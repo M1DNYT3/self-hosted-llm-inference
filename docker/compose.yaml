@@ -1,0 +1,38 @@
+services:
+  fixture-db:
+    build:
+      context: ../fixture
+      dockerfile: Dockerfile
+    container_name: inference-fixture-db
+    ports:
+      - "5433:5432"
+    volumes:
+      - fixture-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fixture -d inference_fixture"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # CPU inference server (always-on, no GPU cost)
+  # Pull the model manually before starting: see fixture/README.md
+  llama-cpu:
+    image: ghcr.io/ggml-org/llama.cpp:server
+    container_name: inference-llama-cpu
+    ports:
+      - "8085:8080"
+    volumes:
+      - ./models:/models:ro
+    command: >
+      --model /models/Qwen3.5-9B-Q4_K_M.gguf
+      --host 0.0.0.0
+      --port 8080
+      --n-gpu-layers 0
+      --ctx-size 4096
+      --parallel 1
+      --reasoning-budget 0
+    profiles:
+      - cpu
+
+volumes:
+  fixture-pgdata:

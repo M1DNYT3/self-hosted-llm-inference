@@ -1,0 +1,14 @@
+# digests.txt
+# Pinned Docker image digests for reproducibility.
+# Run `docker inspect <image> --format '{{index .RepoDigests 0}}'` to get the digest.
+#
+# Fill these in after the benchmark runs are complete.
+
+# Inference server (CUDA)
+# ghcr.io/ggml-org/llama.cpp:server-cuda@sha256:PLACEHOLDER
+
+# Inference server (CPU only)
+# ghcr.io/ggml-org/llama.cpp:server@sha256:PLACEHOLDER
+
+# Fixture DB
+# postgres:16@sha256:PLACEHOLDER

@@ -1,0 +1,52 @@
+# workload-contract.yaml
+# Defines the exact workload shape used for all benchmark runs.
+# All parameters are fixed — changing them invalidates comparisons between iterations.
+
+version: "1"
+
+# Random seed for reproducible record selection from the fixture DB
+seed: 42
+
+tasks:
+  job_skills:
+    # Number of records to process in each benchmark run
+    limit: 1000
+    # Fixed DB query order: ORDER BY id ASC (deterministic given the fixture)
+    order: id_asc
+    # Expected throughput range (rec/min) — for result validation
+    expected_rate_min: 100
+    expected_rate_max: 400
+
+  company_enrich:
+    limit: 500
+    order: id_asc
+    expected_rate_min: 30
+    expected_rate_max: 200
+
+  jd_reparse:
+    limit: 200
+    order: id_asc
+    expected_rate_min: 5
+    expected_rate_max: 50
+
+# Model
+model:
+  name: Qwen3.5-9B-Q4_K_M
+  hf_repo: bartowski/Qwen2.5-7B-Instruct-GGUF  # example — use actual repo
+  vram_gb: 6.0
+  kv_slot_gb: 0.5
+  reasoning_budget: 0   # --reasoning-budget 0 (thinking tokens disabled)
+  max_tokens: 800
+  temperature: 0.1
+
+# Inference server
+server:
+  image: ghcr.io/ggml-org/llama.cpp:server-cuda
+  context_window_per_slot: 4096
+
+# Local emulation settings (CPU, no GPU)
+local_emulation:
+  backend: cpu
+  base_url: "http://localhost:8085/v1"
+  n_parallel: 1
+  note: "CPU results will not match GPU rates — used for timing shape validation only"
