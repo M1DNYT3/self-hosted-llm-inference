@@ -1,0 +1,14 @@
+# Raw (unsanitized) dump — never commit
+fixture/dump_raw.sql
+fixture/dump_clean.sql
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+
+# Env
+.env
+
+# Iteration output — committed manually after review
+# iterations/*/benchmark_results.json  <- intentionally committed when real
