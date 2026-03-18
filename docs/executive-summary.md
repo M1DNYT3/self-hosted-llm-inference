@@ -46,8 +46,8 @@ producer-consumer queues, main-thread aggregator that bulk-commits every 50 resu
 
 | Metric | Baseline | Final |
 |---|---|---|
-| Throughput (job_skills) | 1 rec/min (sequential) | **369 rec/min** (4x RTX 4070S Ti) |
-| Cost per 1k records | ~$0.046 (1x RTX 3090) | **~$0.023** (4x RTX 4070S Ti) |
+| Throughput (job_skills) | 1 rec/min (sequential) | **369 rec/min** (4x cards, ~76 workers) |
+| Cost per 1k records | ~$0.046 (1x card) | **~$0.023** (4x cards, ~$0.50/hr) |
 | API cost alternative | $10–50 per 10k records | — |
 | Self-hosted monthly cost | — | **~$15/month worst case** |
 | Cold-start overhead | — | 2–4 min non-processing time |
@@ -61,10 +61,20 @@ it pays per compute-hour (time-driven). At this workload shape, self-hosted infe
 on commodity gaming GPUs is 20–100× cheaper per record than API pricing, with consistent
 model quality and no vendor lock-in.
 
-The key hardware insight — that VRAM bandwidth, not TFLOPS or VRAM capacity, predicts
-LLM decode throughput — was validated empirically across five GPU configurations, including
-a negative result on a high-TFLOPS workstation card (RTX PRO 6000 WS) that matched a
-budget gaming card (RTX 3090) at three times the cost.
+Two hardware insights were validated empirically across five GPU configurations:
+
+1. **TFLOPS does not predict LLM decode throughput.** A TFLOPS filter set at 100/GPU was
+   intended as a quality gate, but the high-TFLOPS cards it admitted (workstation-class)
+   matched a much cheaper gaming card at 2.8× the cost. Autoregressive decode is
+   memory-bandwidth-bound — every token requires loading the full weight matrix from VRAM.
+   Relaxing the filter to 20/GPU opened the search to gaming cards, which have better
+   bandwidth per dollar.
+
+2. **Per-record latency is nearly flat within a GPU family.** An RTX 3070 Laptop and an RTX
+   3090 produce similar per-slot decode speed once slots are correctly sized to VRAM headroom.
+   The actual throughput multiplier is **GPU count**, not GPU tier. Going from 1 card (36 slots)
+   to 4 cards (~76 slots) — each cheaper than the original — delivered 3.4× the throughput at
+   half the cost per record.
 
 ---
 
