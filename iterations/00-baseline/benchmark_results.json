@@ -1,0 +1,1340 @@
+{
+  "meta": {
+    "task": "jd_reparse",
+    "limit": 20,
+    "backend": "local",
+    "seed": 42,
+    "model": "qwen/qwen3.5-9b",
+    "started_at": "2026-03-18T23:59:55.680458+00:00",
+    "wall_secs": 657.6
+  },
+  "summary": {
+    "total": 20,
+    "ok": 20,
+    "failed": 0,
+    "rate_rec_per_min": 1.8,
+    "avg_latency_ms": 32813,
+    "avg_input_tokens": 884,
+    "avg_output_tokens": 484,
+    "total_input_tokens": 17688,
+    "total_output_tokens": 9670
+  },
+  "records": [
+    {
+      "derived_id": 3818,
+      "job_fk": 45177,
+      "slice_results": [
+        {
+          "section_about": "Au sein de l'\u00e9quipe Qualit\u00e9 syst\u00e8me, nous recherchons une(e) alternant(e) qui aidera \u00e0 d\u00e9finir les besoins, les impacts et les actions \u00e0 mettre en \u0153uvre au niveau de l'entit\u00e9 qualit\u00e9 syst\u00e8me et des autres entit\u00e9s.\n\n Vos principales activit\u00e9s seront notamment les suivantes :\n\n* Faire un \u00e9tat des lieux du sujet SE \u00e0 l'usine (maturit\u00e9 au niveau de l'\u00e9quipe SE, actions d\u00e9marr\u00e9es dans les entit\u00e9s, difficult\u00e9s, etc.), identifier les priorit\u00e9s pour la mise en place du SE dans les diff\u00e9rentes entit\u00e9s, analyser les impacts processus/proc\u00e9dures avec un focus sur l'implication et la strat\u00e9gie QA.\n* Poursuivre la mise en place de la surveillance digitalis\u00e9e des permanents (Courville et t\u00e9l\u00e9phones/tablettes).\n* D\u00e9veloppement de la digitalisation des questionnaires Qualit\u00e9 et S\u00fbret\u00e9 (via des tablettes et/ou QR code avec t\u00e9l\u00e9phone personnel ou professionnel).\n* Projet IMS : faire l'inventaire des proc\u00e9dures CORP et BU PCM afin d'harmoniser les pratiques au sein de la BU et de mettre \u00e0 jour, voire r\u00e9duire, la documentation STMA. Inclut \u00e9galement un travail avec l'\u00e9quipe PYX4 suite \u00e0 la mise \u00e0 jour de la cartographie.\n* Renforcement QSE : faire l'inventaire des documents S\u00e9curit\u00e9 (essentiellement) afin d'assister l'entit\u00e9 dans la mise \u00e0 jour des nouvelles trames et surtout la suppression des anciens documents \u00e0 en-t\u00eate AREVA.\n* Assistance \u00e0 la partie planification lors des audits internes et externes.\n* Aide au traitement des \u00e9carts.\n\n  Vous pr\u00e9parez un dipl\u00f4me de niveau Bac+5 en \u00e9cole d'ing\u00e9nieurs ou \u00e9quivalent universitaire dans le domaine de la qualit\u00e9.\n\nVous \u00eates reconnu(e) pour votre rigueur, votre sens de l'organisation et votre esprit d'analyse.\n\nVous appr\u00e9ciez le travail en \u00e9quipe et faites preuve de curiosit\u00e9 et de proactivit\u00e9 dans la r\u00e9alisation de vos missions."
+        }
+      ],
+      "merged": {
+        "section_about": "Au sein de l'\u00e9quipe Qualit\u00e9 syst\u00e8me, nous recherchons une(e) alternant(e) qui aidera \u00e0 d\u00e9finir les besoins, les impacts et les actions \u00e0 mettre en \u0153uvre au niveau de l'entit\u00e9 qualit\u00e9 syst\u00e8me et des autres entit\u00e9s.\n\n Vos principales activit\u00e9s seront notamment les suivantes :\n\n* Faire un \u00e9tat des lieux du sujet SE \u00e0 l'usine (maturit\u00e9 au niveau de l'\u00e9quipe SE, actions d\u00e9marr\u00e9es dans les entit\u00e9s, difficult\u00e9s, etc.), identifier les priorit\u00e9s pour la mise en place du SE dans les diff\u00e9rentes entit\u00e9s, analyser les impacts processus/proc\u00e9dures avec un focus sur l'implication et la strat\u00e9gie QA.\n* Poursuivre la mise en place de la surveillance digitalis\u00e9e des permanents (Courville et t\u00e9l\u00e9phones/tablettes).\n* D\u00e9veloppement de la digitalisation des questionnaires Qualit\u00e9 et S\u00fbret\u00e9 (via des tablettes et/ou QR code avec t\u00e9l\u00e9phone personnel ou professionnel).\n* Projet IMS : faire l'inventaire des proc\u00e9dures CORP et BU PCM afin d'harmoniser les pratiques au sein de la BU et de mettre \u00e0 jour, voire r\u00e9duire, la documentation STMA. Inclut \u00e9galement un travail avec l'\u00e9quipe PYX4 suite \u00e0 la mise \u00e0 jour de la cartographie.\n* Renforcement QSE : faire l'inventaire des documents S\u00e9curit\u00e9 (essentiellement) afin d'assister l'entit\u00e9 dans la mise \u00e0 jour des nouvelles trames et surtout la suppression des anciens documents \u00e0 en-t\u00eate AREVA.\n* Assistance \u00e0 la partie planification lors des audits internes et externes.\n* Aide au traitement des \u00e9carts.\n\n  Vous pr\u00e9parez un dipl\u00f4me de niveau Bac+5 en \u00e9cole d'ing\u00e9nieurs ou \u00e9quivalent universitaire dans le domaine de la qualit\u00e9.\n\nVous \u00eates reconnu(e) pour votre rigueur, votre sens de l'organisation et votre esprit d'analyse.\n\nVous appr\u00e9ciez le travail en \u00e9quipe et faites preuve de curiosit\u00e9 et de proactivit\u00e9 dans la r\u00e9alisation de vos missions.",
+        "section_skills": "",
+        "section_salary": "",
+        "section_job_type": "",
+        "section_contract": ""
+      },
+      "got_skills": false,
+      "latency_ms": 29030,
+      "input_tokens": 530,
+      "output_tokens": 432,
+      "status": "ok"
+    },
+    {
+      "derived_id": 3819,
+      "job_fk": 45178,
+      "slice_results": [
+        {
+          "section_skills": [
+            "Excellentes capacit\u00e9s relationnelles et r\u00e9dactionnelles",
+            "Rigueur et exemplarit\u00e9 : s\u00e9curit\u00e9 et qualit\u00e9",
+            "Autonomie",
+            "Force de proposition",
+            "Go\u00fbt prononc\u00e9 pour le terrain et le travail en \u00e9quipe",
+            "Grande capacit\u00e9 d'adaptabilit\u00e9"
+          ],
+          "section_about": "Dans le cadre de notre vision strat\u00e9gique \u00e0 long terme et de l'augmentation pr\u00e9visionnelle des volumes, nous souhaitons anticiper les contraintes capacitaires de nos ateliers. Vous aurez pour missions : Collecter et analyser les temps de chaque op\u00e9ration r\u00e9alis\u00e9e sur les \u00e9quipements annexes. Identifier les \u00e9quipements susceptibles de devenir obsol\u00e8te et de ne plus r\u00e9pondre aux besoins de capacit\u00e9. R\u00e9aliser des calculs de projection, compl\u00e9ter et fiabiliser les donn\u00e9es existantes, puis assurer leur mise en forme et leur exploitation. Identifier les points de blocage potentiels, analyser les risques d'obsolescence des machines et proposer des pistes d'investissement adapt\u00e9es. Construire et structurer une base de donn\u00e9es \u00e0 partir des \u00e9l\u00e9ments collect\u00e9s. Cette base permettra d'anticiper les \u00e9volutions, de pr\u00e9parer les plans d'investissement et d'identifier les besoins en productivit\u00e9."
+        }
+      ],
+      "merged": {
+        "section_about": "Dans le cadre de notre vision strat\u00e9gique \u00e0 long terme et de l'augmentation pr\u00e9visionnelle des volumes, nous souhaitons anticiper les contraintes capacitaires de nos ateliers. Vous aurez pour missions : Collecter et analyser les temps de chaque op\u00e9ration r\u00e9alis\u00e9e sur les \u00e9quipements annexes. Identifier les \u00e9quipements susceptibles de devenir obsol\u00e8te et de ne plus r\u00e9pondre aux besoins de capacit\u00e9. R\u00e9aliser des calculs de projection, compl\u00e9ter et fiabiliser les donn\u00e9es existantes, puis assurer leur mise en forme et leur exploitation. Identifier les points de blocage potentiels, analyser les risques d'obsolescence des machines et proposer des pistes d'investissement adapt\u00e9es. Construire et structurer une base de donn\u00e9es \u00e0 partir des \u00e9l\u00e9ments collect\u00e9s. Cette base permettra d'anticiper les \u00e9volutions, de pr\u00e9parer les plans d'investissement et d'identifier les besoins en productivit\u00e9.",
+        "section_skills": [
+          "Excellentes capacit\u00e9s relationnelles et r\u00e9dactionnelles",
+          "Rigueur et exemplarit\u00e9 : s\u00e9curit\u00e9 et qualit\u00e9",
+          "Autonomie",
+          "Force de proposition",
+          "Go\u00fbt prononc\u00e9 pour le terrain et le travail en \u00e9quipe",
+          "Grande capacit\u00e9 d'adaptabilit\u00e9"
+        ],
+        "section_salary": "",
+        "section_job_type": "",
+        "section_contract": ""
+      },
+      "got_skills": true,
+      "latency_ms": 17277,
+      "input_tokens": 393,
+      "output_tokens": 265,
+      "status": "ok"
+    },
+    {
+      "derived_id": 3828,
+      "job_fk": 45181,
+      "slice_results": [
+        {
+          "section_skills": [
+            "Attester de la conformit\u00e9 des produits",
+            "Pr\u00e9senter les produits et documentations pour acceptations aux clients France, Etrangers, Export (FAT) et aux repr\u00e9sentants DGA/SQ",
+            "Traiter les non-conformit\u00e9s",
+            "Piloter les instances de suivi des non-conformit\u00e9s et groupes de travail permettant leurs r\u00e9solution",
+            "R\u00e9aliser des \u00e9valuations qualit\u00e9s en production",
+            "Pr\u00e9parer et encadrer l'ex\u00e9cution des audits externes (EN 9100)",
+            "Participer aux certifications et d\u00e9l\u00e9gation contr\u00f4le/autocontr\u00f4le des op\u00e9rateurs",
+            "V\u00e9rifier la conformit\u00e9 du dossier de fabrication et de contr\u00f4le",
+            "V\u00e9rifier le respect et l'application du r\u00e9f\u00e9rentiel qualit\u00e9, des normes et des exigences contractuelles sur son p\u00e9rim\u00e8tre au sein de l'entit\u00e9 de production",
+            "Etablir des bilans qualit\u00e9 et les pr\u00e9senter aux collaborateurs des entit\u00e9s de production du p\u00e9rim\u00e8tre concern\u00e9 ou DGA/SQ",
+            "Animer des chantiers d'am\u00e9lioration (impact cout, d\u00e9lai, risques), dans son p\u00e9rim\u00e8tre de responsabilit\u00e9",
+            "Formation ing\u00e9nieur g\u00e9n\u00e9raliste, qualit\u00e9, production/m\u00e9thodes ou \u00e9quivalent",
+            "5 ans d'exp\u00e9rience professionnelle",
+            "Exp\u00e9rience dans l'industrie a\u00e9ronautique et/ou de d\u00e9fense",
+            "Connaissances sur les outils qualit\u00e9 (8D, AMDEC...)",
+            "Connaissances sur les standards Qualit\u00e9 (ISO 9001; EN9100)",
+            "Connaissances sur les m\u00e9thodes de r\u00e9solution de probl\u00e8me"
+          ]
+        }
+      ],
+      "merged": {
+        "section_about": "",
+        "section_skills": [
+          "Attester de la conformit\u00e9 des produits",
+          "Pr\u00e9senter les produits et documentations pour acceptations aux clients France, Etrangers, Export (FAT) et aux repr\u00e9sentants DGA/SQ",
+          "Traiter les non-conformit\u00e9s",
+          "Piloter les instances de suivi des non-conformit\u00e9s et groupes de travail permettant leurs r\u00e9solution",
+          "R\u00e9aliser des \u00e9valuations qualit\u00e9s en production",
+          "Pr\u00e9parer et encadrer l'ex\u00e9cution des audits externes (EN 9100)",
+          "Participer aux certifications et d\u00e9l\u00e9gation contr\u00f4le/autocontr\u00f4le des op\u00e9rateurs",
+          "V\u00e9rifier la conformit\u00e9 du dossier de fabrication et de contr\u00f4le",
+          "V\u00e9rifier le respect et l'application du r\u00e9f\u00e9rentiel qualit\u00e9, des normes et des exigences contractuelles sur son p\u00e9rim\u00e8tre au sein de l'entit\u00e9 de production",
+          "Etablir des bilans qualit\u00e9 et les pr\u00e9senter aux collaborateurs des entit\u00e9s de production du p\u00e9rim\u00e8tre concern\u00e9 ou DGA/SQ",
+          "Animer des chantiers d'am\u00e9lioration (impact cout, d\u00e9lai, risques), dans son p\u00e9rim\u00e8tre de responsabilit\u00e9",
+          "Formation ing\u00e9nieur g\u00e9n\u00e9raliste, qualit\u00e9, production/m\u00e9thodes ou \u00e9quivalent",
+          "5 ans d'exp\u00e9rience professionnelle",
+          "Exp\u00e9rience dans l'industrie a\u00e9ronautique et/ou de d\u00e9fense",
+          "Connaissances sur les outils qualit\u00e9 (8D, AMDEC...)",
+          "Connaissances sur les standards Qualit\u00e9 (ISO 9001; EN9100)",
+          "Connaissances sur les m\u00e9thodes de r\u00e9solution de probl\u00e8me"
+        ],
+        "section_salary": "",
+        "section_job_type": "",
+        "section_contract": ""
+      },
+      "got_skills": true,
+      "latency_ms": 25938,
+      "input_tokens": 622,
+      "output_tokens": 374,
+      "status": "ok"
+    },
+    {
+      "derived_id": 3829,
+      "job_fk": 45182,
+      "slice_results": [
+        {
+          "section_about": "Entreprise responsable, nous d\u00e9veloppons des actions pour former et accompagner les premi\u00e8res exp\u00e9riences professionnelles (label Happy Trainees), int\u00e9grer tous les talents, dont les personnes en situation de handicap, \u0153uvrer pour l'\u00e9galit\u00e9 professionnelle et la mixit\u00e9 de nos m\u00e9tiers (94/100 \u00e0 l'index de l'\u00e9galit\u00e9 hommes-femmes) et concilier les temps de vie.\n\nPour suivre notre actualit\u00e9, retrouvez-nous sur www.framatome.com, LinkedIn, Instagram et X.\n\nChez Framatome, filiale d'EDF, nous concevons et fournissons des \u00e9quipements, des services, du combustible, et des syst\u00e8mes de contr\u00f4le-commande pour les centrales nucl\u00e9aires du monde entier.\n\nNos 20 000 collaborateurs permettent chaque jour \u00e0 nos clients de produire un mix \u00e9nerg\u00e9tique bas-carbone toujours plus propre, plus s\u00fbr et plus \u00e9conomique.\n\nNos \u00e9quipes d\u00e9veloppent \u00e9galement des solutions pour les secteurs de la d\u00e9fense, de la m\u00e9decine nucl\u00e9aire et du spatial.\n\nImplant\u00e9e dans une vingtaine de pays, Framatome rassemble les expertises d'hommes et de femmes passionn\u00e9s et convaincus que le nucl\u00e9aire est une \u00e9nergie d'avenir.",
+          "section_job_type": "Student",
+          "section_contract": "24"
+        },
+        {
+          "section_about": "La Business Unit Projets & Composants de Framatome, r\u00e9f\u00e9rence mondiale pour la gestion de projets et la fabrication d'\u00e9quipements pour l'industrie nucl\u00e9aire. Elle est au centre de l'int\u00e9gration EPC - Engineering / Procurement / Construction - de la chaudi\u00e8re nucl\u00e9aire. Nos \u00e9quipes assurent la gestion des projets de construction de nouveaux r\u00e9acteurs et de remplacement de composants pour les r\u00e9acteurs en exploitation. Elles con\u00e7oivent et fabriquent au sein de nos usines les composants lourds et mobiles du circuit primaire. 'Notre business unit compte pr\u00e8s de 1 900 personnes qui apportent chaque jour \u00e0 nos clients dans le monde entier des solutions s\u00fbres, comp\u00e9titives et innovantes, en toute s\u00e9curit\u00e9.",
+          "section_job_type": "Alternance",
+          "section_contract": "Alternance",
+          "section_salary": "Bar\u00e8me Alternance, Stage et VIE"
+        }
+      ],
+      "merged": {
+        "section_about": "Entreprise responsable, nous d\u00e9veloppons des actions pour former et accompagner les premi\u00e8res exp\u00e9riences professionnelles (label Happy Trainees), int\u00e9grer tous les talents, dont les personnes en situation de handicap, \u0153uvrer pour l'\u00e9galit\u00e9 professionnelle et la mixit\u00e9 de nos m\u00e9tiers (94/100 \u00e0 l'index de l'\u00e9galit\u00e9 hommes-femmes) et concilier les temps de vie.\n\nPour suivre notre actualit\u00e9, retrouvez-nous sur www.framatome.com, LinkedIn, Instagram et X.\n\nChez Framatome, filiale d'EDF, nous concevons et fournissons des \u00e9quipements, des services, du combustible, et des syst\u00e8mes de contr\u00f4le-commande pour les centrales nucl\u00e9aires du monde entier.\n\nNos 20 000 collaborateurs permettent chaque jour \u00e0 nos clients de produire un mix \u00e9nerg\u00e9tique bas-carbone toujours plus propre, plus s\u00fbr et plus \u00e9conomique.\n\nNos \u00e9quipes d\u00e9veloppent \u00e9galement des solutions pour les secteurs de la d\u00e9fense, de la m\u00e9decine nucl\u00e9aire et du spatial.\n\nImplant\u00e9e dans une vingtaine de pays, Framatome rassemble les expertises d'hommes et de femmes passionn\u00e9s et convaincus que le nucl\u00e9aire est une \u00e9nergie d'avenir.",
+        "section_skills": "",
+        "section_salary": "Bar\u00e8me Alternance, Stage et VIE",
+        "section_job_type": "Student",
+        "section_contract": "24"
+      },
+      "got_skills": false,
+      "latency_ms": 33884,
+      "input_tokens": 1391,
+      "output_tokens": 488,
+      "status": "ok"
+    },
+    {
+      "derived_id": 3830,
+      "job_fk": 45183,
+      "slice_results": [
+        {
+          "section_about": "La soci\u00e9t\u00e9 **SICAF** est rattach\u00e9e au **Groupe ANJAC Health \\& Beauty**, partenaire des marques de beaut\u00e9, de bien\\-\u00eatre et des laboratoires de sant\u00e9. Cr\u00e9\u00e9 en 2008, le Groupe r\u00e9unit aujourd'hui plus de 3 000 personnes pour un chiffre d'affaires sup\u00e9rieur \u00e0 800 millions d'euros.\n\nActeur majeur de la sous\\-traitance cosm\u00e9tique, partenaire industriel innovant des marques cosm\u00e9tiques, l'entreprise **SICAF** est reconnue pour son expertise et son savoir\\-faire en recherche \\& innovation. **SICAF** formule, fabrique et conditionne, de la mati\u00e8re premi\u00e8re au produit fini.\n\nAfin de renforcer notre \u00e9quipe, nous recherchons un(e) Charg\u00e9(e) Assurance Qualit\u00e9 pour un poste en CDI \u00e0 temps plein.",
+          "section_job_type": "CDI",
+          "section_skills": [
+            "Bac +3 avec une sp\u00e9cialisation Qualit\u00e9 (AQ/CQ ou \u00e9quivalent)",
+            "Au moins 2 ans d'exp\u00e9rience sur un poste en Assurance Qualit\u00e9",
+            "Exp\u00e9rience id\u00e9alement en environnement cosm\u00e9tique, pharmaceutique ou agroalimentaire",
+            "Ma\u00eetrise des exigences des BPF (ISO 22716)",
+            "Ma\u00eetrise des outils qualit\u00e9 (audits, non-conformit\u00e9s, CAPA, analyses de risques)",
+            "Aisance avec les outils informatiques (Pack Office, ERP \u2013 id\u00e9alement Navision)",
+            "Bon niveau d'anglais",
+            "Rigueur",
+            "Sens de l'analyse",
+            "Organisation",
+            "Bon relationnel",
+            "D\u00e9placements \u00e0 pr\u00e9voir sur Carpentras (84) 1x/semaine"
+          ]
+        }
+      ],
+      "merged": {
+        "section_about": "La soci\u00e9t\u00e9 **SICAF** est rattach\u00e9e au **Groupe ANJAC Health \\& Beauty**, partenaire des marques de beaut\u00e9, de bien\\-\u00eatre et des laboratoires de sant\u00e9. Cr\u00e9\u00e9 en 2008, le Groupe r\u00e9unit aujourd'hui plus de 3 000 personnes pour un chiffre d'affaires sup\u00e9rieur \u00e0 800 millions d'euros.\n\nActeur majeur de la sous\\-traitance cosm\u00e9tique, partenaire industriel innovant des marques cosm\u00e9tiques, l'entreprise **SICAF** est reconnue pour son expertise et son savoir\\-faire en recherche \\& innovation. **SICAF** formule, fabrique et conditionne, de la mati\u00e8re premi\u00e8re au produit fini.\n\nAfin de renforcer notre \u00e9quipe, nous recherchons un(e) Charg\u00e9(e) Assurance Qualit\u00e9 pour un poste en CDI \u00e0 temps plein.",
+        "section_skills": [
+          "Bac +3 avec une sp\u00e9cialisation Qualit\u00e9 (AQ/CQ ou \u00e9quivalent)",
+          "Au moins 2 ans d'exp\u00e9rience sur un poste en Assurance Qualit\u00e9",
+          "Exp\u00e9rience id\u00e9alement en environnement cosm\u00e9tique, pharmaceutique ou agroalimentaire",
+          "Ma\u00eetrise des exigences des BPF (ISO 22716)",
+          "Ma\u00eetrise des outils qualit\u00e9 (audits, non-conformit\u00e9s, CAPA, analyses de risques)",
+          "Aisance avec les outils informatiques (Pack Office, ERP \u2013 id\u00e9alement Navision)",
+          "Bon niveau d'anglais",
+          "Rigueur",
+          "Sens de l'analyse",
+          "Organisation",
+          "Bon relationnel",
+          "D\u00e9placements \u00e0 pr\u00e9voir sur Carpentras (84) 1x/semaine"
+        ],
+        "section_salary": "",
+        "section_job_type": "CDI",
+        "section_contract": ""
+      },
+      "got_skills": true,
+      "latency_ms": 27961,
+      "input_tokens": 907,
+      "output_tokens": 401,
+      "status": "ok"
+    },
+    {
+      "derived_id": 3831,
+      "job_fk": 45184,
+      "slice_results": [
+        {
+          "section_about": "La soci\u00e9t\u00e9 **SICAF** est rattach\u00e9e au **Groupe ANJAC Health \\& Beauty**, partenaire des marques de beaut\u00e9, de bien\\-\u00eatre et des laboratoires de sant\u00e9. Cr\u00e9\u00e9 en 2008, le Groupe r\u00e9unit aujourd'hui pr\u00e8s de 3 000 personnes au sein de 16 soci\u00e9t\u00e9s, pour un chiffre d'affaires sup\u00e9rieur \u00e0 800 millions d'euros.\n\nActeur majeur de la sous\\-traitance cosm\u00e9tique, partenaire industriel innovant des marques cosm\u00e9tiques, l'entreprise **SICAF** est reconnue pour son expertise et son savoir\\-faire en recherche \\& innovation. **SICAF** formule, fabrique et conditionne, de la mati\u00e8re premi\u00e8re au produit fini.",
+          "section_job_type": "\u00e0 temps plein en CDI",
+          "section_salary": "32 000 et 36 000\u20ac",
+          "section_skills": "Bac +2/3 \u00e0 Bac +5 en Contr\u00f4le Qualit\u00e9 (chimie, cosm\u00e9tique ou pharmacie), 3 ans d'exp\u00e9rience en contr\u00f4le qualit\u00e9 en environnement industriel (cosm\u00e9tique/pharma), ma\u00eetrise des exigences BPF (ISO 22716 ou BPF pharmaceutiques), fonctionnement d'un laboratoire de contr\u00f4le"
+        }
+      ],
+      "merged": {
+        "section_about": "La soci\u00e9t\u00e9 **SICAF** est rattach\u00e9e au **Groupe ANJAC Health \\& Beauty**, partenaire des marques de beaut\u00e9, de bien\\-\u00eatre et des laboratoires de sant\u00e9. Cr\u00e9\u00e9 en 2008, le Groupe r\u00e9unit aujourd'hui pr\u00e8s de 3 000 personnes au sein de 16 soci\u00e9t\u00e9s, pour un chiffre d'affaires sup\u00e9rieur \u00e0 800 millions d'euros.\n\nActeur majeur de la sous\\-traitance cosm\u00e9tique, partenaire industriel innovant des marques cosm\u00e9tiques, l'entreprise **SICAF** est reconnue pour son expertise et son savoir\\-faire en recherche \\& innovation. **SICAF** formule, fabrique et conditionne, de la mati\u00e8re premi\u00e8re au produit fini.",
+        "section_skills": "Bac +2/3 \u00e0 Bac +5 en Contr\u00f4le Qualit\u00e9 (chimie, cosm\u00e9tique ou pharmacie), 3 ans d'exp\u00e9rience en contr\u00f4le qualit\u00e9 en environnement industriel (cosm\u00e9tique/pharma), ma\u00eetrise des exigences BPF (ISO 22716 ou BPF pharmaceutiques), fonctionnement d'un laboratoire de contr\u00f4le",
+        "section_salary": "32 000 et 36 000\u20ac",
+        "section_job_type": "\u00e0 temps plein en CDI",
+        "section_contract": ""
+      },
+      "got_skills": true,
+      "latency_ms": 18258,
+      "input_tokens": 976,
+      "output_tokens": 287,
+      "status": "ok"
+    },
+    {
+      "derived_id": 3832,
+      "job_fk": 45185,
+      "slice_results": [
+        {
+          "section_skills": [
+            "Sp\u00e9cifier, mod\u00e9liser et d\u00e9velopper des syst\u00e8mes optiques innovants",
+            "Garant de l'atteinte des performances des collimateurs",
+            "Veille technologique en optique et optronique",
+            "Pilotage complet de projets R&D (planning, budget, risques, coordination technique)",
+            "Coordination d'\u00e9quipes pluridisciplinaires (optique, \u00e9lectronique, m\u00e9canique, logiciel)",
+            "Interlocuteur privil\u00e9gi\u00e9 des clients (qualit\u00e9, d\u00e9lais, performance)",
+            "Soutien technique aux services Production et Support Client",
+            "Rigueur scientifique et capacit\u00e9s r\u00e9dactionnelles",
+            "Culture technico-scientifique",
+            "Go\u00fbt pour l'exp\u00e9rimentation",
+            "Travail en \u00e9quipe sur des solutions innovantes",
+            "Bon niveau d'anglais (oral et \u00e9crit)"
+          ],
+          "section_about": [
+            "\u00c0 votre arriv\u00e9e, vous suivrez un parcours de formation structur\u00e9 sur nos technologies, nos produits et nos processus.",
+            "Vous assurerez \u00e0 mesure de votre expertise, le soutien technique aux services Production et Support Client."
+          ],
+          "section_salary": [
+            "R\u00e9mun\u00e9ration en fonction du niveau d'exp\u00e9rience (fixe + participation et int\u00e9ressement)",
+            "titres restaurant",
+            "RTT",
+            "Forfait mobilit\u00e9 durable",
+            "avantages CSE",
+            "couverture sant\u00e9 avantageuse (mutuelle individuelle ou familiale, pr\u00e9voyance)"
+          ],
+          "section_job_type": [
+            "CDI",
+            "bas\u00e9 \u00e0 Igny (91)",
+            "Possibilit\u00e9 de t\u00e9l\u00e9travail jusqu'\u00e0 2 jours par semaine"
+          ],
+          "section_contract": [
+            "CDI"
+          ]
+        }
+      ],
+      "merged": {
+        "section_about": [
+          "\u00c0 votre arriv\u00e9e, vous suivrez un parcours de formation structur\u00e9 sur nos technologies, nos produits et nos processus.",
+          "Vous assurerez \u00e0 mesure de votre expertise, le soutien technique aux services Production et Support Client."
+        ],
+        "section_skills": [
+          "Sp\u00e9cifier, mod\u00e9liser et d\u00e9velopper des syst\u00e8mes optiques innovants",
+          "Garant de l'atteinte des performances des collimateurs",
+          "Veille technologique en optique et optronique",
+          "Pilotage complet de projets R&D (planning, budget, risques, coordination technique)",
+          "Coordination d'\u00e9quipes pluridisciplinaires (optique, \u00e9lectronique, m\u00e9canique, logiciel)",
+          "Interlocuteur privil\u00e9gi\u00e9 des clients (qualit\u00e9, d\u00e9lais, performance)",
+          "Soutien technique aux services Production et Support Client",
+          "Rigueur scientifique et capacit\u00e9s r\u00e9dactionnelles",
+          "Culture technico-scientifique",
+          "Go\u00fbt pour l'exp\u00e9rimentation",
+          "Travail en \u00e9quipe sur des solutions innovantes",
+          "Bon niveau d'anglais (oral et \u00e9crit)"
+        ],
+        "section_salary": [
+          "R\u00e9mun\u00e9ration en fonction du niveau d'exp\u00e9rience (fixe + participation et int\u00e9ressement)",
+          "titres restaurant",
+          "RTT",
+          "Forfait mobilit\u00e9 durable",
+          "avantages CSE",
+          "couverture sant\u00e9 avantageuse (mutuelle individuelle ou familiale, pr\u00e9voyance)"
+        ],
+        "section_job_type": [
+          "CDI",
+          "bas\u00e9 \u00e0 Igny (91)",
+          "Possibilit\u00e9 de t\u00e9l\u00e9travail jusqu'\u00e0 2 jours par semaine"
+        ],
+        "section_contract": [
+          "CDI"
+        ]
+      },
+      "got_skills": true,
+      "latency_ms": 27691,
+      "input_tokens": 612,
+      "output_tokens": 401,
+      "status": "ok"
+    },
+    {
+      "derived_id": 3847,
+      "job_fk": 45568,
+      "slice_results": [
+        {
+          "section_skills": [
+            "writing and executing test cases",
+            "creating test plans",
+            "software usability concepts",
+            "requirements traceability",
+            "Software Development Lifecycle (SDLC)",
+            "Xray Test Case management tool",
+            "scrum team",
+            "agile environment",
+            "Jira",
+            "SharePoint",
+            "defect tracking and management",
+            "SQL query writing",
+            "API Testing",
+            "Postman",
+            "SOAPUI",
+            "JMETER",
+            "unit testing",
+            "integration testing",
+            "regression testing",
+            "smoke testing",
+            "user acceptance testing",
+            "system testing",
+            "stress testing",
+            "performance testing",
+            "code coverage tools",
+            "process or systems analysis",
+            "design work",
+            "QA automation testing",
+            "scripting",
+            "UFT",
+            "performance testing scripts",
+            "UAT test plans",
+            "UAT test cases",
+            "Object-Oriented Programming",
+            "State of Texas HHS agency and system"
+          ]
+        },
+        {
+          "section_job_type": "Contract",
+          "section_contract": "12+ months",
+          "section_about": "QA Automation Analyst 3 will be responsible for the development and maintenance of test scripts for both manual and automated testing. Experience preparing UAT test cases, aligning them with business requirements, and conducting walkthroughs with stakeholders to ensure clarity. Tracks test case execution and provides reporting. Use Jira to log and track defects. Develops and maintains requirements traceability matrices. Must have experience working in an Agile environment. Supports the development team as needed in dev, test, and UAT environments and troubleshoots the defect as required."
+        }
+      ],
+      "merged": {
+        "section_about": "QA Automation Analyst 3 will be responsible for the development and maintenance of test scripts for both manual and automated testing. Experience preparing UAT test cases, aligning them with business requirements, and conducting walkthroughs with stakeholders to ensure clarity. Tracks test case execution and provides reporting. Use Jira to log and track defects. Develops and maintains requirements traceability matrices. Must have experience working in an Agile environment. Supports the development team as needed in dev, test, and UAT environments and troubleshoots the defect as required.",
+        "section_skills": [
+          "writing and executing test cases",
+          "creating test plans",
+          "software usability concepts",
+          "requirements traceability",
+          "Software Development Lifecycle (SDLC)",
+          "Xray Test Case management tool",
+          "scrum team",
+          "agile environment",
+          "Jira",
+          "SharePoint",
+          "defect tracking and management",
+          "SQL query writing",
+          "API Testing",
+          "Postman",
+          "SOAPUI",
+          "JMETER",
+          "unit testing",
+          "integration testing",
+          "regression testing",
+          "smoke testing",
+          "user acceptance testing",
+          "system testing",
+          "stress testing",
+          "performance testing",
+          "code coverage tools",
+          "process or systems analysis",
+          "design work",
+          "QA automation testing",
+          "scripting",
+          "UFT",
+          "performance testing scripts",
+          "UAT test plans",
+          "UAT test cases",
+          "Object-Oriented Programming",
+          "State of Texas HHS agency and system"
+        ],
+        "section_salary": "",
+        "section_job_type": "Contract",
+        "section_contract": "12+ months"
+      },
+      "got_skills": true,
+      "latency_ms": 27715,
+      "input_tokens": 747,
+      "output_tokens": 404,
+      "status": "ok"
+    },
+    {
+      "derived_id": 3850,
+      "job_fk": 45580,
+      "slice_results": [
+        {
+          "section_skills": [
+            "Experience in writing and executing test cases",
+            "creating test plans",
+            "Knowledge of software usability concepts",
+            "requirements traceability",
+            "Software Development Lifecycle (SDLC) process",
+            "Knowledge of Xray Test Case management tool",
+            "Jira Project management tool",
+            "Strong SQL query knowledge",
+            "Create, Read, Update, Delete",
+            "Experience in writing and executing tests automation using UFT",
+            "conducting API Testing and automation using Postman, SOAPUI, JMETER or similar"
+          ]
+        },
+        {
+          "section_about": "QA automation engineers design automated tests by creating scripts that run testing functions automatically. This includes determining the priority for test scenarios and creating execution plans to implement these scenarios. Designing documentation for automated processes. QA Automation Analyst 3 will be responsible for the development and maintenance of test scripts for both manual and automated testing. Experience preparing UAT test cases, aligning them with business requirements, and conducting walkthroughs with stakeholders to ensure clarity. Tracks test case execution and provides reporting. Use Jira to log and track defects. Develops and maintains requirements traceability matrices. Must have experience working in an Agile environment. Supports the development team as needed in dev, test, and UAT environments and troubleshoots the defect as required.",
+          "section_job_type": "2 days remote with 3 days (Mondays, Wednesdays and Fridays) required to be onsite",
+          "section_contract": "LOCAL ONLY candidates"
+        },
+        {
+          "section_skills": [
+            "writing and executing test cases",
+            "creating test plans",
+            "software usability concepts",
+            "requirements traceability",
+            "Software Development Lifecycle (SDLC) process",
+            "Xray Test Case management tool",
+            "scrum team in an agile environment",
+            "Jira",
+            "SharePoint",
+            "defect tracking and management",
+            "SQL query writing",
+            "API Testing",
+            "Postman",
+            "automated test cases",
+            "unit testing",
+            "integration testing",
+            "regression testing",
+            "smoke testing",
+            "user acceptance testing",
+            "system testing",
+            "stress testing",
+            "performance testing",
+            "code coverage tools",
+            "process or systems analysis",
+            "design work",
+            "QA automation testing",
+            "scripting",
+            "UFT",
+            "Object-Oriented Programming",
+            "accessibility testing tools",
+            "assistive technologies",
+            "WCAG 2.1 AA standards",
+            "State of Texas HHS agency and system"
+          ]
+        }
+      ],
+      "merged": {
+        "section_about": "QA automation engineers design automated tests by creating scripts that run testing functions automatically. This includes determining the priority for test scenarios and creating execution plans to implement these scenarios. Designing documentation for automated processes. QA Automation Analyst 3 will be responsible for the development and maintenance of test scripts for both manual and automated testing. Experience preparing UAT test cases, aligning them with business requirements, and conducting walkthroughs with stakeholders to ensure clarity. Tracks test case execution and provides reporting. Use Jira to log and track defects. Develops and maintains requirements traceability matrices. Must have experience working in an Agile environment. Supports the development team as needed in dev, test, and UAT environments and troubleshoots the defect as required.",
+        "section_skills": [
+          "Experience in writing and executing test cases",
+          "creating test plans",
+          "Knowledge of software usability concepts",
+          "requirements traceability",
+          "Software Development Lifecycle (SDLC) process",
+          "Knowledge of Xray Test Case management tool",
+          "Jira Project management tool",
+          "Strong SQL query knowledge",
+          "Create, Read, Update, Delete",
+          "Experience in writing and executing tests automation using UFT",
+          "conducting API Testing and automation using Postman, SOAPUI, JMETER or similar"
+        ],
+        "section_salary": "",
+        "section_job_type": "2 days remote with 3 days (Mondays, Wednesdays and Fridays) required to be onsite",
+        "section_contract": "LOCAL ONLY candidates"
+      },
+      "got_skills": true,
+      "latency_ms": 40372,
+      "input_tokens": 1051,
+      "output_tokens": 597,
+      "status": "ok"
+    },
+    {
+      "derived_id": 3852,
+      "job_fk": 45588,
+      "slice_results": [
+        {
+          "section_skills": [
+            "writing and executing test cases",
+            "creating test plans",
+            "software usability concepts",
+            "requirements traceability",
+            "Software Development Lifecycle (SDLC) process",
+            "Xray Test Case management tool",
+            "Jira Project management tool",
+            "SQL query knowledge",
+            "writing and executing tests automation using UFT",
+            "conducting API Testing and automation using Postman, SOAPUI, JMETER or similar"
+          ]
+        },
+        {
+          "section_about": "QA Automation Engineer Austin, TX Hybrid Only Locals 5 months contract Please do not submit profiles of candidates who are not local to Texas (TX). Candidates with prior experience working for State Government clients are preferred. Position will be 2 days remote with 3 days (Mondays, Wednesdays and Fridays) required to be onsite at the location listed above. Program will only accept LOCAL ONLY candidates for this position. 8 or more years of experience, relies on experience and judgment to plan and accomplish goals, independently performs a variety of complicated tasks, a wide degree of creativity and latitude is expected. QA automation engineers design automated tests by creating scripts that run testing functions automatically. This includes determining the priority for test scenarios and creating execution plans to implement these scenarios. Designing documentation for automated processes. QA Automation Analyst 3 will be responsible for the development and maintenance of test scripts for both manual and automated testing. Experience preparing UAT test cases, aligning them with business requirements, and conducting walkthroughs with stakeholders to ensure clarity. Tracks test case execution and provides reporting. Use Jira to log and track defects. Develops and maintains requirements traceability matrices. Must have experience working in an Agile environment. Supports the development team as needed in dev, test, and UAT environments and troubleshoots the defect as required.",
+          "section_job_type": "Hybrid",
+          "section_contract": "5 months"
+        },
+        {
+          "section_skills": [
+            "Experience in writing and executing test cases",
+            "Creating test plans",
+            "Knowledge of software usability concepts",
+            "Requirements traceability",
+            "Software Development Lifecycle (SDLC) process",
+            "Xray Test Case management tool",
+            "Scrum team experience in an agile environment",
+            "Jira",
+            "SharePoint",
+            "Defect tracking and management",
+            "SQL query writing",
+            "API Testing using Postman",
+            "Develop and execute automated test cases",
+            "Unit testing",
+            "Integration testing",
+            "Regression testing",
+            "Smoke testing",
+            "User acceptance testing",
+            "System testing",
+            "Stress testing",
+            "Performance testing",
+            "Code coverage tools",
+            "Systems analysis",
+            "Design work",
+            "QA automation testing and scripting using UFT",
+            "Organizing and presenting complex technical information",
+            "Working independently",
+            "Working with sprint development team members",
+            "Working under pressure",
+            "Communicating with varied levels of staff and end users",
+            "Responding to inquiries regarding errors, problems, or questions",
+            "Tracking time spent working on projects",
+            "Estimating changes or enhancements",
+            "Object-Oriented Programming",
+            "Accessibility testing tools",
+            "Assistive technologies",
+            "WCAG 2.1 AA standards compliance",
+            "Experience working with the State of Texas HHS agency and system"
+          ]
+        }
+      ],
+      "merged": {
+        "section_about": "QA Automation Engineer Austin, TX Hybrid Only Locals 5 months contract Please do not submit profiles of candidates who are not local to Texas (TX). Candidates with prior experience working for State Government clients are preferred. Position will be 2 days remote with 3 days (Mondays, Wednesdays and Fridays) required to be onsite at the location listed above. Program will only accept LOCAL ONLY candidates for this position. 8 or more years of experience, relies on experience and judgment to plan and accomplish goals, independently performs a variety of complicated tasks, a wide degree of creativity and latitude is expected. QA automation engineers design automated tests by creating scripts that run testing functions automatically. This includes determining the priority for test scenarios and creating execution plans to implement these scenarios. Designing documentation for automated processes. QA Automation Analyst 3 will be responsible for the development and maintenance of test scripts for both manual and automated testing. Experience preparing UAT test cases, aligning them with business requirements, and conducting walkthroughs with stakeholders to ensure clarity. Tracks test case execution and provides reporting. Use Jira to log and track defects. Develops and maintains requirements traceability matrices. Must have experience working in an Agile environment. Supports the development team as needed in dev, test, and UAT environments and troubleshoots the defect as required.",
+        "section_skills": [
+          "writing and executing test cases",
+          "creating test plans",
+          "software usability concepts",
+          "requirements traceability",
+          "Software Development Lifecycle (SDLC) process",
+          "Xray Test Case management tool",
+          "Jira Project management tool",
+          "SQL query knowledge",
+          "writing and executing tests automation using UFT",
+          "conducting API Testing and automation using Postman, SOAPUI, JMETER or similar"
+        ],
+        "section_salary": "",
+        "section_job_type": "Hybrid",
+        "section_contract": "5 months"
+      },
+      "got_skills": true,
+      "latency_ms": 49962,
+      "input_tokens": 1190,
+      "output_tokens": 759,
+      "status": "ok"
+    },
+    {
+      "derived_id": 3854,
+      "job_fk": 45597,
+      "slice_results": [
+        {
+          "section_skills": [
+            "writing and executing test cases",
+            "creating test plans",
+            "software usability concepts",
+            "requirements traceability",
+            "Software Development Lifecycle (SDLC)",
+            "Xray Test Case management tool",
+            "scrum team",
+            "agile environment",
+            "Jira",
+            "SharePoint",
+            "defect tracking and management",
+            "SQL query writing",
+            "API Testing",
+            "Postman",
+            "SOAPUI",
+            "JMETER",
+            "unit testing",
+            "integration testing",
+            "regression testing",
+            "smoke testing",
+            "user acceptance testing",
+            "system testing",
+            "stress testing",
+            "performance testing",
+            "code coverage tools",
+            "process or systems analysis",
+            "design work",
+            "QA automation testing",
+            "scripting",
+            "UFT",
+            "performance testing scripts",
+            "UAT test plans",
+            "UAT test cases",
+            "Object-Oriented Programming",
+            "working with the State of Texas HHS agency and system"
+          ]
+        },
+        {
+          "section_skills": [
+            "Experience in writing and executing test cases, as well as creating test plans",
+            "Knowledge of software usability concepts and requirements traceability, and Software Development Lifecycle (SDLC) process",
+            "Knowledge of Xray Test Case management tool",
+            "Knowledge of SQL query writing to perform CURD operations",
+            "Proficient in using CI/CD pipelines to enhance software development testing processes",
+            "Experience in conducting API Testing using Postman, SOAPUI, JMETER or similar",
+            "Experience in writing and executing tests automation using UFT"
+          ],
+          "section_about": "Investigate and diagnose quality complaints, track down components, and recommend corrective actions. Verify logs, databases, and other data to track and flag quality concerns and improvements. QA Automation Analyst 3 will be responsible for the development and maintenance of test scripts for both manual and automated testing. Experience preparing UAT test cases, aligning them with business requirements, and conducting walkthroughs with stakeholders to ensure clarity. Tracks test case execution and provides reporting. Use Jira to log and track defects. Develops and maintains requirements traceability matrices. Must have experience working in an Agile environment. Supports the development team as needed in dev, test, and UAT environments and troubleshoots the defect as required.",
+          "section_job_type": "Hybrid/Local",
+          "section_contract": "4 Months"
+        }
+      ],
+      "merged": {
+        "section_about": "Investigate and diagnose quality complaints, track down components, and recommend corrective actions. Verify logs, databases, and other data to track and flag quality concerns and improvements. QA Automation Analyst 3 will be responsible for the development and maintenance of test scripts for both manual and automated testing. Experience preparing UAT test cases, aligning them with business requirements, and conducting walkthroughs with stakeholders to ensure clarity. Tracks test case execution and provides reporting. Use Jira to log and track defects. Develops and maintains requirements traceability matrices. Must have experience working in an Agile environment. Supports the development team as needed in dev, test, and UAT environments and troubleshoots the defect as required.",
+        "section_skills": [
+          "writing and executing test cases",
+          "creating test plans",
+          "software usability concepts",
+          "requirements traceability",
+          "Software Development Lifecycle (SDLC)",
+          "Xray Test Case management tool",
+          "scrum team",
+          "agile environment",
+          "Jira",
+          "SharePoint",
+          "defect tracking and management",
+          "SQL query writing",
+          "API Testing",
+          "Postman",
+          "SOAPUI",
+          "JMETER",
+          "unit testing",
+          "integration testing",
+          "regression testing",
+          "smoke testing",
+          "user acceptance testing",
+          "system testing",
+          "stress testing",
+          "performance testing",
+          "code coverage tools",
+          "process or systems analysis",
+          "design work",
+          "QA automation testing",
+          "scripting",
+          "UFT",
+          "performance testing scripts",
+          "UAT test plans",
+          "UAT test cases",
+          "Object-Oriented Programming",
+          "working with the State of Texas HHS agency and system"
+        ],
+        "section_salary": "",
+        "section_job_type": "Hybrid/Local",
+        "section_contract": "4 Months"
+      },
+      "got_skills": true,
+      "latency_ms": 38660,
+      "input_tokens": 975,
+      "output_tokens": 570,
+      "status": "ok"
+    },
+    {
+      "derived_id": 3874,
+      "job_fk": 45501,
+      "slice_results": [
+        {
+          "section_skills": [
+            "Selenium WebDriver",
+            "TestNG",
+            "JUnit",
+            "Cucumber",
+            "Python",
+            "JavaScript",
+            "Mobile testing frameworks",
+            "Android",
+            "iOS",
+            "Postman",
+            "SoapUI",
+            "MySQL",
+            "Microsoft SQL Server",
+            "Oracle",
+            "DB2",
+            "MongoDB",
+            "PL/SQL",
+            "GitHub",
+            "GitLab",
+            "SVN",
+            "TFS",
+            "Jenkins",
+            "SDLC",
+            "Agile",
+            "Waterfall",
+            "AWS",
+            "LoadRunner",
+            "Communication skills"
+          ],
+          "section_salary": "$50.00 - $60.00 per hour",
+          "section_job_type": "Remote"
+        },
+        {
+          "section_skills": [
+            "Selenium",
+            "TestNG",
+            "JUnit",
+            "Cucumber",
+            "Android",
+            "iOS",
+            "RESTful services",
+            "SOAP",
+            "Postman",
+            "Jenkins",
+            "GitLab",
+            "GitHub",
+            "TFS",
+            "HP ALM",
+            "Jira"
+          ]
+        }
+      ],
+      "merged": {
+        "section_about": "",
+        "section_skills": [
+          "Selenium WebDriver",
+          "TestNG",
+          "JUnit",
+          "Cucumber",
+          "Python",
+          "JavaScript",
+          "Mobile testing frameworks",
+          "Android",
+          "iOS",
+          "Postman",
+          "SoapUI",
+          "MySQL",
+          "Microsoft SQL Server",
+          "Oracle",
+          "DB2",
+          "MongoDB",
+          "PL/SQL",
+          "GitHub",
+          "GitLab",
+          "SVN",
+          "TFS",
+          "Jenkins",
+          "SDLC",
+          "Agile",
+          "Waterfall",
+          "AWS",
+          "LoadRunner",
+          "Communication skills"
+        ],
+        "section_salary": "$50.00 - $60.00 per hour",
+        "section_job_type": "Remote",
+        "section_contract": ""
+      },
+      "got_skills": true,
+      "latency_ms": 21246,
+      "input_tokens": 828,
+      "output_tokens": 310,
+      "status": "ok"
+    },
+    {
+      "derived_id": 3876,
+      "job_fk": 45285,
+      "slice_results": [
+        {
+          "section_about": "Entendemos que el \u00e9xito empresarial va de la mano del impacto positivo en la sociedad. Desde nuestros inicios, Grupo Orenes trabaja para generar empleo estable y de calidad, optimizar recursos y actuar con responsabilidad, contribuyendo as\u00ed al desarrollo social, econ\u00f3mico y medioambiental. Queremos ser parte activa del cambio hacia una sociedad m\u00e1s justa e innovadora."
+        },
+        {
+          "section_skills": [
+            "Ingenier\u00eda Inform\u00e1tica",
+            "Docker",
+            "Kubernetes",
+            "Helm",
+            "AWS",
+            "Jenkins",
+            "Windows Server",
+            "Linux/Unix",
+            "PowerShell",
+            "Bash",
+            "Git",
+            "Hudson",
+            "Ansible",
+            "Prometheus",
+            "Kafka",
+            "ElasticSearch",
+            "Grafana",
+            "Rancher",
+            "PostgreSQL",
+            "MongoDB",
+            "Java",
+            "Javascript",
+            "Gradle",
+            "Terraform",
+            "SonarQube",
+            "CI/CD",
+            "Quality Management"
+          ],
+          "section_about": "Grupo Orenes, empresa l\u00edder en el sector del ocio y la restauraci\u00f3n en Espa\u00f1a con m\u00e1s de 50 a\u00f1os de experiencia, ofrece la oportunidad de incorporarse a un gran equipo multidisciplinar de m\u00e1s 4.000 personas a nivel nacional e internacional.\n\nSeleccionamos una persona para incorporarse al equipo de DevOps Engineering realizando tareas de implementaci\u00f3n y mantenimiento de procesos CI/CD, as\u00ed como el despliegue de versiones y automatizaci\u00f3n de tareas. Trabajar\u00e1s con metodolog\u00edas \u00e1giles con un alto grado de autonom\u00eda y responsabilidad en proyectos en contacto con las \u00e1reas de SW Development, IT y DBA.\n\nQu\u00e9 encontrar\u00e1s en nuestra empresa:\n* Un equipo formado con personas altamente cualificadas\n* Entorno innovador en un mercado con un crecimiento exponencial\n* Jornada de verano y jornada reducida los viernes\n* Teletrabajo 4 d\u00edas a la semana\n* Proyecto estable\n\nEn Grupo Orenes creemos en las personas por lo que son y por lo que aportan. Valoramos el talento m\u00e1s all\u00e1 de la edad, sexo, nacionalidad o cualquier otra condici\u00f3n. Por eso, tambi\u00e9n valoramos positivamente las candidaturas con certificado de discapacidad, porque la diversidad nos hace m\u00e1s fuertes como equipo.",
+          "section_job_type": "Senior DevOps Engineer"
+        }
+      ],
+      "merged": {
+        "section_about": "Entendemos que el \u00e9xito empresarial va de la mano del impacto positivo en la sociedad. Desde nuestros inicios, Grupo Orenes trabaja para generar empleo estable y de calidad, optimizar recursos y actuar con responsabilidad, contribuyendo as\u00ed al desarrollo social, econ\u00f3mico y medioambiental. Queremos ser parte activa del cambio hacia una sociedad m\u00e1s justa e innovadora.",
+        "section_skills": [
+          "Ingenier\u00eda Inform\u00e1tica",
+          "Docker",
+          "Kubernetes",
+          "Helm",
+          "AWS",
+          "Jenkins",
+          "Windows Server",
+          "Linux/Unix",
+          "PowerShell",
+          "Bash",
+          "Git",
+          "Hudson",
+          "Ansible",
+          "Prometheus",
+          "Kafka",
+          "ElasticSearch",
+          "Grafana",
+          "Rancher",
+          "PostgreSQL",
+          "MongoDB",
+          "Java",
+          "Javascript",
+          "Gradle",
+          "Terraform",
+          "SonarQube",
+          "CI/CD",
+          "Quality Management"
+        ],
+        "section_salary": "",
+        "section_job_type": "Senior DevOps Engineer",
+        "section_contract": ""
+      },
+      "got_skills": true,
+      "latency_ms": 36824,
+      "input_tokens": 801,
+      "output_tokens": 544,
+      "status": "ok"
+    },
+    {
+      "derived_id": 3877,
+      "job_fk": 45287,
+      "slice_results": [
+        {
+          "section_skills": [
+            "Bachelor's degree in Computer Science, Information Technology, or a related field",
+            "5+ years of experience in DevOps or Site Reliability Engineering roles",
+            "3+ years of hands-on experience with Google Cloud Platform services and architecture",
+            "Strong proficiency in Infrastructure as Code (IaC) tools, preferably Terraform or Cloud Deployment Manager",
+            "Expert knowledge of CI/CD methodologies and tools (e.g., Jenkins, GitLab CI, Cloud Build)",
+            "Advanced skills in containerization technologies, including Docker and Kubernetes",
+            "Proficiency in scripting languages such as Python and Bash",
+            "Extensive experience with version control systems, particularly Git",
+            "Solid understanding of networking concepts and cloud security best practices",
+            "Experience with monitoring and logging tools (e.g., Stackdriver, Prometheus, ELK stack)",
+            "Familiarity with microservices architecture and distributed systems",
+            "Strong problem-solving skills and ability to troubleshoot complex technical issues",
+            "Excellent communication and collaboration skills, with the ability to work effectively in cross-functional teams",
+            "Google Cloud Professional DevOps Engineer certification is highly preferred",
+            "Additional relevant cloud certifications (e.g., Google Cloud Professional Cloud Architect) are a plus",
+            "Demonstrated experience in performance optimization, scalability, and disaster recovery planning",
+            "Ability to mentor junior team members and promote best practices across the organization"
+          ]
+        },
+        {
+          "section_about": "Devoteam is a leading European consultancy focused on digital strategy, technology platforms, cybersecurity and business transformation through technology.\n\nTechnology is in our DNA and we believe in it as a lever capable of driving change for the better, maintaining a balance that allows us to offer our client portfolio first class technological tools but always with the proximity and professionalism of a team that acts as a guide along the way.\n\nDevoteam has been committed to technology at the service of people for more than 30 years. With more than 11,000 people in the group, in 25 countries in Europe, the Middle East and Africa.\n\nWe are seeking a Senior DevOps Google Cloud Engineer to join our innovative team. In this role, you will lead our efforts in designing, implementing, and maintaining robust, scalable, and secure infrastructure on the Google Cloud Platform. You will be at the forefront of our cloud operations, driving automation, efficiency, and reliability across our systems.",
+          "section_skills": [
+            "Design and implement scalable, highly available, and fault-tolerant systems on Google Cloud Platform",
+            "Lead the development and maintenance of Infrastructure as Code (IaC) using tools like Terraform or Cloud Deployment Manager",
+            "Optimize and automate CI/CD pipelines to streamline software delivery processes",
+            "Implement and manage containerized applications using Docker and Kubernetes",
+            "Develop and maintain monitoring, alerting, and logging solutions to ensure system health and performance",
+            "Collaborate with development teams to improve application deployment and operational efficiency",
+            "Implement and maintain robust security measures and best practices for cloud infrastructure",
+            "Troubleshoot and resolve complex technical issues in production environments",
+            "Mentor junior team members and promote DevOps best practices across the organization",
+            "Stay up-to-date with the latest GCP features and industry trends, recommending improvements to our cloud strategy"
+          ]
+        }
+      ],
+      "merged": {
+        "section_about": "Devoteam is a leading European consultancy focused on digital strategy, technology platforms, cybersecurity and business transformation through technology.\n\nTechnology is in our DNA and we believe in it as a lever capable of driving change for the better, maintaining a balance that allows us to offer our client portfolio first class technological tools but always with the proximity and professionalism of a team that acts as a guide along the way.\n\nDevoteam has been committed to technology at the service of people for more than 30 years. With more than 11,000 people in the group, in 25 countries in Europe, the Middle East and Africa.\n\nWe are seeking a Senior DevOps Google Cloud Engineer to join our innovative team. In this role, you will lead our efforts in designing, implementing, and maintaining robust, scalable, and secure infrastructure on the Google Cloud Platform. You will be at the forefront of our cloud operations, driving automation, efficiency, and reliability across our systems.",
+        "section_skills": [
+          "Bachelor's degree in Computer Science, Information Technology, or a related field",
+          "5+ years of experience in DevOps or Site Reliability Engineering roles",
+          "3+ years of hands-on experience with Google Cloud Platform services and architecture",
+          "Strong proficiency in Infrastructure as Code (IaC) tools, preferably Terraform or Cloud Deployment Manager",
+          "Expert knowledge of CI/CD methodologies and tools (e.g., Jenkins, GitLab CI, Cloud Build)",
+          "Advanced skills in containerization technologies, including Docker and Kubernetes",
+          "Proficiency in scripting languages such as Python and Bash",
+          "Extensive experience with version control systems, particularly Git",
+          "Solid understanding of networking concepts and cloud security best practices",
+          "Experience with monitoring and logging tools (e.g., Stackdriver, Prometheus, ELK stack)",
+          "Familiarity with microservices architecture and distributed systems",
+          "Strong problem-solving skills and ability to troubleshoot complex technical issues",
+          "Excellent communication and collaboration skills, with the ability to work effectively in cross-functional teams",
+          "Google Cloud Professional DevOps Engineer certification is highly preferred",
+          "Additional relevant cloud certifications (e.g., Google Cloud Professional Cloud Architect) are a plus",
+          "Demonstrated experience in performance optimization, scalability, and disaster recovery planning",
+          "Ability to mentor junior team members and promote best practices across the organization"
+        ],
+        "section_salary": "",
+        "section_job_type": "",
+        "section_contract": ""
+      },
+      "got_skills": true,
+      "latency_ms": 50025,
+      "input_tokens": 865,
+      "output_tokens": 730,
+      "status": "ok"
+    },
+    {
+      "derived_id": 4018,
+      "job_fk": 46062,
+      "slice_results": [
+        {
+          "section_skills": [
+            "networking principles (TCP/IP, DNS, load balancing, firewalls)",
+            "monitoring and logging tools (NewRelic, CloudWatch, Cloud Logging, Prometheus)",
+            "scripting (Python, Ruby, PowerShell, Bash)",
+            "problem-solving and troubleshooting",
+            "communication and collaboration",
+            "containerization & orchestration (Docker, Kubernetes)",
+            "AWS and/or Google Cloud Platform certifications",
+            "AWS EC2 features and Services (Autoscaling and WarmPools)",
+            "configuration management tool Chef",
+            "Windows server Build process (Chocolaty, Packer)",
+            "Windows server operating system and server tools (IIS)"
+          ],
+          "section_salary": "$52.50 - $62.50 / per hour",
+          "section_job_type": "contract"
+        },
+        {
+          "section_about": "OpenKyber provides end to end IT solutions to enterprise partners across the United States and with offices in Los Angeles, New York, New Jersey, Atlanta, and more including internationally in Mexico and India. Platform Engineer responsible for strengthening Platform Engineering capabilities across AWS and Windows/Linux environments. This role focuses on designing, evolving, and supporting scalable, secure, and automated infrastructure to enable Infrastructure and Application stacks. The engineer will collaborate with cross-functional technology teams to streamline CI/CD pipelines, embed security best practices, and champion infrastructure-as-code initiatives that improve reliability, performance, and operational efficiency.",
+          "section_job_type": "Hybrid",
+          "section_skills": [
+            "AWS",
+            "Windows Server",
+            "Linux Server",
+            "Terraform",
+            "OpenTofu",
+            "AWS CloudFormation",
+            "AWS CDK",
+            "Chef",
+            "GitLab CI/CD",
+            ".NET",
+            "Infrastructure-as-Code (IaC)",
+            "CI/CD pipelines",
+            "Security best practices",
+            "Monitoring and logging"
+          ]
+        }
+      ],
+      "merged": {
+        "section_about": "OpenKyber provides end to end IT solutions to enterprise partners across the United States and with offices in Los Angeles, New York, New Jersey, Atlanta, and more including internationally in Mexico and India. Platform Engineer responsible for strengthening Platform Engineering capabilities across AWS and Windows/Linux environments. This role focuses on designing, evolving, and supporting scalable, secure, and automated infrastructure to enable Infrastructure and Application stacks. The engineer will collaborate with cross-functional technology teams to streamline CI/CD pipelines, embed security best practices, and champion infrastructure-as-code initiatives that improve reliability, performance, and operational efficiency.",
+        "section_skills": [
+          "networking principles (TCP/IP, DNS, load balancing, firewalls)",
+          "monitoring and logging tools (NewRelic, CloudWatch, Cloud Logging, Prometheus)",
+          "scripting (Python, Ruby, PowerShell, Bash)",
+          "problem-solving and troubleshooting",
+          "communication and collaboration",
+          "containerization & orchestration (Docker, Kubernetes)",
+          "AWS and/or Google Cloud Platform certifications",
+          "AWS EC2 features and Services (Autoscaling and WarmPools)",
+          "configuration management tool Chef",
+          "Windows server Build process (Chocolaty, Packer)",
+          "Windows server operating system and server tools (IIS)"
+        ],
+        "section_salary": "$52.50 - $62.50 / per hour",
+        "section_job_type": "contract",
+        "section_contract": ""
+      },
+      "got_skills": true,
+      "latency_ms": 30918,
+      "input_tokens": 1179,
+      "output_tokens": 442,
+      "status": "ok"
+    },
+    {
+      "derived_id": 4024,
+      "job_fk": 45351,
+      "slice_results": [
+        {
+          "section_about": "A Machine Learning (ML) Engineer designs, builds, and deploys artificial intelligence systems, bridging data science prototypes with production-ready software. They optimize algorithms for performance, manage data pipelines, and utilize tools like Python and cloud platforms (AWS/Google Cloud Platform/Azure) to automate predictive models and enhance AI capabilities."
+        }
+      ],
+      "merged": {
+        "section_about": "A Machine Learning (ML) Engineer designs, builds, and deploys artificial intelligence systems, bridging data science prototypes with production-ready software. They optimize algorithms for performance, manage data pipelines, and utilize tools like Python and cloud platforms (AWS/Google Cloud Platform/Azure) to automate predictive models and enhance AI capabilities.",
+        "section_skills": "",
+        "section_salary": "",
+        "section_job_type": "",
+        "section_contract": ""
+      },
+      "got_skills": false,
+      "latency_ms": 5161,
+      "input_tokens": 187,
+      "output_tokens": 75,
+      "status": "ok"
+    },
+    {
+      "derived_id": 4166,
+      "job_fk": 45503,
+      "slice_results": [
+        {
+          "section_salary": "USA, WA, REDMOND - 168,100.00 - 227,400.00 USD annually",
+          "section_about": "Our inclusive culture empowers Amazonians to deliver the best results for our customers. If you have a disability and need a workplace accommodation or adjustment during the application and hiring process, including support for the interview or onboarding process, please visit https://amazon.jobs/content/en/how\\-we\\-hire/accommodations for more information. If the country/region you're applying in isn't listed, please contact your Recruiting Partner.  \n\nThe base salary range for this position is listed below. Your Amazon package will include sign-on payments and restricted stock units (RSUs). Final compensation will be determined based on factors including experience, qualifications, and location. Amazon also offers comprehensive benefits including health insurance (medical, dental, vision, prescription, Basic Life & AD&D insurance and option for Supplemental life plans, EAP, Mental Health Support, Medical Advice Line, Flexible Spending Accounts, Adoption and Surrogacy Reimbursement coverage), 401(k) matching, paid time off, and parental leave. Learn more about our benefits at https://amazon.jobs/en/benefits."
+        },
+        {
+          "section_skills": [
+            "distributed systems",
+            "cloud infrastructure",
+            "DevOps",
+            "Java",
+            "JavaScript",
+            "TS",
+            "Python",
+            "React",
+            "Angular",
+            "AWS services",
+            "EC2",
+            "S3",
+            "SQS",
+            "SNS",
+            "Lambda",
+            "Kafka",
+            "DynamoDB",
+            "event-driven systems",
+            "full software development life cycle",
+            "coding standards",
+            "code reviews",
+            "source control management",
+            "build processes",
+            "testing",
+            "operations",
+            "design patterns",
+            "reliability",
+            "scaling",
+            "mentoring",
+            "leadership",
+            "machine learning",
+            "AI"
+          ],
+          "section_about": "The Optical Inter-Satellite Link (OISL) organization is responsible for the design, development, and manufacturing of critical hardware and software that makes laser links between satellites possible. We are rapidly expanding and developing a new Network Automation team. We are looking for a senior software engineer to join and lead our new team to develop novel software services that can automate fault finding based on satellite data, automate workflows and operational procedures, and use ML/AI to find and correlate anomalies in the space network, identify root causes, and predict customer impacts.",
+          "section_job_type": "Senior Software Development Engineer",
+          "section_contract": "Full-time"
+        }
+      ],
+      "merged": {
+        "section_about": "Our inclusive culture empowers Amazonians to deliver the best results for our customers. If you have a disability and need a workplace accommodation or adjustment during the application and hiring process, including support for the interview or onboarding process, please visit https://amazon.jobs/content/en/how\\-we\\-hire/accommodations for more information. If the country/region you're applying in isn't listed, please contact your Recruiting Partner.  \n\nThe base salary range for this position is listed below. Your Amazon package will include sign-on payments and restricted stock units (RSUs). Final compensation will be determined based on factors including experience, qualifications, and location. Amazon also offers comprehensive benefits including health insurance (medical, dental, vision, prescription, Basic Life & AD&D insurance and option for Supplemental life plans, EAP, Mental Health Support, Medical Advice Line, Flexible Spending Accounts, Adoption and Surrogacy Reimbursement coverage), 401(k) matching, paid time off, and parental leave. Learn more about our benefits at https://amazon.jobs/en/benefits.",
+        "section_skills": [
+          "distributed systems",
+          "cloud infrastructure",
+          "DevOps",
+          "Java",
+          "JavaScript",
+          "TS",
+          "Python",
+          "React",
+          "Angular",
+          "AWS services",
+          "EC2",
+          "S3",
+          "SQS",
+          "SNS",
+          "Lambda",
+          "Kafka",
+          "DynamoDB",
+          "event-driven systems",
+          "full software development life cycle",
+          "coding standards",
+          "code reviews",
+          "source control management",
+          "build processes",
+          "testing",
+          "operations",
+          "design patterns",
+          "reliability",
+          "scaling",
+          "mentoring",
+          "leadership",
+          "machine learning",
+          "AI"
+        ],
+        "section_salary": "USA, WA, REDMOND - 168,100.00 - 227,400.00 USD annually",
+        "section_job_type": "Senior Software Development Engineer",
+        "section_contract": "Full-time"
+      },
+      "got_skills": true,
+      "latency_ms": 71106,
+      "input_tokens": 1488,
+      "output_tokens": 1034,
+      "status": "ok"
+    },
+    {
+      "derived_id": 4067,
+      "job_fk": 45415,
+      "slice_results": [
+        {
+          "section_about": "The AGL Pricing & Science team operates at the intersection of science, logistics, and business strategy. We're a diverse group of problem-solvers working to transform international freight forwarding."
+        },
+        {
+          "section_about": "Our team builds intelligent pricing systems, predicts and prevents seller churn, develops GenAI applications for operational intelligence, creates ML-powered fraud detection systems, builds routing optimization models, and prioritizes seller experience. We value data-driven decision making and innovation.  \n\nOur work protects millions in GMS and drives hundreds of millions in cost savings annually. We offer opportunities to make significant impact while working with AI technologies and systems at Amazon scale.",
+          "section_skills": [
+            "5+ years of data querying languages (e.g. SQL)",
+            "scripting languages (e.g. Python)",
+            "statistical/mathematical software (e.g. R, SAS, Matlab)",
+            "Master's degree in computer science, engineering, mathematics or equivalent",
+            "5+ years of data scientist experience",
+            "Machine Learning and Large Language Model fundamentals",
+            "architecture",
+            "training/inference lifecycles",
+            "optimization of model execution",
+            "machine learning",
+            "data mining",
+            "information retrieval",
+            "statistics",
+            "natural language processing",
+            "cross-functional teams",
+            "business development",
+            "marketing",
+            "operations",
+            "product development",
+            "legal",
+            "strategic work",
+            "exploratory analysis",
+            "AWS tech stack (e.g., AWS Redshift, S3, EC2, Glue)",
+            "leader and mentor on a data science team",
+            "2+ years of data visualization using AWS QuickSight, Tableau, R Shiny",
+            "documenting modeling for technical and business leaders"
+          ]
+        }
+      ],
+      "merged": {
+        "section_about": "The AGL Pricing & Science team operates at the intersection of science, logistics, and business strategy. We're a diverse group of problem-solvers working to transform international freight forwarding.",
+        "section_skills": [
+          "5+ years of data querying languages (e.g. SQL)",
+          "scripting languages (e.g. Python)",
+          "statistical/mathematical software (e.g. R, SAS, Matlab)",
+          "Master's degree in computer science, engineering, mathematics or equivalent",
+          "5+ years of data scientist experience",
+          "Machine Learning and Large Language Model fundamentals",
+          "architecture",
+          "training/inference lifecycles",
+          "optimization of model execution",
+          "machine learning",
+          "data mining",
+          "information retrieval",
+          "statistics",
+          "natural language processing",
+          "cross-functional teams",
+          "business development",
+          "marketing",
+          "operations",
+          "product development",
+          "legal",
+          "strategic work",
+          "exploratory analysis",
+          "AWS tech stack (e.g., AWS Redshift, S3, EC2, Glue)",
+          "leader and mentor on a data science team",
+          "2+ years of data visualization using AWS QuickSight, Tableau, R Shiny",
+          "documenting modeling for technical and business leaders"
+        ],
+        "section_salary": "",
+        "section_job_type": "",
+        "section_contract": ""
+      },
+      "got_skills": true,
+      "latency_ms": 41344,
+      "input_tokens": 1411,
+      "output_tokens": 630,
+      "status": "ok"
+    },
+    {
+      "derived_id": 4079,
+      "job_fk": 45406,
+      "slice_results": [
+        {
+          "section_about": "At Schwab, you're empowered to shape your future. We champion your growth through meaningful work, continuous learning, and a culture of trust and collaboration\u2014so you can build the skills to make a lasting impact. Our Hybrid Work and Flexibility approach balances our ongoing commitment to workplace flexibility, serving our clients, and our strong belief in the value of being together in person on a regular basis.\n\nWe offer a competitive benefits package that takes care of the whole you \u2013 both today and in the future:\n\n* 401(k) with company match and Employee stock purchase plan\n* Paid time for vacation, volunteering, and 28-day sabbatical after every 5 years of service for eligible positions\n* Paid parental leave and family building benefits\n* Tuition reimbursement\n* Health, dental, and vision insurance"
+        },
+        {
+          "section_about": "At Schwab, you're empowered to make an impact on your career. Here, innovative thought meets creative problem solving, helping us \"challenge the status quo\" and transform the finance industry together. Schwab is seeking a dynamic Angular UI and Java Engineer with a passion for technology and excellence. As part of the transformation of how the world invests, the ideal candidate will thrive in a fast-paced, Agile environment, developing high-quality, high-performance, scalable software. The position involves a balanced mix of design and hands-on coding, focused on our mission-critical Authentication platform. This is an opportunity to lead at the forefront of financial technology innovation within a team that values innovative practices and delivering exceptional software solutions. In this role as an individual contributor, you will be: You will be required to do hands-on coding and coordinating with key collaborators to meet project deadlines and budget. Estimating development sizing and costs and collaborating with the Scrum Master and product owner for efficient task prioritization. Ensuring quality through automated testing and TDD and integrating SSO to interconnect various internal and external systems. Driving release process improvements, assisting the Scrum Master with team needs, and synchronizing team efforts for seamless product releases. Proactively identifying risks, establishing mitigation plans, and maintaining documentation and code quality standards. Engaging with both onshore and offshore teams to refine development practices. At Schwab, we're committed to empowering our employees' personal and professional success. Our purpose-driven, supportive culture, and focus on your development means you'll get the tools you need to make a positive difference in the finance industry.",
+          "section_skills": [
+            "Java/J2EE",
+            "Angular",
+            "Agile principles",
+            "object-oriented analysis",
+            "design patterns",
+            "server-side application development",
+            "MongoDB",
+            "SAML",
+            "OAuth",
+            "REST Web Services",
+            "Kafka",
+            "transaction processing environments",
+            "Automated testing",
+            "TDD",
+            "SSO",
+            "Architecture",
+            "Development Standards"
+          ]
+        }
+      ],
+      "merged": {
+        "section_about": "At Schwab, you're empowered to shape your future. We champion your growth through meaningful work, continuous learning, and a culture of trust and collaboration\u2014so you can build the skills to make a lasting impact. Our Hybrid Work and Flexibility approach balances our ongoing commitment to workplace flexibility, serving our clients, and our strong belief in the value of being together in person on a regular basis.\n\nWe offer a competitive benefits package that takes care of the whole you \u2013 both today and in the future:\n\n* 401(k) with company match and Employee stock purchase plan\n* Paid time for vacation, volunteering, and 28-day sabbatical after every 5 years of service for eligible positions\n* Paid parental leave and family building benefits\n* Tuition reimbursement\n* Health, dental, and vision insurance",
+        "section_skills": [
+          "Java/J2EE",
+          "Angular",
+          "Agile principles",
+          "object-oriented analysis",
+          "design patterns",
+          "server-side application development",
+          "MongoDB",
+          "SAML",
+          "OAuth",
+          "REST Web Services",
+          "Kafka",
+          "transaction processing environments",
+          "Automated testing",
+          "TDD",
+          "SSO",
+          "Architecture",
+          "Development Standards"
+        ],
+        "section_salary": "",
+        "section_job_type": "",
+        "section_contract": ""
+      },
+      "got_skills": true,
+      "latency_ms": 43523,
+      "input_tokens": 928,
+      "output_tokens": 630,
+      "status": "ok"
+    },
+    {
+      "derived_id": 4182,
+      "job_fk": 45515,
+      "slice_results": [
+        {
+          "section_skills": [
+            "Java",
+            "Spring Boot",
+            "React",
+            "SQL",
+            "NoSQL",
+            "Kafka",
+            "Docker",
+            "Kubernetes",
+            "Azure",
+            "GCP",
+            "AWS",
+            "DevOps",
+            "CI/CD",
+            "Node.js",
+            "Microservices",
+            "APIs"
+          ],
+          "section_about": "Lead development for a cross-functional agile team of 4\u20138 engineers across backend, frontend, and Full Stack disciplines, delivering core platform features and integrated web applications used across multiple international markets. Translate requirements into scalable solutions across the full stack using Java, Spring Boot, React, Kafka, Node.js, and modern cloud technologies. Build, test, deploy, and maintain secure APIs, microservices, and user interfaces with a focus on automation, fault tolerance, and high availability. Ensure strong integration between frontend and backend components by driving code quality, documentation, and best practices around performance, usability, and reliability. Mentor engineers through reviews, pair programming, and technical discussions that strengthen backend and frontend capabilities.",
+          "section_salary": "$95,000-$100,000 a year",
+          "section_job_type": "Engineer",
+          "section_contract": "Full Time"
+        }
+      ],
+      "merged": {
+        "section_about": "Lead development for a cross-functional agile team of 4\u20138 engineers across backend, frontend, and Full Stack disciplines, delivering core platform features and integrated web applications used across multiple international markets. Translate requirements into scalable solutions across the full stack using Java, Spring Boot, React, Kafka, Node.js, and modern cloud technologies. Build, test, deploy, and maintain secure APIs, microservices, and user interfaces with a focus on automation, fault tolerance, and high availability. Ensure strong integration between frontend and backend components by driving code quality, documentation, and best practices around performance, usability, and reliability. Mentor engineers through reviews, pair programming, and technical discussions that strengthen backend and frontend capabilities.",
+        "section_skills": [
+          "Java",
+          "Spring Boot",
+          "React",
+          "SQL",
+          "NoSQL",
+          "Kafka",
+          "Docker",
+          "Kubernetes",
+          "Azure",
+          "GCP",
+          "AWS",
+          "DevOps",
+          "CI/CD",
+          "Node.js",
+          "Microservices",
+          "APIs"
+        ],
+        "section_salary": "$95,000-$100,000 a year",
+        "section_job_type": "Engineer",
+        "section_contract": "Full Time"
+      },
+      "got_skills": true,
+      "latency_ms": 19356,
+      "input_tokens": 607,
+      "output_tokens": 297,
+      "status": "ok"
+    }
+  ]
+}

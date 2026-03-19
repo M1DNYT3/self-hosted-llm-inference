@@ -1,0 +1,315 @@
+{
+  "meta": {
+    "task": "company_enrich",
+    "limit": 20,
+    "backend": "local",
+    "seed": 42,
+    "model": "qwen/qwen3.5-9b",
+    "started_at": "2026-03-19T00:11:51.564777+00:00",
+    "wall_secs": 80.1
+  },
+  "summary": {
+    "total": 20,
+    "ok": 19,
+    "failed": 1,
+    "rate_rec_per_min": 15.0,
+    "avg_latency_ms": 3965,
+    "avg_input_tokens": 121,
+    "avg_output_tokens": 51,
+    "total_input_tokens": 2418,
+    "total_output_tokens": 1024
+  },
+  "records": [
+    {
+      "company_id": 1124,
+      "company_name": "Weidm\u00fcller Germany",
+      "llm_result": {
+        "summary": "Weidm\u00fcller Germany is a leading manufacturer of industrial electronics and electrical connection technology, specializing in reliable solutions for automation and power distribution systems.",
+        "signals": [
+          "High trust score (51) indicating strong brand reputation and reliability"
+        ]
+      },
+      "latency_ms": 4181,
+      "input_tokens": 121,
+      "output_tokens": 51,
+      "status": "ok"
+    },
+    {
+      "company_id": 1125,
+      "company_name": "Microsoft",
+      "llm_result": {
+        "summary": "Microsoft is a global technology leader in the Internet and Software industry, renowned for developing, manufacturing, licensing, and supporting a wide range of software products, services, and hardware solutions.",
+        "signals": [
+          "Excellent trust score (92)",
+          "Very high hiring activity (90)"
+        ]
+      },
+      "latency_ms": 4635,
+      "input_tokens": 122,
+      "output_tokens": 62,
+      "status": "ok"
+    },
+    {
+      "company_id": 1126,
+      "company_name": "Amazon.com",
+      "llm_result": {
+        "summary": "Amazon.com is a global technology leader operating in the Internet and Software industry, renowned for its e-commerce platform, cloud computing services, and diverse digital innovations.",
+        "signals": [
+          "High trust score (59) indicating strong reliability and reputation",
+          "Established presence in the Indeed domain suggesting active workforce engagement"
+        ]
+      },
+      "latency_ms": 4434,
+      "input_tokens": 122,
+      "output_tokens": 66,
+      "status": "ok"
+    },
+    {
+      "company_id": 1127,
+      "company_name": "AEROCONTACT",
+      "llm_result": {
+        "summary": "AEROCONTACT is a company operating within the aviation or aerospace sector, indicated by its name and domain.",
+        "signals": [
+          "High trust score (75/100) indicating strong credibility",
+          "Moderate hiring activity (30/100) suggesting steady growth"
+        ]
+      },
+      "latency_ms": 4454,
+      "input_tokens": 119,
+      "output_tokens": 62,
+      "status": "ok"
+    },
+    {
+      "company_id": 1128,
+      "company_name": "The HEINEKEN Company",
+      "llm_result": {
+        "summary": "The Heineken Company is a global leader in the brewing and beverage industry, known for its iconic brand portfolio and international presence.",
+        "signals": [
+          "High hiring activity",
+          "Good trust score"
+        ]
+      },
+      "latency_ms": 3491,
+      "input_tokens": 123,
+      "output_tokens": 44,
+      "status": "ok"
+    },
+    {
+      "company_id": 1129,
+      "company_name": "Accenture",
+      "llm_result": {
+        "summary": "Accenture is a global professional services company providing consulting, technology, and outsourcing services to help organizations transform and succeed in a digital world.",
+        "signals": [
+          "Very High hiring activity (score: 81)"
+        ]
+      },
+      "latency_ms": 3603,
+      "input_tokens": 117,
+      "output_tokens": 48,
+      "status": "ok"
+    },
+    {
+      "company_id": 1130,
+      "company_name": "ING",
+      "llm_result": {
+        "summary": "ING is a global financial services company providing banking, insurance, and asset management solutions.",
+        "signals": [
+          "High hiring activity in data engineering"
+        ]
+      },
+      "latency_ms": 2653,
+      "input_tokens": 117,
+      "output_tokens": 33,
+      "status": "ok"
+    },
+    {
+      "company_id": 1131,
+      "company_name": "Molex",
+      "llm_result": {
+        "summary": "Molex is a global leader in electrical interconnect solutions, providing critical components for industries such as automotive, aerospace, and consumer electronics. The company demonstrates strong market presence with excellent trust metrics and high hiring activity.",
+        "signals": [
+          "Excellent trust score (83)",
+          "High hiring activity (58)"
+        ]
+      },
+      "latency_ms": 5135,
+      "input_tokens": 121,
+      "output_tokens": 68,
+      "status": "ok"
+    },
+    {
+      "company_id": 1132,
+      "company_name": "3BrainAI Solutions s.r.o.",
+      "llm_result": {
+        "summary": "3BrainAI Solutions s.r.o. is a Czech entity operating in an undefined industry sector.",
+        "signals": [
+          "Trust score of 40 (Fair)",
+          "Hiring activity rated as Low"
+        ]
+      },
+      "latency_ms": 4066,
+      "input_tokens": 127,
+      "output_tokens": 45,
+      "status": "ok"
+    },
+    {
+      "company_id": 1133,
+      "company_name": "Grundfos Pumps",
+      "llm_result": {
+        "summary": "Grundfos Pumps is a leading global manufacturer of intelligent pumping solutions and systems for water, heating, and industrial applications. The company demonstrates strong market presence with high hiring activity and solid trust indicators.",
+        "signals": [
+          "High hiring activity (Score: 51)",
+          "Good trust score (Score: 73)"
+        ]
+      },
+      "latency_ms": 5509,
+      "input_tokens": 123,
+      "output_tokens": 70,
+      "status": "ok"
+    },
+    {
+      "company_id": 1134,
+      "company_name": "Nokia",
+      "llm_result": {
+        "summary": "Nokia is a leading global technology company specializing in network infrastructure, telecommunications equipment, and consumer electronics.",
+        "signals": [
+          "Excellent trust score (97)",
+          "High hiring activity (70)"
+        ]
+      },
+      "latency_ms": 3449,
+      "input_tokens": 121,
+      "output_tokens": 45,
+      "status": "ok"
+    },
+    {
+      "company_id": 1135,
+      "company_name": "Zoom Communications",
+      "llm_result": {
+        "summary": "Zoom Communications is a leading provider of video communications software and services, widely recognized for its user-friendly platform that facilitates seamless virtual meetings and collaboration.",
+        "signals": [
+          "High hiring activity",
+          "Good trust score"
+        ]
+      },
+      "latency_ms": 3664,
+      "input_tokens": 120,
+      "output_tokens": 46,
+      "status": "ok"
+    },
+    {
+      "company_id": 1136,
+      "company_name": "Infineon Technologies",
+      "llm_result": {
+        "summary": "Infineon Technologies is a global semiconductor company specializing in microcontrollers, power semiconductors, and security solutions for automotive, industrial, and consumer markets.",
+        "signals": [
+          "High trust score (86) indicating strong employer reputation and reliability"
+        ]
+      },
+      "latency_ms": 4469,
+      "input_tokens": 121,
+      "output_tokens": 55,
+      "status": "ok"
+    },
+    {
+      "company_id": 1137,
+      "company_name": "Amsterdam UMC",
+      "llm_result": {
+        "summary": "Amsterdam UMC is a leading academic medical center in the Netherlands, combining university research with high-quality patient care across multiple hospitals.",
+        "signals": [
+          "High hiring activity",
+          "Good trust score"
+        ]
+      },
+      "latency_ms": 3668,
+      "input_tokens": 122,
+      "output_tokens": 44,
+      "status": "ok"
+    },
+    {
+      "company_id": 1138,
+      "company_name": "Apple",
+      "llm_result": {
+        "summary": "Apple Inc. is a global technology leader renowned for its innovative consumer electronics, software, and services, including the iPhone, Mac, iPad, and Apple Watch.",
+        "signals": [
+          "Excellent trust score (88)",
+          "High hiring activity (76)"
+        ]
+      },
+      "latency_ms": 4553,
+      "input_tokens": 119,
+      "output_tokens": 57,
+      "status": "ok"
+    },
+    {
+      "company_id": 1139,
+      "company_name": "ENERGIE RECRUTE",
+      "llm_result": {
+        "raw": "{\"summary\": \"ENERGIE RECRUTE is a French recruitment firm operating in the staffing industry with moderate trust indicators but low hiring activity.\", \"signals\": [\"Trust score of 45 (Fair)\"]"
+      },
+      "latency_ms": 3745,
+      "input_tokens": 121,
+      "output_tokens": 44,
+      "status": "parse_fail"
+    },
+    {
+      "company_id": 1140,
+      "company_name": "Vodafone",
+      "llm_result": {
+        "summary": "Vodafone is a global telecommunications company providing mobile and fixed-line services, known for its strong market presence and digital transformation initiatives.",
+        "signals": [
+          "Excellent trust score (100)",
+          "High hiring activity (65)"
+        ]
+      },
+      "latency_ms": 3838,
+      "input_tokens": 120,
+      "output_tokens": 51,
+      "status": "ok"
+    },
+    {
+      "company_id": 1141,
+      "company_name": "RecordLinker",
+      "llm_result": {
+        "summary": "RecordLinker is a company operating in an undefined industry with a solid reputation for trustworthiness and a high propensity for hiring.",
+        "signals": [
+          "High hiring activity",
+          "Good trust score"
+        ]
+      },
+      "latency_ms": 3249,
+      "input_tokens": 121,
+      "output_tokens": 44,
+      "status": "ok"
+    },
+    {
+      "company_id": 1142,
+      "company_name": "Proterial",
+      "llm_result": {
+        "summary": "Proterial is a leading industrial manufacturing company specializing in the design, development, and production of advanced materials and components for diverse sectors.",
+        "signals": [
+          "Excellent trust score (78)",
+          "High hiring activity (61)"
+        ]
+      },
+      "latency_ms": 3911,
+      "input_tokens": 122,
+      "output_tokens": 52,
+      "status": "ok"
+    },
+    {
+      "company_id": 1143,
+      "company_name": "Hitachi Energy",
+      "llm_result": {
+        "summary": "Hitachi Energy is a global leader in power grid technologies and services, providing critical infrastructure solutions for the energy sector.",
+        "signals": [
+          "Very High hiring activity"
+        ]
+      },
+      "latency_ms": 2596,
+      "input_tokens": 119,
+      "output_tokens": 37,
+      "status": "ok"
+    }
+  ]
+}

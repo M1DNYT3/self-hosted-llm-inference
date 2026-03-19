@@ -28,6 +28,20 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import UTC, datetime, timedelta
 from typing import TYPE_CHECKING
 
+
+def _partition_queues(items: list, n: int) -> list[queue.Queue]:
+    """Pre-assign items to N dedicated queues using interleaved (round-robin) slicing.
+
+    Replicates the original static-batch-split design: worker i gets items
+    [i, i+n, i+2n, ...] and processes only those — idle workers cannot steal
+    from busier ones.  This is the historical behaviour prior to the unified-queue
+    refactor introduced during the 5090 benchmarking phase.
+    """
+    worker_queues: list[queue.Queue] = [queue.Queue() for _ in range(n)]
+    for idx, item in enumerate(items):
+        worker_queues[idx % n].put(item)
+    return worker_queues
+
 import sqlalchemy as sa
 from sqlalchemy import text
 
@@ -50,7 +64,8 @@ def run_batch(
     limit: int,
     db_url: str,
     force: bool = False,
-) -> list[dict]:
+    static_batches: bool = False,
+) -> tuple[list[dict], float]:
     """Run a batch of LLM inference for the given task.
 
     Lifecycle: startup → batch → shutdown (always via finally).
@@ -62,7 +77,8 @@ def run_batch(
         db_url:   PostgreSQL connection URL (e.g. postgresql://user:pw@host/db).
         force:    Re-process already-enriched records.
 
-    Returns list of per-record result dicts for downstream metrics collection.
+    Returns (summaries, compute_secs) where compute_secs is pure inference time
+    (excludes backend startup/shutdown — startup logs the wall-clock difference).
     """
     engine = sa.create_engine(db_url, pool_size=backend.n_parallel + 1)
     try:
@@ -70,7 +86,7 @@ def run_batch(
         # n_parallel may be updated by startup() (Vast.ai computes from VRAM)
         engine.dispose()
         engine = sa.create_engine(db_url, pool_size=backend.n_parallel + 1)
-        return _dispatch(backend, task, limit, force, engine)
+        return _dispatch(backend, task, limit, force, engine, static_batches)
     finally:
         backend.shutdown()
         engine.dispose()
@@ -126,16 +142,17 @@ def _dispatch(
     limit: int,
     force: bool,
     engine: "Engine",
-) -> list[dict]:
+    static_batches: bool = False,
+) -> tuple[list[dict], float]:
     with engine.connect() as conn:
         if task == "job_skills":
-            return _run_job_skills_batch(conn, backend, limit, force)
+            return _run_job_skills_batch(conn, backend, limit, force, static_batches)
         elif task == "jd_reparse":
-            return _run_jd_reparse_batch(conn, backend, limit, force)
+            return _run_jd_reparse_batch(conn, backend, limit, force, static_batches)
         elif task == "jd_validate":
-            return _run_jd_validate_batch(conn, backend, limit, force)
+            return _run_jd_validate_batch(conn, backend, limit, force, static_batches)
         elif task == "company_enrich":
-            return _run_company_enrich_batch(conn, backend, limit, force)
+            return _run_company_enrich_batch(conn, backend, limit, force, static_batches)
         else:
             raise ValueError(
                 f"Unknown task: '{task}'. "
@@ -287,6 +304,7 @@ def _run_job_skills_batch(
     backend: "BaseLLMBackend",
     limit: int,
     force: bool,
+    static_batches: bool = False,
 ) -> list[dict]:
     """Extract required/preferred skills from job postings.
 
@@ -325,16 +343,20 @@ def _run_job_skills_batch(
     if total == 0:
         return []
 
-    work_q: queue.Queue = queue.Queue()
     result_q: queue.Queue = queue.Queue()
-    for row in rows:
-        work_q.put(row)
+    if static_batches and n > 1:
+        worker_queues = _partition_queues(list(rows), n)
+    else:
+        shared_q: queue.Queue = queue.Queue()
+        for row in rows:
+            shared_q.put(row)
+        worker_queues = [shared_q] * n
 
     t0 = time.monotonic()
     with ThreadPoolExecutor(max_workers=n) as pool:
         for i in range(n):
             pool.submit(
-                _job_skills_worker, backend, work_q, result_q, i + 1, n
+                _job_skills_worker, backend, worker_queues[i], result_q, i + 1, n
             )
 
         summaries: list[dict] = []
@@ -364,7 +386,7 @@ def _run_job_skills_batch(
         f"[job_skills] Done. {ok}/{len(summaries)} parsed  "
         f"time={_fmt_elapsed(elapsed)}  rate={rate:.1f} rec/min"
     )
-    return summaries
+    return summaries, elapsed
 
 
 def _persist_job_skills(
@@ -376,7 +398,7 @@ def _persist_job_skills(
         text(
             "INSERT INTO market.job_skills_premium "
             "  (job_fk, required, preferred, enriched_at, reanalyze_due_at) "
-            "VALUES (:job_fk, :required::jsonb, :preferred::jsonb, :enriched_at, :reanalyze_due_at) "
+            "VALUES (:job_fk, :required, :preferred, :enriched_at, :reanalyze_due_at) "
             "ON CONFLICT (job_fk) DO UPDATE SET "
             "  required = EXCLUDED.required, "
             "  preferred = EXCLUDED.preferred, "
@@ -537,6 +559,7 @@ def _run_jd_reparse_batch(
     backend: "BaseLLMBackend",
     limit: int,
     force: bool,
+    static_batches: bool = False,
 ) -> list[dict]:
     """Re-parse job descriptions to fill missing section_* fields via slice-and-scan."""
     if force:
@@ -566,16 +589,20 @@ def _run_jd_reparse_batch(
     if total == 0:
         return []
 
-    work_q: queue.Queue = queue.Queue()
     result_q: queue.Queue = queue.Queue()
-    for row in rows:
-        work_q.put(row)
+    if static_batches and n > 1:
+        worker_queues = _partition_queues(list(rows), n)
+    else:
+        shared_q: queue.Queue = queue.Queue()
+        for row in rows:
+            shared_q.put(row)
+        worker_queues = [shared_q] * n
 
     t0 = time.monotonic()
     with ThreadPoolExecutor(max_workers=n) as pool:
         for i in range(n):
             pool.submit(
-                _jd_reparse_worker, backend, work_q, result_q, i + 1, n
+                _jd_reparse_worker, backend, worker_queues[i], result_q, i + 1, n
             )
 
         summaries: list[dict] = []
@@ -607,7 +634,14 @@ def _run_jd_reparse_batch(
         f"skills_found={got_skills}  "
         f"time={_fmt_elapsed(elapsed)}  rate={rate:.1f} rec/min"
     )
-    return summaries
+    return summaries, elapsed
+
+
+def _section_to_text(v: object) -> str | None:
+    """LLM returns section fields as lists; DB columns are TEXT — join to newlines."""
+    if isinstance(v, list):
+        return "\n".join(str(x) for x in v) or None
+    return str(v) if v else None
 
 
 def _persist_jd_reparse(
@@ -629,11 +663,11 @@ def _persist_jd_reparse(
             ),
             {
                 "id": res["derived_id"],
-                "section_skills": merged["section_skills"] or None,
-                "section_about": merged["section_about"] or None,
-                "section_salary": merged["section_salary"] or None,
-                "section_job_type": merged["section_job_type"] or None,
-                "section_contract": merged["section_contract"] or None,
+                "section_skills":   _section_to_text(merged.get("section_skills")),
+                "section_about":    _section_to_text(merged.get("section_about")),
+                "section_salary":   _section_to_text(merged.get("section_salary")),
+                "section_job_type": _section_to_text(merged.get("section_job_type")),
+                "section_contract": _section_to_text(merged.get("section_contract")),
                 "now": now,
             },
         )
@@ -769,6 +803,7 @@ def _run_jd_validate_batch(
     backend: "BaseLLMBackend",
     limit: int,
     force: bool,
+    static_batches: bool = False,
 ) -> list[dict]:
     """Validate all heuristically-extracted sections with JSON-in/JSON-out LLM call."""
     if force:
@@ -797,16 +832,20 @@ def _run_jd_validate_batch(
     if total == 0:
         return []
 
-    work_q: queue.Queue = queue.Queue()
     result_q: queue.Queue = queue.Queue()
-    for row in rows:
-        work_q.put(row)
+    if static_batches and n > 1:
+        worker_queues = _partition_queues(list(rows), n)
+    else:
+        shared_q: queue.Queue = queue.Queue()
+        for row in rows:
+            shared_q.put(row)
+        worker_queues = [shared_q] * n
 
     t0 = time.monotonic()
     with ThreadPoolExecutor(max_workers=n) as pool:
         for i in range(n):
             pool.submit(
-                _jd_validate_worker, backend, work_q, result_q, i + 1, n
+                _jd_validate_worker, backend, worker_queues[i], result_q, i + 1, n
             )
 
         summaries: list[dict] = []
@@ -838,7 +877,7 @@ def _run_jd_validate_batch(
         f"sections_cleared={cleared_any}  "
         f"time={_fmt_elapsed(elapsed)}  rate={rate:.1f} rec/min"
     )
-    return summaries
+    return summaries, elapsed
 
 
 def _persist_jd_validate(
@@ -978,6 +1017,7 @@ def _run_company_enrich_batch(
     backend: "BaseLLMBackend",
     limit: int,
     force: bool,
+    static_batches: bool = False,
 ) -> list[dict]:
     """Enrich company records with LLM-generated summary and signals."""
     if force:
@@ -1013,10 +1053,10 @@ def _run_company_enrich_batch(
     if total == 0:
         return []
 
-    work_q: queue.Queue = queue.Queue()
     result_q: queue.Queue = queue.Queue()
     now = datetime.now(UTC)
 
+    items = []
     for row in rows:
         payload = {
             "company_name": row[1],
@@ -1032,13 +1072,21 @@ def _run_company_enrich_batch(
                 }
             ],
         }
-        work_q.put((row[0], row[1], payload))
+        items.append((row[0], row[1], payload))
+
+    if static_batches and n > 1:
+        worker_queues = _partition_queues(items, n)
+    else:
+        shared_q: queue.Queue = queue.Queue()
+        for item in items:
+            shared_q.put(item)
+        worker_queues = [shared_q] * n
 
     t0 = time.monotonic()
     with ThreadPoolExecutor(max_workers=n) as pool:
         for i in range(n):
             pool.submit(
-                _company_enrich_worker, backend, work_q, result_q, i + 1, n
+                _company_enrich_worker, backend, worker_queues[i], result_q, i + 1, n
             )
 
         summaries: list[dict] = []
@@ -1067,7 +1115,7 @@ def _run_company_enrich_batch(
         f"[company_enrich] Done. {ok}/{len(summaries)} parsed  "
         f"time={_fmt_elapsed(elapsed)}  rate={rate:.1f} rec/min"
     )
-    return summaries
+    return summaries, elapsed
 
 
 def _persist_company_enrich(
@@ -1079,7 +1127,7 @@ def _persist_company_enrich(
         text(
             "INSERT INTO market.company_scores_premium "
             "  (company_id, role_domain, llm_result, enriched_at, reanalyze_due_at) "
-            "VALUES (:company_id, '__all__', :llm_result::jsonb, :enriched_at, :reanalyze_due_at) "
+            "VALUES (:company_id, '__all__', :llm_result, :enriched_at, :reanalyze_due_at) "
             "ON CONFLICT (company_id, role_domain) DO UPDATE SET "
             "  llm_result = EXCLUDED.llm_result, "
             "  enriched_at = EXCLUDED.enriched_at, "

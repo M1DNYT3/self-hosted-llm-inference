@@ -100,6 +100,12 @@ LLM_VAST_KV_SLOT_GB: float = float(os.getenv("LLM_VAST_KV_SLOT_GB", "0.5"))
 # Vast.ai — offer search filters
 # ---------------------------------------------------------------------------
 LLM_VAST_NUM_GPUS: int = int(os.getenv("LLM_VAST_NUM_GPUS", "4"))  # start of tiered search
+LLM_VAST_SINGLE_GPU_MODE: bool = (
+    os.getenv("LLM_VAST_SINGLE_GPU_MODE", "false").lower() == "true"
+)  # rent the offer as-is, but start/use only GPU 0 (simulate single-GPU on a multi-GPU bundle)
+LLM_VAST_GPU_NAME: str = os.getenv(
+    "LLM_VAST_GPU_NAME", ""
+)  # optional substring filter on gpu_name (e.g. "3090"); empty = no filter
 LLM_VAST_MIN_VRAM_GB: int = int(os.getenv("LLM_VAST_MIN_VRAM_GB", "8"))
 LLM_VAST_MAX_VRAM_GB: int = int(os.getenv("LLM_VAST_MAX_VRAM_GB", "96"))
 LLM_VAST_MAX_PRICE: float = float(os.getenv("LLM_VAST_MAX_PRICE", "1.0"))  # USD/hr

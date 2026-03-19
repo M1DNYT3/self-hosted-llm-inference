@@ -70,6 +70,7 @@ class VastaiLLMBackend(BaseLLMBackend):
             LLM_OFFER_ID,
             LLM_PROVIDER_KEY,
             LLM_VAST_DISK_GB,
+            LLM_VAST_GPU_NAME,
             LLM_VAST_HF_FILE,
             LLM_VAST_HF_REPO,
             LLM_VAST_IMAGE,
@@ -86,6 +87,7 @@ class VastaiLLMBackend(BaseLLMBackend):
             LLM_VAST_NUM_GPUS,
             LLM_VAST_REQUIRE_DATACENTER,
             LLM_VAST_REQUIRE_VERIFIED,
+            LLM_VAST_SINGLE_GPU_MODE,
             LLM_VAST_SSH_KEY,
             LLM_VAST_TIMEOUT_LOAD,
             LLM_VAST_TIMEOUT_RUNNING,
@@ -108,6 +110,8 @@ class VastaiLLMBackend(BaseLLMBackend):
         self._min_reliability: float = LLM_VAST_MIN_RELIABILITY
         self._min_tflops_per_gpu: float = LLM_VAST_MIN_TFLOPS_PER_GPU
         self._min_inet_down_mbps: int = LLM_VAST_MIN_INET_DOWN_MBPS
+        self._single_gpu_mode: bool = LLM_VAST_SINGLE_GPU_MODE
+        self._gpu_name_filter: str = LLM_VAST_GPU_NAME
 
         self._hf_repo: str = LLM_VAST_HF_REPO
         self._hf_file: str = LLM_VAST_HF_FILE
@@ -243,6 +247,21 @@ class VastaiLLMBackend(BaseLLMBackend):
         path = [p for p in [8, 4, 2, 1] if p <= target]
         path.sort(reverse=True)
 
+        gpu_name_filter_str = f", gpu_name⊇'{self._gpu_name_filter}'" if self._gpu_name_filter else ""
+        print(
+            f"[vastai] Offer search — filters: "
+            f"x{target} GPUs (fallback path {path}), "
+            f"price≤${self._max_price:.2f}/hr, "
+            f"VRAM {self._min_vram_gb}–{self._max_vram_gb}GB, "
+            f"tflops≥{self._min_tflops_per_gpu}/GPU, "
+            f"inet_down≥{self._min_inet_down_mbps}Mbps, "
+            f"bw_cost≤${self._max_bw_cost:.2f}, "
+            f"datacenter={self._require_datacenter}, "
+            f"verified={self._require_verified}, "
+            f"reliability≥{self._min_reliability}"
+            f"{gpu_name_filter_str}"
+        )
+
         best_offer = None
         best_gpu_count = target
 
@@ -284,6 +303,13 @@ class VastaiLLMBackend(BaseLLMBackend):
             matching = [
                 o for o in offers if _RTX_PATTERN.search(o.get("gpu_name", ""))
             ]
+
+            # Optional GPU name substring filter (e.g. "3090" to target a specific card).
+            if self._gpu_name_filter:
+                matching = [
+                    o for o in matching
+                    if self._gpu_name_filter.lower() in o.get("gpu_name", "").lower()
+                ]
 
             # Filter out hosts with expensive bandwidth (slow model downloads
             # are billed at full GPU rate — a $0.05 download that takes 10 min
@@ -334,17 +360,30 @@ class VastaiLLMBackend(BaseLLMBackend):
         offer_id: int = best_offer["id"]
         vram_gb: float = best_offer["gpu_ram"] / 1024
         inet_down: float = float(best_offer.get("inet_down", 500))
+        inet_down_cost: float = float(best_offer.get("inet_down_cost", 0.0))
+        bw_cost_estimate: float = inet_down_cost * self._model_vram_gb
+        tflops: float = float(best_offer.get("total_flops", 0.0))
+        tflops_per_gpu: float = tflops / best_gpu_count if best_gpu_count else 0.0
+        reliability: float = float(best_offer.get("reliability2", 0.0))
+        datacenter: bool = bool(best_offer.get("datacenter", False))
 
         def get_final_price(o: dict) -> float:
             return o.get("dph_total", 0.0) + (
                 o.get("inet_down_cost", 0.0) * self._model_vram_gb
             )
 
+        dph: float = float(best_offer.get("dph_total", 0.0))
         price: float = get_final_price(best_offer)
         gpu_name: str = best_offer.get("gpu_name", "unknown")
         print(
-            f"[vastai] Selected: {gpu_name} {best_gpu_count}x {vram_gb:.0f}GB "
-            f"@ ${price:.2f}/h (id={offer_id}, dl={inet_down:.0f}Mbps)"
+            f"[vastai] Selected offer:\n"
+            f"  GPU:         {gpu_name} x{best_gpu_count}\n"
+            f"  VRAM:        {vram_gb:.0f} GB/card  ({vram_gb * best_gpu_count:.0f} GB total)\n"
+            f"  TFLOPS:      {tflops_per_gpu:.0f}/GPU  ({tflops:.0f} total)\n"
+            f"  Price:       ${dph:.3f}/hr base + ${bw_cost_estimate:.3f} BW est = ${price:.3f}/hr\n"
+            f"  inet_down:   {inet_down:.0f} Mbps  (cost ${inet_down_cost:.4f}/GB)\n"
+            f"  Reliability: {reliability:.3f}  datacenter={datacenter}\n"
+            f"  Offer ID:    {offer_id}"
         )
         return offer_id, vram_gb, inet_down
 
@@ -623,19 +662,32 @@ class VastaiLLMBackend(BaseLLMBackend):
         if not self._offer_id:
             offer_id, vram_gb, inet_down_mbps = self._find_offer()
             self._offer_id = str(offer_id)
+
+            if self._single_gpu_mode and self._num_gpus > 1:
+                print(
+                    f"[vastai] SINGLE_GPU_MODE: rented bundle has {self._num_gpus}x GPUs "
+                    f"but only CUDA_VISIBLE_DEVICES=0 will be started. "
+                    f"Remaining cards idle (still billed as part of the bundle)."
+                )
+                self._num_gpus = 1
+
             n_parallel_per_gpu = self._calc_parallel_slots(vram_gb)
             n_parallel = n_parallel_per_gpu * self._num_gpus
             duration_secs = self._calc_duration(
                 n_parallel, inet_down_mbps, queue_size
             )
+            available_vram = vram_gb - self._model_vram_gb
             print(
-                f"[vastai] {self._num_gpus}x {vram_gb:.0f}GB VRAM → "
-                f"{n_parallel} total parallel slots "
-                f"({n_parallel_per_gpu} per GPU)"
+                f"[vastai] Parallel slot formula:\n"
+                f"  ({vram_gb:.0f}GB VRAM - {self._model_vram_gb:.0f}GB model) "
+                f"/ {self._kv_slot_gb:.1f}GB per KV slot "
+                f"= {n_parallel_per_gpu} slots/GPU × {self._num_gpus} GPU(s) "
+                f"= {n_parallel} total workers\n"
+                f"  available_vram={available_vram:.0f}GB"
             )
             print(
                 f"[vastai] Instance TTL: {duration_secs // 60}min "
-                f"(queue={queue_size})"
+                f"(queue={queue_size}, n_parallel={n_parallel})"
             )
         else:
             n_parallel = self.n_parallel if self.n_parallel > 1 else 1
@@ -653,6 +705,18 @@ class VastaiLLMBackend(BaseLLMBackend):
         self.n_parallel = n_parallel
 
         # Step 3
+        total_ctx = max(4096, self._ctx_per_slot) * n_parallel_per_gpu
+        print(
+            f"[vastai] llama-server config per GPU:\n"
+            f"  image:        {self._vast_image}\n"
+            f"  model:        {self._hf_repo}/{self._hf_file}\n"
+            f"  GPUs started: {self._num_gpus} (CUDA_VISIBLE_DEVICES 0..{self._num_gpus - 1})\n"
+            f"  ports:        {', '.join(str(8000 + i) for i in range(self._num_gpus))}\n"
+            f"  --parallel:   {n_parallel_per_gpu}\n"
+            f"  --ctx-size:   {total_ctx}  ({self._ctx_per_slot} tokens/slot × {n_parallel_per_gpu} slots)\n"
+            f"  --reasoning-budget: 0  (thinking disabled)\n"
+            f"  disk:         {self._disk_gb}GB"
+        )
         self._instance_id = self._create_instance(n_parallel_per_gpu, duration_secs)
 
         # Step 4: poll until running

@@ -45,8 +45,12 @@ if str(_root) not in sys.path:
     sys.path.insert(0, str(_root))
 
 
-def _load_env(path: str = ".env") -> None:
-    """Load key=value pairs from .env into os.environ (minimal dotenv)."""
+def _load_env(path: str = ".env", override: bool = False) -> None:
+    """Load key=value pairs from .env into os.environ (minimal dotenv).
+
+    override=False (default): setdefault — existing env vars win.
+    override=True: force-set — file values win (used for per-iteration config.env).
+    """
     try:
         with open(path) as f:
             for line in f:
@@ -54,7 +58,12 @@ def _load_env(path: str = ".env") -> None:
                 if not line or line.startswith("#") or "=" not in line:
                     continue
                 k, _, v = line.partition("=")
-                os.environ.setdefault(k.strip(), v.strip().strip('"').strip("'"))
+                key = k.strip()
+                val = v.strip().strip('"').strip("'")
+                if override:
+                    os.environ[key] = val
+                else:
+                    os.environ.setdefault(key, val)
     except FileNotFoundError:
         pass
 
@@ -190,21 +199,38 @@ def main() -> None:
         help="Re-process already-enriched records.",
     )
     parser.add_argument(
+        "--static-batches",
+        action="store_true",
+        help="Use static interleaved batch split (worker i gets rows[i::n]). "
+        "Replicates the original pre-unified-queue dispatch design. "
+        "Idle workers cannot steal from busier ones once their slice is exhausted.",
+    )
+    parser.add_argument(
+        "--env-file",
+        default="",
+        help="Per-iteration config file (e.g. iterations/02-bugs-fixed/config.env). "
+        "Loaded after the root .env with override semantics — iteration values win.",
+    )
+    parser.add_argument(
         "--output",
         default="iterations/local-emulation/benchmark_results.json",
         help="Output path for benchmark_results.json.",
     )
     args = parser.parse_args()
 
-    # Load .env from the case-study root (or current dir)
+    # Load .env from the case-study root (base defaults, setdefault — existing env wins)
     _load_env(str(_root / ".env"))
     _load_env(".env")
+    # Per-iteration config overrides base values (force-set — iteration wins)
+    if args.env_file:
+        _load_env(args.env_file, override=True)
 
     backend = _build_backend(args)
     output_path = Path(args.output)
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
-    print(f"=== Benchmark: {args.task} | limit={args.limit} | backend={args.backend} ===")
+    dispatch = "static-batches" if args.static_batches else "shared-queue"
+    print(f"=== Benchmark: {args.task} | limit={args.limit} | backend={args.backend} | dispatch={dispatch} ===")
     print(f"DB:     {args.db_url}")
     print(f"Output: {output_path}")
     print()
@@ -213,19 +239,21 @@ def main() -> None:
 
     t_wall_start = time.monotonic()
     started_at = datetime.now(UTC).isoformat()
-    summaries = run_batch(
+    summaries, compute_secs = run_batch(
         backend=backend,
         task=args.task,
         limit=args.limit,
         db_url=args.db_url,
         force=args.force,
+        static_batches=args.static_batches,
     )
     t_wall_end = time.monotonic()
     wall_secs = t_wall_end - t_wall_start
 
     ok = sum(1 for s in summaries if s.get("status") == "ok")
     failed = sum(1 for s in summaries if s.get("status") not in ("ok",))
-    rate = len(summaries) / (wall_secs / 60) if wall_secs > 0 else 0
+    wall_rate = len(summaries) / (wall_secs / 60) if wall_secs > 0 else 0
+    compute_rate = len(summaries) / (compute_secs / 60) if compute_secs > 0 else 0
 
     # Per-record token metrics (job_skills / company_enrich only)
     latencies = [
@@ -242,16 +270,19 @@ def main() -> None:
             "task": args.task,
             "limit": args.limit,
             "backend": args.backend,
+            "dispatch": "static-batches" if args.static_batches else "shared-queue",
             "seed": args.seed,
             "model": args.model or os.getenv("LLM_MODEL", ""),
             "started_at": started_at,
             "wall_secs": round(wall_secs, 1),
+            "compute_secs": round(compute_secs, 1),
         },
         "summary": {
             "total": len(summaries),
             "ok": ok,
             "failed": failed,
-            "rate_rec_per_min": round(rate, 1),
+            "wall_rate_rec_per_min": round(wall_rate, 1),
+            "compute_rate_rec_per_min": round(compute_rate, 1),
             "avg_latency_ms": round(_avg(latencies)),
             "avg_input_tokens": round(_avg(in_tokens)),
             "avg_output_tokens": round(_avg(out_tokens)),
@@ -264,13 +295,16 @@ def main() -> None:
     with open(output_path, "w") as f:
         json.dump(results, f, indent=2, default=str)
 
+    def _fmt_time(secs: float) -> str:
+        return f"{int(secs // 60)}m{int(secs % 60):02d}s"
+
     print()
     print(f"=== Results ===")
     print(f"  Total:        {len(summaries)}")
     print(f"  OK:           {ok}")
     print(f"  Failed:       {failed}")
-    print(f"  Wall time:    {int(wall_secs // 60)}m{int(wall_secs % 60):02d}s")
-    print(f"  Rate:         {rate:.1f} rec/min")
+    print(f"  Compute time: {_fmt_time(compute_secs)}  ({compute_rate:.1f} rec/min)")
+    print(f"  Wall time:    {_fmt_time(wall_secs)}  ({wall_rate:.1f} rec/min)")
     if latencies:
         print(f"  Avg latency:  {_avg(latencies):.0f}ms")
     print(f"  Output:       {output_path}")
