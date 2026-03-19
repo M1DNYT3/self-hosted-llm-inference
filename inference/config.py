@@ -58,7 +58,10 @@ LLM_VAST_AVG_INFERENCE_SECS_JOB_SKILLS: int = int(
     os.getenv("LLM_VAST_AVG_INFERENCE_SECS_JOB_SKILLS", "20")
 )
 LLM_VAST_AVG_INFERENCE_SECS_JD_REPARSE: int = int(
-    os.getenv("LLM_VAST_AVG_INFERENCE_SECS_JD_REPARSE", "36")
+    # 36s/slice × 4.5 avg slices/record = 162s/record.
+    # Using per-slice time (36) here caused TTL underestimation — the instance
+    # was destroyed mid-batch because the budget was 4.5× too short.
+    os.getenv("LLM_VAST_AVG_INFERENCE_SECS_JD_REPARSE", "162")
 )
 LLM_VAST_AVG_INFERENCE_SECS_JD_VALIDATE: int = int(
     os.getenv("LLM_VAST_AVG_INFERENCE_SECS_JD_VALIDATE", "33")
@@ -108,6 +111,7 @@ LLM_VAST_GPU_NAME: str = os.getenv(
 )  # optional substring filter on gpu_name (e.g. "3090"); empty = no filter
 LLM_VAST_MIN_VRAM_GB: int = int(os.getenv("LLM_VAST_MIN_VRAM_GB", "8"))
 LLM_VAST_MAX_VRAM_GB: int = int(os.getenv("LLM_VAST_MAX_VRAM_GB", "96"))
+LLM_VAST_MIN_PRICE: float = float(os.getenv("LLM_VAST_MIN_PRICE", "0.0"))  # USD/hr floor
 LLM_VAST_MAX_PRICE: float = float(os.getenv("LLM_VAST_MAX_PRICE", "1.0"))  # USD/hr
 LLM_VAST_MAX_BW_COST_USD: float = float(
     os.getenv("LLM_VAST_MAX_BW_COST_USD", "0.50")
@@ -116,6 +120,10 @@ LLM_VAST_MIN_RELIABILITY: float = float(os.getenv("LLM_VAST_MIN_RELIABILITY", "0
 LLM_VAST_MIN_TFLOPS_PER_GPU: float = float(
     os.getenv("LLM_VAST_MIN_TFLOPS_PER_GPU", "20.0")
 )
+LLM_VAST_MIN_MEM_BW_PER_GPU: float = float(
+    os.getenv("LLM_VAST_MIN_MEM_BW_PER_GPU", "0.0")
+)  # GB/s per card; 0 = disabled. LLM decode is bandwidth-bound — this is a
+   # more direct quality filter than TFLOPS for autoregressive workloads.
 LLM_VAST_MIN_INET_DOWN_MBPS: int = int(
     os.getenv("LLM_VAST_MIN_INET_DOWN_MBPS", "1000")
 )  # ≥1 Gbps — guards against slow model downloads
@@ -141,6 +149,9 @@ LLM_VAST_TIMEOUT_LOAD: int = int(
 LLM_VAST_MAX_DURATION_HOURS: int = int(
     os.getenv("LLM_VAST_MAX_DURATION_HOURS", "4")
 )  # hard TTL cap
+LLM_VAST_KEEP_ON_FAILURE: bool = (
+    os.getenv("LLM_VAST_KEEP_ON_FAILURE", "false").lower() == "true"
+)  # skip instance destruction on exit — preserves instance for SSH log inspection
 
 # ---------------------------------------------------------------------------
 # Pipeline limits (used by workload_driver; overridden by CLI --limit)

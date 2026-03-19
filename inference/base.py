@@ -98,13 +98,42 @@ class BaseLLMBackend(ABC):
         except requests.RequestException:
             return False
 
+    def reconnect_on_error(self, exc: Exception) -> bool:
+        """Called by complete() when an inference request raises an exception.
+
+        If the backend can recover (e.g. reopen a dead SSH tunnel), it should
+        do so here and return True — complete() will then retry the request once.
+        Return False (default) to propagate the exception as-is.
+
+        Override in backends that support mid-batch reconnection.
+        """
+        return False
+
     def complete(self, request: LLMRequest) -> LLMResponse:
         """Send one chat completion request and return a structured response.
 
         Implemented once in the base class — subclasses must NOT override this.
         Uses the openai SDK with a configurable base_url so it works with any
         OpenAI-compatible server.
+
+        On failure, calls reconnect_on_error(exc). If it returns True (backend
+        recovered), the request is retried once before propagating the error.
         """
+        import time
+
+        for attempt in range(2):
+            try:
+                return self._call_api(request)
+            except Exception as exc:
+                if attempt == 0 and self.reconnect_on_error(exc):
+                    time.sleep(2)
+                    continue
+                raise
+
+        raise RuntimeError("unreachable")  # satisfies type checker
+
+    def _call_api(self, request: LLMRequest) -> LLMResponse:
+        """Single attempt at the chat completion API call."""
         import time
 
         client = OpenAI(base_url=self.base_url, api_key=self.api_key)

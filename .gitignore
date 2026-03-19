@@ -12,3 +12,6 @@ __pycache__/
 
 # Iteration output — committed manually after review
 # iterations/*/benchmark_results.json  <- intentionally committed when real
+
+# Run logs — excluded by default; commit selectively with: git add -f iterations/NN-name/logs/filename.log
+iterations/*/logs/

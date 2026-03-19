@@ -1,14 +1,18 @@
 #!/usr/bin/env python3
 """fixture/generate_dump.py — Generate the fixture DB dump from production.
 
-Run this once against the live JobSlicer DB, then sanitize and compress:
+Run this once against the live ProductionAppName DB, then compress:
 
     python fixture/generate_dump.py \\
-        --db-url postgresql://jobslicer:slicerpass@localhost:5432/jobslicer \\
-        > fixture/dump_raw.sql
+        --db-url postgresql://productionappname:dbpass@localhost:5432/productionappname \\
+        --output fixture/dump_raw.sql
 
-    python fixture/sanitize.py fixture/dump_raw.sql > fixture/dump_clean.sql
-    gzip -9 -c fixture/dump_clean.sql > fixture/dump.sql.gz
+    gzip -9 -c fixture/dump_raw.sql > fixture/dump.sql.gz
+
+Email addresses are redacted at export time via PostgreSQL regexp_replace —
+no separate sanitize step needed. Phone numbers are omitted: the regex required
+to match them reliably without false-positives on timestamps and numeric data
+is too broad for SQL text fields.
 
 What is included:
     market.jobs_raw          — rows WHERE description IS NOT NULL
@@ -25,18 +29,31 @@ What is NOT included:
     Any FK to auth.users (enriched_by_user_id is set to NULL)
 
 The dump is self-contained: it creates the market schema and all tables from
-scratch, without requiring the full JobSlicer schema to exist first.
+scratch, without requiring the full ProductionAppName schema to exist first.
 """
 
 from __future__ import annotations
 
 import argparse
+import json
 import sys
-from datetime import datetime, timezone
+from datetime import datetime
 from typing import Any
 
 import sqlalchemy as sa
 from sqlalchemy import text
+
+# ---------------------------------------------------------------------------
+# Email redaction — applied inside the SELECT queries via PostgreSQL
+# regexp_replace so the raw dump file is already clean.
+# ---------------------------------------------------------------------------
+
+_EMAIL_RE_SQL = r"[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
+
+
+def _redact(col: str) -> str:
+    """Wrap a column with email redaction, preserving the original column alias."""
+    return f"regexp_replace({col}, '{_EMAIL_RE_SQL}', '[EMAIL]', 'gi') AS {col}"
 
 
 # ---------------------------------------------------------------------------
@@ -194,7 +211,11 @@ def _lit(v: Any) -> str:
         return str(v)
     if isinstance(v, datetime):
         return f"'{v.isoformat()}'"
-    s = str(v)
+    if isinstance(v, (dict, list)):
+        # SQLAlchemy deserialises JSON columns to Python objects; re-serialise as JSON.
+        s = json.dumps(v, ensure_ascii=False)
+    else:
+        s = str(v)
     # Standard SQL escaping: double single-quotes
     s = s.replace("'", "''")
     return f"'{s}'"
@@ -238,7 +259,7 @@ def main() -> None:
     )
     parser.add_argument(
         "--db-url",
-        default="postgresql://jobslicer:slicerpass@localhost:5432/jobslicer",
+        default="postgresql://productionappname:dbpass@localhost:5432/productionappname",
         help="Production DB connection URL.",
     )
     parser.add_argument(
@@ -321,7 +342,7 @@ def _generate(conn, out) -> None:
         text(
             "SELECT id, source, job_id, title, company, city, state, location, "
             "       job_type, interval, min_amount, max_amount, currency, url, "
-            "       description, created_at, search_location, is_processed, "
+            f"       {_redact('description')}, created_at, search_location, is_processed, "
             "       is_discarded, is_company_derived, date_posted, "
             "       last_seen_in_scrape_at, rescan_due_at, country_code "
             "FROM market.jobs_raw "
@@ -366,8 +387,9 @@ def _generate(conn, out) -> None:
             chunk = job_ids[start : start + batch_size]
             result = conn.execute(
                 text(
-                    "SELECT id, job_fk, section_about, section_salary, section_skills, "
-                    "       section_job_type, section_contract, created_at, "
+                    f"SELECT id, job_fk, {_redact('section_about')}, {_redact('section_salary')}, "
+                    f"       {_redact('section_skills')}, {_redact('section_job_type')}, "
+                    f"       {_redact('section_contract')}, created_at, "
                     "       human_verified, role_domain, skill_tokens, "
                     f"       llm_reparsed_at{demo_select} "
                     "FROM market.jobs_derived "

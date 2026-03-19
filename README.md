@@ -3,6 +3,11 @@
 Self-contained artifact documenting an iterative on-demand GPU inference system
 built to replace per-volume API pricing with predictable, self-hosted compute.
 
+> **Note on naming:** The production application this inference layer was built for is
+> referred to throughout this repository as `ProductionAppName`. The real project name
+> has been replaced with this placeholder because the application is not yet public.
+> All benchmark data, code, and architecture decisions are real and unmodified.
+
 ---
 
 ## What's here

@@ -1,0 +1,123 @@
+=== Benchmark: job_skills | limit=2000 | backend=remote | dispatch=shared-queue ===
+DB:     postgresql://fixture:fixture@localhost:5433/inference_fixture
+Output: /Users/m1dnyt3/GitHub/ProductionAppName/case-study/iterations/07-multi-gpu-mvp/benchmark_results.json
+
+[vastai] Model verified on HuggingFace: unsloth/Qwen3.5-9B-GGUF/Qwen3.5-9B-Q4_K_M.gguf
+[vastai] Offer search — filters: x8 GPUs (fallback path [8, 4, 2, 1]), price $0.00–$0.90/hr, VRAM 16–36GB, tflops≥13.0/GPU, inet_down≥800Mbps, bw_cost≤$0.04, datacenter=False, verified=True, reliability≥0.9
+[vastai] Found 1 matching offers for x8 GPUs.
+[vastai] Selected offer:
+  GPU:         RTX 2080 Ti x8
+  VRAM:        22 GB/card  (176 GB total)
+  TFLOPS:      15/GPU  (117 total)
+  Price:       $0.590/hr base + $0.008 BW est = $0.598/hr
+  inet_down:   1615 Mbps  (cost $0.0013/GB)
+  Reliability: 0.964  datacenter=False
+  Offer ID:    33076663
+[vastai] Parallel slot formula:
+  (22GB VRAM - 6GB model) / 0.5GB per KV slot = 32 slots/GPU × 8 GPU(s) = 256 total workers
+  available_vram=16GB
+[vastai] Instance TTL: 34min (queue=2000, n_parallel=256)
+[vastai] llama-server config per GPU:
+  image:        ghcr.io/ggml-org/llama.cpp:server-cuda
+  model:        unsloth/Qwen3.5-9B-GGUF/Qwen3.5-9B-Q4_K_M.gguf
+  GPUs started: 8 (CUDA_VISIBLE_DEVICES 0..7)
+  ports:        8000, 8001, 8002, 8003, 8004, 8005, 8006, 8007
+  --parallel:   32
+  --ctx-size:   131072  (4096 tokens/slot × 32 slots)
+  --reasoning-budget: 0  (thinking disabled)
+  disk:         40GB
+[vastai] Using image: ghcr.io/ggml-org/llama.cpp:server-cuda
+Vast.ai instance created: id=33148785 (offer=33076663)
+Waiting for Vast.ai instance to reach 'running' (timeout 3600s) ...
+  status=None
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=running
+Waiting for SSH (timeout 60s) ...
+[vastai] SSH tunnel closed.
+  [vastai] SSH tunnel exited immediately (exit=255): ssh: connect to host ssh5.vast.ai port 28784: Connection refused — retrying in 10s ...
+[vastai] SSH tunnel opened: localhost:65441 → container:8000 (GPU0), localhost:65442 → container:8001 (GPU1), localhost:65443 → container:8002 (GPU2), localhost:65444 → container:8003 (GPU3), localhost:65445 → container:8004 (GPU4), localhost:65446 → container:8005 (GPU5), localhost:65447 → container:8006 (GPU6), localhost:65448 → container:8007 (GPU7)
+SSH tunnel open. llama-server endpoints: ('http://localhost:65441/v1', 'http://localhost:65442/v1', 'http://localhost:65443/v1', 'http://localhost:65444/v1', 'http://localhost:65445/v1', 'http://localhost:65446/v1', 'http://localhost:65447/v1', 'http://localhost:65448/v1')
+Waiting for llama-server(s) to load model (timeout 300s) ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+Vast.ai instance 33148785 destroyed.
+[vastai] SSH tunnel closed.
+Traceback (most recent call last):
+  File "/Users/m1dnyt3/GitHub/ProductionAppName/case-study/harness/workload_driver.py", line 314, in <module>
+    main()
+    ~~~~^^
+  File "/Users/m1dnyt3/GitHub/ProductionAppName/case-study/harness/workload_driver.py", line 242, in main
+    summaries, compute_secs = run_batch(
+                              ~~~~~~~~~^
+        backend=backend,
+        ^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        static_batches=args.static_batches,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/m1dnyt3/GitHub/ProductionAppName/case-study/inference/pipeline.py", line 85, in run_batch
+    backend.startup(queue_size=_count_pending(engine, task, limit, force))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/m1dnyt3/GitHub/ProductionAppName/case-study/inference/backends/vastai.py", line 795, in startup
+    raise RuntimeError(
+    ...<2 lines>...
+    )
+RuntimeError: llama-servers did not become healthy within 300s. Instance destroyed.

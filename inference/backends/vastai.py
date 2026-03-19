@@ -34,10 +34,11 @@ from inference.registry import register
 _VASTAI_API = "https://console.vast.ai/api/v0"
 _POLL_INTERVAL = 10  # seconds between status polls
 
-# Post-filter: RTX 30xx/40xx/50xx gaming cards only.
-# These have the best memory bandwidth per dollar for LLM decode,
-# unlike workstation cards (A100, RTX PRO) which are TFLOPS-optimised.
-_RTX_PATTERN = re.compile(r"RTX\s+[3-5]\d{3}", re.IGNORECASE)
+# Post-filter: RTX 20xx–50xx gaming cards only.
+# Matches any NVIDIA RTX card (gaming 2xxx–5xxx, workstation A-series, PRO).
+# Quality is enforced downstream by MIN_MEM_BW_PER_GPU and TFLOPS filters —
+# non-RTX cards (A100, H100, L40) are excluded by not carrying the RTX name.
+_RTX_PATTERN = re.compile(r"\bRTX\b", re.IGNORECASE)
 
 
 def _read_proc_stderr(proc: "subprocess.Popen[bytes]") -> str:
@@ -59,12 +60,18 @@ class VastaiLLMBackend(BaseLLMBackend):
     ) -> None:
         super().__init__(base_url=base_url, model=model, api_key=api_key)
         self._instance_id: int | None = None
-        self._tunnel_proc: subprocess.Popen | None = None  # type: ignore[type-arg]
+        self._tunnel_procs: list[subprocess.Popen] = []  # type: ignore[type-arg]
         self._base_urls: tuple[str, ...] | None = None
+
+        # SSH connection details stored during startup for mid-batch reconnection
+        self._ssh_host: str = ""
+        self._ssh_port: int = 0
+        self._local_ports: list[int] = []
 
         import threading
         self._thread_map: dict[int, int] = {}
         self._thread_lock = threading.Lock()
+        self._tunnel_reconnect_lock = threading.Lock()
 
         from inference.config import (
             LLM_OFFER_ID,
@@ -76,11 +83,13 @@ class VastaiLLMBackend(BaseLLMBackend):
             LLM_VAST_IMAGE,
             LLM_VAST_KV_SLOT_GB,
             LLM_VAST_MAX_DURATION_HOURS,
+            LLM_VAST_MIN_PRICE,
             LLM_VAST_MAX_PRICE,
             LLM_VAST_MAX_BW_COST_USD,
             LLM_VAST_MAX_VRAM_GB,
             LLM_VAST_MIN_RELIABILITY,
             LLM_VAST_MIN_TFLOPS_PER_GPU,
+            LLM_VAST_MIN_MEM_BW_PER_GPU,
             LLM_VAST_MIN_INET_DOWN_MBPS,
             LLM_VAST_MIN_VRAM_GB,
             LLM_VAST_MODEL_VRAM_GB,
@@ -89,6 +98,7 @@ class VastaiLLMBackend(BaseLLMBackend):
             LLM_VAST_REQUIRE_VERIFIED,
             LLM_VAST_SINGLE_GPU_MODE,
             LLM_VAST_SSH_KEY,
+            LLM_VAST_KEEP_ON_FAILURE,
             LLM_VAST_TIMEOUT_LOAD,
             LLM_VAST_TIMEOUT_RUNNING,
             LLM_VAST_TIMEOUT_SSH,
@@ -100,6 +110,7 @@ class VastaiLLMBackend(BaseLLMBackend):
         self._provider_key: str = LLM_PROVIDER_KEY
         self._ssh_key: str = LLM_VAST_SSH_KEY
 
+        self._min_price: float = LLM_VAST_MIN_PRICE
         self._max_price: float = LLM_VAST_MAX_PRICE
         self._max_bw_cost: float = LLM_VAST_MAX_BW_COST_USD
         self._min_vram_gb: int = LLM_VAST_MIN_VRAM_GB
@@ -109,6 +120,7 @@ class VastaiLLMBackend(BaseLLMBackend):
         self._require_verified: bool = LLM_VAST_REQUIRE_VERIFIED
         self._min_reliability: float = LLM_VAST_MIN_RELIABILITY
         self._min_tflops_per_gpu: float = LLM_VAST_MIN_TFLOPS_PER_GPU
+        self._min_mem_bw_per_gpu: float = LLM_VAST_MIN_MEM_BW_PER_GPU
         self._min_inet_down_mbps: int = LLM_VAST_MIN_INET_DOWN_MBPS
         self._single_gpu_mode: bool = LLM_VAST_SINGLE_GPU_MODE
         self._gpu_name_filter: str = LLM_VAST_GPU_NAME
@@ -120,6 +132,7 @@ class VastaiLLMBackend(BaseLLMBackend):
         self._timeout_running: int = LLM_VAST_TIMEOUT_RUNNING
         self._timeout_ssh: int = LLM_VAST_TIMEOUT_SSH
         self._timeout_load: int = LLM_VAST_TIMEOUT_LOAD
+        self._keep_on_failure: bool = LLM_VAST_KEEP_ON_FAILURE
 
         self._model_vram_gb: float = LLM_VAST_MODEL_VRAM_GB
         self._kv_slot_gb: float = LLM_VAST_KV_SLOT_GB
@@ -248,10 +261,11 @@ class VastaiLLMBackend(BaseLLMBackend):
         path.sort(reverse=True)
 
         gpu_name_filter_str = f", gpu_name⊇'{self._gpu_name_filter}'" if self._gpu_name_filter else ""
+        mem_bw_filter_str = f", mem_bw≥{self._min_mem_bw_per_gpu:.0f}GB/s" if self._min_mem_bw_per_gpu > 0 else ""
         print(
             f"[vastai] Offer search — filters: "
             f"x{target} GPUs (fallback path {path}), "
-            f"price≤${self._max_price:.2f}/hr, "
+            f"price ${self._min_price:.2f}–${self._max_price:.2f}/hr, "
             f"VRAM {self._min_vram_gb}–{self._max_vram_gb}GB, "
             f"tflops≥{self._min_tflops_per_gpu}/GPU, "
             f"inet_down≥{self._min_inet_down_mbps}Mbps, "
@@ -259,6 +273,7 @@ class VastaiLLMBackend(BaseLLMBackend):
             f"datacenter={self._require_datacenter}, "
             f"verified={self._require_verified}, "
             f"reliability≥{self._min_reliability}"
+            f"{mem_bw_filter_str}"
             f"{gpu_name_filter_str}"
         )
 
@@ -269,7 +284,7 @@ class VastaiLLMBackend(BaseLLMBackend):
             q = {
                 "rentable": {"eq": True},
                 "verified": {"eq": self._require_verified},
-                "dph_total": {"lte": self._max_price},
+                "dph_total": {"gte": self._min_price, "lte": self._max_price},
                 "gpu_ram": {
                     "gte": self._min_vram_gb * 1024,
                     "lte": self._max_vram_gb * 1024,
@@ -309,6 +324,23 @@ class VastaiLLMBackend(BaseLLMBackend):
                 matching = [
                     o for o in matching
                     if self._gpu_name_filter.lower() in o.get("gpu_name", "").lower()
+                ]
+
+            # Exclude China-region hosts: HuggingFace is blocked there,
+            # causing model download to stall silently at instance startup.
+            matching = [
+                o for o in matching
+                if "CN" not in (o.get("geolocation", "") or "").upper()
+            ]
+
+            # Filter by minimum GPU memory bandwidth (GB/s per card).
+            # LLM autoregressive decode is memory-bandwidth-bound, not TFLOPS-bound.
+            # A bandwidth floor is a more direct quality gate than TFLOPS for this workload.
+            # Disabled when min_mem_bw_per_gpu == 0 (default).
+            if self._min_mem_bw_per_gpu > 0:
+                matching = [
+                    o for o in matching
+                    if float(o.get("gpu_mem_bw", 0.0)) >= self._min_mem_bw_per_gpu
                 ]
 
             # Filter out hosts with expensive bandwidth (slow model downloads
@@ -364,8 +396,11 @@ class VastaiLLMBackend(BaseLLMBackend):
         bw_cost_estimate: float = inet_down_cost * self._model_vram_gb
         tflops: float = float(best_offer.get("total_flops", 0.0))
         tflops_per_gpu: float = tflops / best_gpu_count if best_gpu_count else 0.0
+        mem_bw: float = float(best_offer.get("gpu_mem_bw", 0.0))
         reliability: float = float(best_offer.get("reliability2", 0.0))
-        datacenter: bool = bool(best_offer.get("datacenter", False))
+        # Vast.ai bundles API returns datacenter as int (0/1), not bool.
+        # bool(0) == False even for genuine DC hosts, so cast via int explicitly.
+        datacenter: bool = bool(int(best_offer.get("datacenter") or 0))
 
         def get_final_price(o: dict) -> float:
             return o.get("dph_total", 0.0) + (
@@ -380,6 +415,7 @@ class VastaiLLMBackend(BaseLLMBackend):
             f"  GPU:         {gpu_name} x{best_gpu_count}\n"
             f"  VRAM:        {vram_gb:.0f} GB/card  ({vram_gb * best_gpu_count:.0f} GB total)\n"
             f"  TFLOPS:      {tflops_per_gpu:.0f}/GPU  ({tflops:.0f} total)\n"
+            f"  Mem BW:      {mem_bw:.0f} GB/s/card\n"
             f"  Price:       ${dph:.3f}/hr base + ${bw_cost_estimate:.3f} BW est = ${price:.3f}/hr\n"
             f"  inet_down:   {inet_down:.0f} Mbps  (cost ${inet_down_cost:.4f}/GB)\n"
             f"  Reliability: {reliability:.3f}  datacenter={datacenter}\n"
@@ -560,15 +596,19 @@ class VastaiLLMBackend(BaseLLMBackend):
             return s.getsockname()[1]
 
     def _start_ssh_tunnel(self, instance: dict) -> tuple[str, ...]:
-        """Open SSH tunnels to all GPU ports on the instance.
+        """Open one SSH tunnel process per GPU port on the instance.
 
-        Connects via Vast.ai's SSH proxy and forwards one free local port
-        per GPU to localhost:800N inside the container.
+        Each GPU gets an isolated ssh -N process forwarding one local port to
+        localhost:800N inside the container.  Splitting per-GPU bounds the
+        concurrent channel count per SSH session to slots_per_GPU rather than
+        total_workers, which prevents SSH daemon channel exhaustion under high
+        worker counts (see iter 08 post-mortem).
 
         Returns tuple of local base_urls:
           ("http://localhost:{port0}/v1", "http://localhost:{port1}/v1", ...)
         """
         import os as _os
+        import time as _time
 
         ssh_host = instance.get("ssh_host", "")
         ssh_port = instance.get("ssh_port")
@@ -586,58 +626,106 @@ class VastaiLLMBackend(BaseLLMBackend):
             )
 
         local_ports = [self._free_port() for _ in range(self._num_gpus)]
-        forward_args = []
-        for i, lp in enumerate(local_ports):
-            forward_args += ["-L", f"{lp}:localhost:{8000 + i}"]
+        # Store for mid-batch reconnection via reconnect_on_error()
+        self._ssh_host = ssh_host
+        self._ssh_port = int(ssh_port)
+        self._local_ports = local_ports
 
-        cmd = (
-            ["ssh", "-N"]
-            + forward_args
-            + [
+        # Start one process per GPU — all in parallel before checking
+        for i, lp in enumerate(local_ports):
+            cmd = [
+                "ssh", "-N",
+                "-L", f"{lp}:localhost:{8000 + i}",
                 "-p", str(ssh_port),
                 f"root@{ssh_host}",
                 "-o", "StrictHostKeyChecking=no",
                 "-o", "ServerAliveInterval=10",
                 "-o", "ServerAliveCountMax=3",
             ]
-        )
-        if key_path:
-            cmd += ["-i", key_path]
-
-        self._tunnel_proc = subprocess.Popen(
-            cmd, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE
-        )
-
-        # Give SSH ~5s to connect; if it exits immediately the tunnel failed
-        try:
-            self._tunnel_proc.wait(timeout=5)
-            stderr = _read_proc_stderr(self._tunnel_proc)
-            raise RuntimeError(
-                f"[vastai] SSH tunnel exited immediately "
-                f"(exit={self._tunnel_proc.returncode}): {stderr.strip()}"
+            if key_path:
+                cmd += ["-i", key_path]
+            self._tunnel_procs.append(
+                subprocess.Popen(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
             )
-        except subprocess.TimeoutExpired:
-            pass  # still running — tunnel is up
+
+        # Give all SSH processes ~5s to connect; any that exit immediately failed
+        _time.sleep(5)
+        failed = []
+        for i, proc in enumerate(self._tunnel_procs):
+            if proc.poll() is not None:
+                stderr = _read_proc_stderr(proc)
+                failed.append(f"GPU{i} exit={proc.returncode}: {stderr.strip()}")
+        if failed:
+            raise RuntimeError(
+                f"[vastai] SSH tunnel(s) exited immediately: {'; '.join(failed)}"
+            )
 
         port_info = ", ".join(
-            [
-                f"localhost:{lp} → container:{8000+i} (GPU{i})"
-                for i, lp in enumerate(local_ports)
-            ]
+            f"localhost:{lp} → container:{8000+i} (GPU{i})"
+            for i, lp in enumerate(local_ports)
         )
-        print(f"[vastai] SSH tunnel opened: {port_info}")
+        print(f"[vastai] SSH tunnels opened ({self._num_gpus}× isolated): {port_info}")
         return tuple(f"http://localhost:{lp}/v1" for lp in local_ports)
 
+    def reconnect_on_error(self, exc: Exception) -> bool:
+        """Restart any dead SSH tunnel processes and return True if reconnected.
+
+        Called by BaseLLMBackend.complete() on request failure. Only one thread
+        performs the reconnect; others wait on the lock and skip if the tunnels
+        are already back up by the time they acquire it.
+        """
+        import os as _os
+        import time as _time
+
+        if self._instance_id is None or not self._ssh_host:
+            return False
+
+        with self._tunnel_reconnect_lock:
+            dead = [i for i, p in enumerate(self._tunnel_procs) if p.poll() is not None]
+            if not dead:
+                # Another thread already reconnected — tunnels are alive again
+                return True
+
+            print(
+                f"[vastai] {len(dead)} SSH tunnel(s) dead (GPU {dead}). Reconnecting ..."
+            )
+            key_path = _os.path.expanduser(self._ssh_key) if self._ssh_key else ""
+            for i in dead:
+                lp = self._local_ports[i]
+                cmd = [
+                    "ssh", "-N",
+                    "-L", f"{lp}:localhost:{8000 + i}",
+                    "-p", str(self._ssh_port),
+                    f"root@{self._ssh_host}",
+                    "-o", "StrictHostKeyChecking=no",
+                    "-o", "ServerAliveInterval=10",
+                    "-o", "ServerAliveCountMax=3",
+                ]
+                if key_path:
+                    cmd += ["-i", key_path]
+                self._tunnel_procs[i] = subprocess.Popen(
+                    cmd, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE
+                )
+
+            _time.sleep(3)
+            still_dead = [i for i in dead if self._tunnel_procs[i].poll() is not None]
+            if still_dead:
+                print(f"[vastai] SSH reconnect failed for GPU(s): {still_dead}")
+                return False
+
+            print(f"[vastai] SSH tunnel(s) reconnected for GPU(s): {dead}")
+            return True
+
     def _stop_ssh_tunnel(self) -> None:
-        """Terminate the SSH tunnel subprocess."""
-        if self._tunnel_proc is not None:
-            self._tunnel_proc.terminate()
+        """Terminate all per-GPU SSH tunnel subprocesses."""
+        for proc in self._tunnel_procs:
+            proc.terminate()
             try:
-                self._tunnel_proc.wait(timeout=5)
+                proc.wait(timeout=5)
             except subprocess.TimeoutExpired:
-                self._tunnel_proc.kill()
-            self._tunnel_proc = None
-            print("[vastai] SSH tunnel closed.")
+                proc.kill()
+        self._tunnel_procs.clear()
+        print("[vastai] SSH tunnels closed.")
 
     # ------------------------------------------------------------------
     # BaseLLMBackend lifecycle
@@ -767,12 +855,13 @@ class VastaiLLMBackend(BaseLLMBackend):
             f"(timeout {self._timeout_load}s) ..."
         )
         while time.monotonic() < deadline:
-            if self._tunnel_proc is not None and self._tunnel_proc.poll() is not None:
-                stderr = _read_proc_stderr(self._tunnel_proc)
-                raise RuntimeError(
-                    f"[vastai] SSH tunnel died unexpectedly "
-                    f"(exit={self._tunnel_proc.returncode}): {stderr.strip()}"
-                )
+            for _i, _proc in enumerate(self._tunnel_procs):
+                if _proc.poll() is not None:
+                    stderr = _read_proc_stderr(_proc)
+                    raise RuntimeError(
+                        f"[vastai] SSH tunnel GPU{_i} died unexpectedly "
+                        f"(exit={_proc.returncode}): {stderr.strip()}"
+                    )
             if self.health_check():
                 print("All llama-servers ready.")
                 return
@@ -791,8 +880,19 @@ class VastaiLLMBackend(BaseLLMBackend):
         """Close SSH tunnel and destroy the rented instance.
 
         Always called via finally — even if the batch raised an exception.
+        If LLM_VAST_KEEP_ON_FAILURE=true, destruction is skipped so the instance
+        can be SSH'd into for log inspection (llama-server stderr, dmesg, etc.).
+        Remember to destroy the instance manually from the Vast.ai console afterward.
         """
         self._stop_ssh_tunnel()
         if self._instance_id is not None:
-            self._destroy_instance(self._instance_id)
-            self._instance_id = None
+            if self._keep_on_failure:
+                print(
+                    f"[vastai] KEEP_ON_FAILURE=true — instance {self._instance_id} "
+                    f"preserved. Inspect logs via Vast.ai console or:\n"
+                    f"  vastai ssh-url {self._instance_id}\n"
+                    f"Then destroy manually: vastai destroy instance {self._instance_id}"
+                )
+            else:
+                self._destroy_instance(self._instance_id)
+                self._instance_id = None

@@ -1,0 +1,2075 @@
+=== Benchmark: job_skills | limit=2000 | backend=remote | dispatch=static-batches ===
+DB:     postgresql://fixture:fixture@localhost:5433/inference_fixture
+Output: /Users/m1dnyt3/GitHub/ProductionAppName/case-study/iterations/08-dc-reliability/benchmark_results.json
+
+[vastai] Model verified on HuggingFace: unsloth/Qwen3.5-9B-GGUF/Qwen3.5-9B-Q4_K_M.gguf
+[vastai] Offer search — filters: x8 GPUs (fallback path [8, 4, 2, 1]), price $0.00–$1.60/hr, VRAM 16–36GB, tflops≥1.0/GPU, inet_down≥700Mbps, bw_cost≤$0.09, datacenter=True, verified=True, reliability≥0.9, mem_bw≥480GB/s
+[vastai] Found 1 matching offers for x8 GPUs.
+[vastai] Selected offer:
+  GPU:         RTX A5000 x8
+  VRAM:        24 GB/card  (192 GB total)
+  TFLOPS:      28/GPU  (220 total)
+  Mem BW:      652 GB/s/card
+  Price:       $1.495/hr base + $0.018 BW est = $1.513/hr
+  inet_down:   744 Mbps  (cost $0.0030/GB)
+  Reliability: 0.998  datacenter=False
+  Offer ID:    8677661
+[vastai] Parallel slot formula:
+  (24GB VRAM - 6GB model) / 0.5GB per KV slot = 35 slots/GPU × 8 GPU(s) = 280 total workers
+  available_vram=18GB
+[vastai] Instance TTL: 34min (queue=2000, n_parallel=280)
+[vastai] llama-server config per GPU:
+  image:        ghcr.io/ggml-org/llama.cpp:server-cuda
+  model:        unsloth/Qwen3.5-9B-GGUF/Qwen3.5-9B-Q4_K_M.gguf
+  GPUs started: 8 (CUDA_VISIBLE_DEVICES 0..7)
+  ports:        8000, 8001, 8002, 8003, 8004, 8005, 8006, 8007
+  --parallel:   35
+  --ctx-size:   143360  (4096 tokens/slot × 35 slots)
+  --reasoning-budget: 0  (thinking disabled)
+  disk:         40GB
+[vastai] Using image: ghcr.io/ggml-org/llama.cpp:server-cuda
+Vast.ai instance created: id=33158324 (offer=8677661)
+Waiting for Vast.ai instance to reach 'running' (timeout 3600s) ...
+  status=None
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=running
+Waiting for SSH (timeout 60s) ...
+[vastai] SSH tunnel closed.
+  [vastai] SSH tunnel exited immediately (exit=255): ssh: connect to host ssh9.vast.ai port 38324: Connection refused — retrying in 10s ...
+[vastai] SSH tunnel opened: localhost:56060 → container:8000 (GPU0), localhost:56061 → container:8001 (GPU1), localhost:56062 → container:8002 (GPU2), localhost:56063 → container:8003 (GPU3), localhost:56064 → container:8004 (GPU4), localhost:56065 → container:8005 (GPU5), localhost:56066 → container:8006 (GPU6), localhost:56067 → container:8007 (GPU7)
+SSH tunnel open. llama-server endpoints: ('http://localhost:56060/v1', 'http://localhost:56061/v1', 'http://localhost:56062/v1', 'http://localhost:56063/v1', 'http://localhost:56064/v1', 'http://localhost:56065/v1', 'http://localhost:56066/v1', 'http://localhost:56067/v1')
+Waiting for llama-server(s) to load model (timeout 600s) ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+All llama-servers ready.
+[job_skills] Processing 2000 job(s) ... (workers=280)
+  [gpu5] [w69/280] job  44960  19736ms  in=116 out=16  [ok]
+  [gpu7] [w16/280] job  45351  22970ms  in=174 out=67  [ok]
+  [gpu3] [w211/280] job  47494  23323ms  in=1007 out=36  [ok]
+  [gpu8] [w168/280] job  48150  24368ms  in=515 out=33  [ok]
+  [gpu3] [w155/280] job  48879  24327ms  in=817 out=31  [ok]
+  [gpu6] [w78/280] job  44874  24753ms  in=469 out=37  [ok]
+  [gpu4] [w44/280] job  46293  24844ms  in=274 out=31  [ok]
+  [gpu2] [w170/280] job  48514  25627ms  in=102 out=52  [ok]
+  [gpu5] [w93/280] job  44990  26328ms  in=434 out=44  [ok]
+  [gpu1] [w81/280] job  44952  27267ms  in=178 out=46  [ok]
+  [gpu1] [w1/280] job  45178  28197ms  in=437 out=70  [ok]
+  [gpu8] [w224/280] job  49239  27772ms  in=782 out=58  [ok]
+  [gpu6] [w94/280] job  44877  28249ms  in=770 out=54  [ok]
+  [gpu5] [w85/280] job  46754  27886ms  in=943 out=43  [ok]
+  [gpu3] [w147/280] job  48256  27878ms  in=408 out=50  [ok]
+  [gpu6] [w174/280] job  48379  27886ms  in=2030 out=58  [ok]
+  [gpu2] [w146/280] job  49647  28350ms  in=771 out=65  [ok]
+  [gpu2] [w274/280] job  48956  28198ms  in=737 out=65  [ok]
+  [gpu7] [w159/280] job  47118  28487ms  in=283 out=42  [ok]
+  [gpu8] [w24/280] job  45776  30323ms  in=1281 out=79  [ok]
+  [gpu5] [w213/280] job  49311  29635ms  in=791 out=54  [ok]
+  [gpu8] [w208/280] job  50179  29626ms  in=810 out=67  [ok]
+  [gpu2] [w19/280] job  45406  30583ms  in=643 out=71  [ok]
+  [gpu6] [w134/280] job  47634  30152ms  in=1186 out=74  [ok]
+  [gpu3] [w131/280] job  48824  30190ms  in=785 out=70  [ok]
+  [gpu2] [w210/280] job  47444  30033ms  in=1284 out=73  [ok]
+  [gpu3] [w59/280] job  46620  30069ms  in=300 out=69  [ok]
+  [gpu3] [w99/280] job  46926  30418ms  in=195 out=73  [ok]
+  [gpu5] [w117/280] job  47340  30220ms  in=882 out=62  [ok]
+  [gpu1] [w225/280] job  49276  30221ms  in=808 out=57  [ok]
+  [gpu7] [w47/280] job  46368  30630ms  in=624 out=43  [ok]
+  [gpu2] [w202/280] job  51846  30904ms  in=968 out=85  [ok]
+  [gpu2] [w154/280] job  48703  30882ms  in=1477 out=83  [ok]
+  [gpu6] [w254/280] job  48961  31953ms  in=737 out=68  [ok]
+  [gpu2] [w226/280] job  49572  31499ms  in=764 out=83  [ok]
+  [gpu1] [w249/280] job  49105  31788ms  in=745 out=67  [ok]
+  [gpu8] [w136/280] job  48826  32300ms  in=825 out=73  [ok]
+  [gpu4] [w252/280] job  49127  32230ms  in=789 out=73  [ok]
+  [gpu4] [w132/280] job  47635  32789ms  in=1186 out=74  [ok]
+  [gpu3] [w251/280] job  49125  32712ms  in=722 out=71  [ok]
+  [gpu3] [w75/280] job  44950  32727ms  in=1432 out=71  [ok]
+  [gpu2] [w98/280] job  47018  33743ms  in=1817 out=85  [ok]
+  [gpu3] [w2/280] job  45177  34363ms  in=517 out=96  [ok]
+  [gpu7] [w31/280] job  46384  33797ms  in=824 out=64  [ok]
+  [gpu7] [w55/280] job  46572  34547ms  in=402 out=87  [ok]
+  [gpu1] [w65/280] job  46800  34023ms  in=717 out=74  [ok]
+  [gpu1] [w273/280] job  49115  34709ms  in=714 out=73  [ok]
+  [gpu8] [w5/280] job  45181  35151ms  in=928 out=104  [ok]
+  [gpu5] [w157/280] job  49660  34657ms  in=699 out=73  [ok]
+  [gpu8] [w200/280] job  46696  34705ms  in=901 out=90  [ok]
+  [gpu3] [w115/280] job  47093  34897ms  in=1313 out=81  [ok]
+  [gpu1] [w185/280] job  48876  34853ms  in=796 out=79  [ok]
+  [gpu6] [w38/280] job  46447  35718ms  in=694 out=84  [ok]
+  [gpu4] [w212/280] job  50077  35022ms  in=2126 out=83  [ok]
+  [gpu1] [w89/280] job  46001  35714ms  in=626 out=94  [ok]
+  [gpu6] [w54/280] job  46762  35272ms  in=461 out=94  [ok]
+  [gpu6] [w262/280] job  52641  35683ms  in=945 out=85  [ok]
+  [gpu6] [w142/280] job  47719  35682ms  in=538 out=89  [ok]
+  [gpu5] [w173/280] job  48311  35670ms  in=1495 out=82  [ok]
+  [gpu5] [w277/280] job  49102  35753ms  in=774 out=81  [ok]
+  [gpu8] [w248/280] job  49089  35883ms  in=842 out=89  [ok]
+  [gpu8] [w40/280] job  45939  36551ms  in=575 out=106  [ok]
+  [gpu4] [w188/280] job  48935  36177ms  in=773 out=92  [ok]
+  [gpu2] [w6/280] job  45185  37378ms  in=863 out=106  [ok]
+  [gpu4] [w196/280] job  48932  37164ms  in=857 out=99  [ok]
+  [gpu8] [w256/280] job  49146  37095ms  in=737 out=94  [ok]
+  [gpu7] [w239/280] job  49831  37387ms  in=772 out=85  [ok]
+  [gpu7] [w4/280] job  45182  38194ms  in=766 out=107  [ok]
+  [gpu7] [w39/280] job  46067  37611ms  in=374 out=98  [ok]
+  [gpu8] [w88/280] job  45975  37745ms  in=648 out=95  [ok]
+  [gpu3] [w107/280] job  47076  37810ms  in=846 out=85  [ok]
+  [gpu6] [w126/280] job  47336  38189ms  in=1424 out=104  [ok]
+  [gpu5] [w77/280] job  45042  38147ms  in=1035 out=93  [ok]
+  [gpu5] [w101/280] job  47053  38120ms  in=611 out=92  [ok]
+  [gpu8] [w17/280] job  45503  38939ms  in=1294 out=116  [ok]
+  [gpu6] [w198/280] job  49159  38293ms  in=823 out=100  [ok]
+  [gpu8] [w32/280] job  45923  39201ms  in=739 out=113  [ok]
+  [gpu1] [w209/280] job  49500  38683ms  in=789 out=102  [ok]
+  [gpu7] [w63/280] job  46761  39245ms  in=377 out=112  [ok]
+  [gpu6] [w22/280] job  45612  39474ms  in=682 out=115  [ok]
+  [gpu5] [w189/280] job  52080  38751ms  in=800 out=99  [ok]
+  [gpu4] [w220/280] job  48964  39185ms  in=746 out=104  [ok]
+  [gpu2] [w250/280] job  49119  39334ms  in=759 out=92  [ok]
+  [gpu4] [w236/280] job  50734  40776ms  in=719 out=106  [ok]
+  [gpu7] [w263/280] job  50654  41370ms  in=1718 out=97  [ok]
+  [gpu2] [w178/280] job  51808  40870ms  in=1244 out=94  [ok]
+  [gpu5] [w69/280] job  52091  21877ms  in=745 out=101  [ok]
+  [gpu3] [w35/280] job  46439  42288ms  in=1065 out=117  [ok]
+  [gpu7] [w207/280] job  49444  41960ms  in=780 out=105  [ok]
+  [gpu6] [w62/280] job  46791  42772ms  in=621 out=108  [ok]
+  [gpu1] [w18/280] job  45415  42963ms  in=1045 out=121  [ok]
+  [gpu1] [w73/280] job  46914  42603ms  in=561 out=102  [ok]
+  [gpu3] [w27/280] job  45911  43775ms  in=1312 out=122  [ok]
+  [gpu5] [w149/280] job  52560  43382ms  in=1547 out=109  [ok]
+  [gpu6] [w78/280] job  52393  18424ms  in=930 out=68  [ok]
+  [gpu3] [w195/280] job  48251  43293ms  in=713 out=110  [ok]
+  [gpu1] [w177/280] job  48569  43547ms  in=1922 out=105  [ok]
+  [gpu1] [w129/280] job  47532  43963ms  in=329 out=103  [ok]
+  [gpu7] [w23/280] job  45734  44436ms  in=1348 out=130  [ok]
+  [gpu4] [w10/280] job  45597  44685ms  in=727 out=134  [ok]
+  [gpu2] [w74/280] job  45953  44908ms  in=1338 out=109  [ok]
+  [gpu4] [w60/280] job  46622  44414ms  in=1504 out=126  [ok]
+  [gpu7] [w255/280] job  49141  45024ms  in=768 out=123  [ok]
+  [gpu2] [w26/280] job  45893  45411ms  in=1242 out=114  [ok]
+  [gpu1] [w233/280] job  50823  44944ms  in=1585 out=108  [ok]
+  [gpu5] [w93/280] job  51964  19365ms  in=746 out=76  [ok]
+  [gpu1] [w217/280] job  49689  45490ms  in=2928 out=106  [ok]
+  [gpu3] [w131/280] job  52978  15592ms  in=805 out=56  [ok]
+  [gpu1] [w153/280] job  48838  45508ms  in=1966 out=111  [ok]
+  [gpu1] [w57/280] job  46617  46236ms  in=693 out=124  [ok]
+  [gpu5] [w21/280] job  45556  45942ms  in=643 out=123  [ok]
+  [gpu3] [w43/280] job  46283  46030ms  in=1027 out=133  [ok]
+  [gpu8] [w280/280] job  51810  45961ms  in=1333 out=117  [ok]
+  [gpu2] [w138/280] job  47735  46405ms  in=749 out=128  [ok]
+  [gpu3] [w171/280] job  48900  46180ms  in=666 out=126  [ok]
+  [gpu3] [w187/280] job  48926  46436ms  in=724 out=128  [ok]
+  [gpu7] [w183/280] job  48785  46462ms  in=1358 out=117  [ok]
+  [gpu7] [w31/280] job  51317  12762ms  in=785 out=42  [ok]
+  [gpu8] [w224/280] job  45157  18768ms  in=899 out=58  [ok]
+  [gpu1] [w105/280] job  47099  46650ms  in=706 out=117  [ok]
+  [gpu1] [w257/280] job  48042  47136ms  in=1365 out=114  [ok]
+  [gpu4] [w164/280] job  47992  47072ms  in=619 out=133  [ok]
+  [gpu6] [w190/280] job  52078  47109ms  in=759 out=121  [ok]
+  [gpu5] [w205/280] job  49980  47563ms  in=957 out=119  [ok]
+  [gpu4] [w148/280] job  48285  47421ms  in=1307 out=139  [ok]
+  [gpu6] [w86/280] job  45028  47491ms  in=1107 out=120  [ok]
+  [gpu2] [w90/280] job  47278  48162ms  in=1361 out=122  [ok]
+  [gpu4] [w244/280] job  48944  47625ms  in=763 out=136  [ok]
+  [gpu4] [w20/280] job  45515  48234ms  in=619 out=131  [ok]
+  [gpu5] [w133/280] job  47633  48053ms  in=1186 out=121  [ok]
+  [gpu2] [w9/280] job  45580  48687ms  in=680 out=142  [ok]
+  [gpu6] [w278/280] job  49708  48354ms  in=931 out=125  [ok]
+  [gpu5] [w269/280] job  48955  48620ms  in=769 out=122  [ok]
+  [gpu4] [w36/280] job  46440  48537ms  in=1065 out=148  [ok]
+  [gpu2] [w106/280] job  47749  48940ms  in=1474 out=137  [ok]
+  [gpu8] [w96/280] job  47748  49482ms  in=1474 out=127  [ok]
+  [gpu4] [w228/280] job  49048  50275ms  in=858 out=139  [ok]
+  [gpu6] [w46/280] job  46353  49686ms  in=1414 out=129  [ok]
+  [gpu8] [w72/280] job  47746  50381ms  in=1474 out=137  [ok]
+  [gpu8] [w80/280] job  44905  50526ms  in=1318 out=145  [ok]
+  [gpu4] [w28/280] job  46397  50598ms  in=808 out=153  [ok]
+  [gpu8] [w192/280] job  48233  50846ms  in=1638 out=139  [ok]
+  [gpu6] [w246/280] job  48960  50734ms  in=905 out=135  [ok]
+  [gpu1] [w81/280] job  52135  23448ms  in=1296 out=72  [ok]
+  [gpu8] [w56/280] job  46580  50867ms  in=485 out=150  [ok]
+  [gpu2] [w66/280] job  46795  50891ms  in=563 out=137  [ok]
+  [gpu8] [w232/280] job  48208  51012ms  in=1442 out=140  [ok]
+  [gpu7] [w247/280] job  49050  51699ms  in=748 out=141  [ok]
+  [gpu5] [w37/280] job  47744  52339ms  in=1362 out=148  [ok]
+  [gpu4] [w84/280] job  47747  52206ms  in=1474 out=144  [ok]
+  [gpu4] [w276/280] job  50123  52059ms  in=3952 out=144  [parse_fail]
+  [gpu8] [w128/280] job  48842  51674ms  in=1359 out=144  [ok]
+  [gpu4] [w172/280] job  48902  51726ms  in=682 out=150  [ok]
+  [gpu5] [w165/280] job  48054  52576ms  in=1382 out=141  [ok]
+  [gpu5] [w29/280] job  46541  52721ms  in=1062 out=147  [ok]
+  [gpu8] [w152/280] job  48389  52682ms  in=726 out=146  [ok]
+  [gpu8] [w264/280] job  49964  53175ms  in=741 out=145  [ok]
+  [gpu7] [w191/280] job  47121  53062ms  in=645 out=140  [ok]
+  [gpu3] [w163/280] job  47926  53188ms  in=1671 out=143  [ok]
+  [gpu3] [w275/280] job  49040  53361ms  in=715 out=144  [ok]
+  [gpu3] [w139/280] job  47791  53492ms  in=783 out=150  [ok]
+  [gpu6] [w230/280] job  50436  54165ms  in=1520 out=144  [ok]
+  [gpu3] [w123/280] job  47424  54046ms  in=866 out=160  [ok]
+  [gpu8] [w240/280] job  48977  54314ms  in=1754 out=164  [ok]
+  [gpu8] [w168/280] job  44875  29674ms  in=665 out=110  [ok]
+  [gpu2] [w186/280] job  48873  54456ms  in=1408 out=149  [ok]
+  [gpu7] [w239/280] job  45113  17568ms  in=869 out=49  [ok]
+  [gpu7] [w271/280] job  49683  55432ms  in=1766 out=161  [ok]
+  [gpu6] [w38/280] job  51426  20102ms  in=764 out=57  [ok]
+  [gpu8] [w64/280] job  47745  55345ms  in=1474 out=157  [ok]
+  [gpu3] [w75/280] job  52109  23013ms  in=1461 out=68  [ok]
+  [gpu1] [w33/280] job  46401  55796ms  in=696 out=129  [ok]
+  [gpu7] [w215/280] job  48069  55702ms  in=3292 out=156  [ok]
+  [gpu5] [w181/280] job  48466  55860ms  in=1952 out=146  [ok]
+  [gpu7] [w111/280] job  47019  55955ms  in=607 out=151  [ok]
+  [gpu5] [w133/280] job  53220   8305ms  in=710 out=12  [ok]
+  [gpu1] [w201/280] job  52787  56195ms  in=1512 out=132  [ok]
+  [gpu7] [w71/280] job  46889  56339ms  in=901 out=153  [ok]
+  [gpu3] [w179/280] job  46032  56296ms  in=1629 out=159  [ok]
+  [gpu3] [w91/280] job  46708  57148ms  in=808 out=172  [ok]
+  [gpu2] [w34/280] job  46065  56852ms  in=700 out=159  [ok]
+  [gpu7] [w119/280] job  47261  57129ms  in=1237 out=168  [ok]
+  [gpu7] [w127/280] job  48330  57343ms  in=1337 out=169  [ok]
+  [gpu5] [w61/280] job  46895  57304ms  in=585 out=159  [ok]
+  [gpu4] [w132/280] job  53145  24967ms  in=779 out=77  [ok]
+  [gpu2] [w6/280] job  52618  20931ms  in=2166 out=72  [ok]
+  [gpu6] [w118/280] job  47352  58018ms  in=543 out=164  [ok]
+  [gpu6] [w182/280] job  51809  57887ms  in=1318 out=158  [ok]
+  [gpu3] [w219/280] job  48970  57918ms  in=560 out=169  [ok]
+  [gpu7] [w79/280] job  44878  58192ms  in=684 out=158  [ok]
+  [gpu8] [w120/280] job  47423  58070ms  in=888 out=160  [ok]
+  [gpu3] [w8/280] job  45568  58942ms  in=727 out=186  [ok]
+  [gpu1] [w41/280] job  47685  58670ms  in=1781 out=149  [ok]
+  [gpu1] [w97/280] job  47144  59140ms  in=1208 out=138  [ok]
+  [gpu1] [w121/280] job  47422  59312ms  in=911 out=140  [ok]
+  [gpu6] [w22/280] job  52291  20571ms  in=924 out=52  [ok]
+  [gpu2] [w178/280] job  45289  18568ms  in=1053 out=79  [ok]
+  [gpu2] [w234/280] job  50559  60057ms  in=1490 out=176  [ok]
+  [gpu1] [w225/280] job  45158  29309ms  in=767 out=72  [ok]
+  [gpu7] [w135/280] job  47645  59687ms  in=1220 out=167  [ok]
+  [gpu5] [w45/280] job  46332  60502ms  in=741 out=155  [ok]
+  [gpu6] [w30/280] job  46041  60785ms  in=663 out=183  [ok]
+  [gpu7] [w47/280] job  51858  29480ms  in=929 out=114  [ok]
+  [gpu2] [w218/280] job  50136  60412ms  in=715 out=181  [ok]
+  [gpu1] [w193/280] job  47780  60639ms  in=590 out=152  [ok]
+  [gpu1] [w241/280] job  50516  61356ms  in=2278 out=167  [ok]
+  [gpu2] [w122/280] job  47425  60787ms  in=873 out=183  [ok]
+  [gpu2] [w50/280] job  46546  61245ms  in=773 out=184  [ok]
+  [gpu6] [w102/280] job  46986  61839ms  in=1153 out=174  [ok]
+  [gpu2] [w162/280] job  48036  61460ms  in=1543 out=190  [ok]
+  [gpu4] [w156/280] job  47055  61563ms  in=2037 out=168  [ok]
+  [gpu6] [w206/280] job  49661  61572ms  in=1282 out=175  [ok]
+  [gpu6] [w150/280] job  48328  62108ms  in=645 out=184  [ok]
+  [gpu6] [w11/280] job  45588  63084ms  in=659 out=195  [ok]
+  [gpu2] [w74/280] job  52105  18486ms  in=775 out=72  [ok]
+  [gpu5] [w77/280] job  52122  25189ms  in=749 out=67  [ok]
+  [gpu4] [w7/280] job  45183  64177ms  in=920 out=192  [ok]
+  [gpu5] [w85/280] job  51301  35732ms  in=780 out=127  [ok]
+  [gpu1] [w65/280] job  52575  29696ms  in=1540 out=77  [ok]
+  [gpu3] [w35/280] job  51937  22641ms  in=792 out=68  [ok]
+  [gpu6] [w134/280] job  53610  34426ms  in=701 out=101  [ok]
+  [gpu3] [w59/280] job  51962  34313ms  in=787 out=100  [ok]
+  [gpu2] [w98/280] job  46734  31145ms  in=1501 out=100  [ok]
+  [gpu4] [w68/280] job  46798  65353ms  in=577 out=193  [ok]
+  [gpu3] [w243/280] job  50211  64715ms  in=1737 out=181  [ok]
+  [gpu8] [w128/280] job  53120  13119ms  in=920 out=12  [ok]
+  [gpu6] [w94/280] job  52158  37029ms  in=779 out=122  [ok]
+  [gpu6] [w270/280] job  50324  65365ms  in=2047 out=184  [ok]
+  [gpu6] [w126/280] job  53098  27019ms  in=1656 out=74  [ok]
+  [gpu8] [w48/280] job  46550  65223ms  in=650 out=174  [ok]
+  [gpu4] [w204/280] job  50398  65526ms  in=1883 out=182  [ok]
+  [gpu8] [w40/280] job  51882  30624ms  in=686 out=70  [ok]
+  [gpu4] [w124/280] job  47348  66915ms  in=1323 out=191  [ok]
+  [gpu5] [w197/280] job  48562  66823ms  in=2118 out=192  [ok]
+  [gpu5] [w229/280] job  50536  67070ms  in=2782 out=200  [ok]
+  [gpu5] [w205/280] job  45147  19557ms  in=686 out=59  [ok]
+  [gpu5] [w125/280] job  47349  67327ms  in=1323 out=191  [ok]
+  [gpu8] [w216/280] job  49448  66990ms  in=886 out=180  [ok]
+  [gpu7] [w167/280] job  47983  67077ms  in=3372 out=175  [ok]
+  [gpu4] [w260/280] job  48079  67680ms  in=2589 out=188  [ok]
+  [gpu3] [w267/280] job  50449  67775ms  in=2153 out=200  [ok]
+  [gpu4] [w100/280] job  46955  68028ms  in=1159 out=190  [ok]
+  [gpu4] [w76/280] job  44966  68876ms  in=636 out=192  [ok]
+  [gpu5] [w14/280] job  45287  69142ms  in=871 out=245  [ok]
+  [gpu8] [w144/280] job  47833  68768ms  in=719 out=187  [ok]
+  [gpu5] [w253/280] job  49130  68595ms  in=730 out=202  [ok]
+  [gpu8] [w200/280] job  45198  33835ms  in=1031 out=92  [ok]
+  [gpu7] [w143/280] job  48360  68860ms  in=2366 out=177  [ok]
+  [gpu8] [w5/280] job  51725  35333ms  in=749 out=104  [ok]
+  [gpu8] [w176/280] job  48541  69759ms  in=1611 out=197  [ok]
+  [gpu6] [w54/280] job  52076  34663ms  in=803 out=94  [ok]
+  [gpu8] [w184/280] job  48857  69907ms  in=967 out=197  [ok]
+  [gpu2] [w170/280] job  44890  44682ms  in=942 out=144  [ok]
+  [gpu1] [w12/280] job  45285  71259ms  in=775 out=206  [ok]
+  [gpu7] [w39/280] job  51445  33019ms  in=757 out=74  [ok]
+  [gpu3] [w99/280] job  51944  40581ms  in=777 out=117  [ok]
+  [gpu2] [w266/280] job  49636  71431ms  in=1913 out=216  [ok]
+  [gpu7] [w4/280] job  51723  33713ms  in=729 out=92  [ok]
+  [gpu5] [w261/280] job  49589  71770ms  in=2072 out=207  [ok]
+  [gpu7] [w55/280] job  52077  37624ms  in=767 out=114  [ok]
+  [gpu5] [w157/280] job  47080  37264ms  in=628 out=130  [ok]
+  [gpu7] [w175/280] job  48392  71612ms  in=1872 out=192  [ok]
+  [gpu5] [w189/280] job  45126  33210ms  in=1071 out=101  [ok]
+  [gpu1] [w145/280] job  48359  71971ms  in=1835 out=188  [ok]
+  [gpu1] [w169/280] job  48268  72537ms  in=628 out=197  [ok]
+  [gpu6] [w166/280] job  48011  72742ms  in=671 out=198  [ok]
+  [gpu8] [w17/280] job  51782  34999ms  in=2326 out=91  [ok]
+  [gpu1] [w105/280] job  53294  26749ms  in=834 out=64  [ok]
+  [gpu2] [w258/280] job  49231  74214ms  in=743 out=224  [ok]
+  [gpu3] [w13/280] job  45501  74658ms  in=808 out=232  [ok]
+  [gpu7] [w63/280] job  51965  35296ms  in=793 out=92  [ok]
+  [gpu6] [w174/280] job  45104  46087ms  in=1057 out=125  [ok]
+  [gpu3] [w155/280] job  53580  49702ms  in=1274 out=182  [ok]
+  [gpu3] [w211/280] job  45175  50868ms  in=889 out=185  [ok]
+  [gpu2] [w194/280] job  47989  74229ms  in=610 out=221  [ok]
+  [gpu3] [w147/280] job  53767  46301ms  in=729 out=162  [ok]
+  [gpu2] [w19/280] job  51163  44466ms  in=2609 out=127  [ok]
+  [gpu1] [w73/280] job  52059  31807ms  in=748 out=86  [ok]
+  [gpu2] [w26/280] job  51026  30509ms  in=1479 out=101  [ok]
+  [gpu4] [w10/280] job  51835  31632ms  in=777 out=86  [ok]
+  [gpu3] [w43/280] job  50954  29953ms  in=707 out=86  [ok]
+  [gpu7] [w31/280] job  45203  29747ms  in=769 out=85  [ok]
+  [gpu7] [w16/280] job  51331  54087ms  in=1898 out=206  [ok]
+  [gpu3] [w195/280] job  46294  33250ms  in=1303 out=91  [ok]
+  [gpu5] [w3/280] job  45184  77672ms  in=802 out=249  [ok]
+  [gpu6] [w15/280] job  46062  77767ms  in=740 out=225  [ok]
+  [gpu3] [w163/280] job  44886  24064ms  in=983 out=72  [ok]
+  [gpu2] [w274/280] job  45228  49307ms  in=942 out=149  [ok]
+  [gpu8] [w72/280] job  52058  27319ms  in=750 out=63  [ok]
+  [gpu4] [w268/280] job  49725  78219ms  in=2675 out=218  [ok]
+  [gpu6] [w238/280] job  50239  78341ms  in=1710 out=210  [ok]
+  [gpu4] [w252/280] job  45125  45648ms  in=895 out=142  [ok]
+  [gpu4] [w44/280] job  51436  53117ms  in=2202 out=192  [ok]
+  [gpu3] [w259/280] job  50751  78501ms  in=898 out=240  [ok]
+  [gpu2] [w210/280] job  45173  48121ms  in=1455 out=145  [ok]
+  [gpu8] [w280/280] job  45163  32141ms  in=889 out=92  [ok]
+  [gpu5] [w237/280] job  50030  79150ms  in=1806 out=218  [ok]
+  [gpu3] [w227/280] job  49774  78616ms  in=1891 out=230  [ok]
+  [gpu6] [w190/280] job  45127  31606ms  in=672 out=89  [ok]
+  [gpu2] [w130/280] job  47589  79262ms  in=1110 out=246  [ok]
+  [gpu6] [w110/280] job  47161  79147ms  in=296 out=222  [ok]
+  [gpu4] [w212/280] job  45176  44276ms  in=661 out=124  [ok]
+  [gpu1] [w177/280] job  44895  35805ms  in=1322 out=89  [ok]
+  [gpu2] [w250/280] job  45124  40162ms  in=895 out=145  [ok]
+  [gpu1] [w89/280] job  51722  44741ms  in=746 out=115  [ok]
+  [gpu5] [w181/280] job  44883  24039ms  in=843 out=67  [ok]
+  [gpu1] [w57/280] job  51440  34452ms  in=758 out=89  [ok]
+  [gpu7] [w255/280] job  45201  35566ms  in=1076 out=96  [ok]
+  [gpu4] [w60/280] job  51963  35900ms  in=787 out=105  [ok]
+  [gpu5] [w37/280] job  51212  28748ms  in=1384 out=83  [ok]
+  [gpu7] [w223/280] job  49977  80364ms  in=2240 out=221  [ok]
+  [gpu7] [w159/280] job  54087  51909ms  in=685 out=174  [ok]
+  [gpu4] [w108/280] job  47172  80615ms  in=1160 out=238  [ok]
+  [gpu4] [w116/280] job  47306  80694ms  in=626 out=233  [ok]
+  [gpu6] [w78/280] job  45305  37696ms  in=1114 out=108  [ok]
+  [gpu8] [w136/280] job  53611  48957ms  in=1506 out=133  [ok]
+  [gpu5] [w109/280] job  48068  81360ms  in=1566 out=225  [ok]
+  [gpu6] [w206/280] job  45149  19708ms  in=731 out=38  [ok]
+  [gpu8] [w160/280] job  47117  81630ms  in=645 out=229  [ok]
+  [gpu8] [w88/280] job  51641  44302ms  in=1770 out=122  [ok]
+  [gpu1] [w81/280] job  45251  31587ms  in=999 out=94  [ok]
+  [gpu8] [w48/280] job  53091  17247ms  in=934 out=55  [ok]
+  [gpu1] [w249/280] job  45123  51755ms  in=1145 out=150  [ok]
+  [gpu5] [w165/280] job  44893  31111ms  in=864 out=98  [ok]
+  [gpu5] [w149/280] job  53777  40652ms  in=602 out=126  [ok]
+  [gpu7] [w231/280] job  48106  83815ms  in=2301 out=225  [ok]
+  [gpu1] [w1/280] job  51300  56464ms  in=1803 out=175  [ok]
+  [gpu7] [w71/280] job  52726  28161ms  in=798 out=63  [ok]
+  [gpu1] [w41/280] job  52115  26020ms  in=749 out=76  [ok]
+  [gpu2] [w186/280] job  45193  30610ms  in=1031 out=92  [ok]
+  [gpu5] [w93/280] job  45596  40052ms  in=1235 out=124  [ok]
+  [gpu5] [w53/280] job  47188  85892ms  in=1396 out=241  [ok]
+  [gpu2] [w42/280] job  45942  85399ms  in=615 out=248  [ok]
+  [gpu8] [w64/280] job  51210  30157ms  in=1384 out=83  [ok]
+  [gpu2] [w202/280] job  45122  54853ms  in=817 out=159  [ok]
+  [gpu6] [w158/280] job  47446  85627ms  in=2230 out=238  [ok]
+  [gpu3] [w251/280] job  46187  53041ms  in=1202 out=153  [ok]
+  [gpu3] [w107/280] job  53242  48301ms  in=724 out=150  [ok]
+  [gpu8] [w240/280] job  45061  32364ms  in=918 out=86  [ok]
+  [gpu5] [w77/280] job  45248  22938ms  in=999 out=63  [ok]
+  [gpu7] [w95/280] job  47515  87737ms  in=1281 out=257  [ok]
+  [gpu6] [w214/280] job  50481  87569ms  in=1924 out=238  [ok]
+  [gpu1] [w33/280] job  51877  31939ms  in=834 out=99  [ok]
+  [gpu2] [w138/280] job  53618  41858ms  in=862 out=117  [ok]
+  [gpu7] [w279/280] job  50357  88732ms  in=1950 out=255  [ok]
+  [gpu4] [w92/280] job  45073  88543ms  in=882 out=250  [ok]
+  [gpu3] [w51/280] job  46573  88732ms  in=735 out=243  [ok]
+  [gpu7] [w199/280] job  46695  88692ms  in=1743 out=244  [ok]
+  [gpu1] [w273/280] job  45227  54653ms  in=942 out=149  [ok]
+  [gpu2] [w154/280] job  53799  58074ms  in=813 out=172  [ok]
+  [gpu2] [w146/280] job  53751  60922ms  in=731 out=192  [ok]
+  [gpu2] [w34/280] job  51857  32394ms  in=848 out=97  [ok]
+  [gpu3] [w203/280] job  49713  89356ms  in=2414 out=250  [ok]
+  [gpu4] [w132/280] job  45276  32147ms  in=887 out=96  [ok]
+  [gpu8] [w96/280] job  51678  40733ms  in=678 out=106  [ok]
+  [gpu3] [w83/280] job  44947  89927ms  in=725 out=250  [ok]
+  [gpu1] [w97/280] job  52878  31371ms  in=1035 out=81  [ok]
+  [gpu3] [w91/280] job  52300  34066ms  in=701 out=83  [ok]
+  [gpu8] [w5/280] job  45134  21088ms  in=887 out=48  [ok]
+  [gpu6] [w222/280] job  49093  91016ms  in=758 out=261  [ok]
+  [gpu6] [w30/280] job  51223  30824ms  in=1596 out=69  [ok]
+  [gpu1] [w169/280] job  44879  18700ms  in=735 out=37  [ok]
+  [gpu1] [w49/280] job  46545  92161ms  in=804 out=239  [ok]
+  [gpu1] [w12/280] job  51052  21031ms  in=3281 out=52  [ok]
+  [gpu8] [w56/280] job  52111  40902ms  in=809 out=95  [ok]
+  [gpu4] [w180/280] job  48364  91819ms  in=1702 out=264  [ok]
+  [gpu7] [w151/280] job  48307  91919ms  in=645 out=258  [ok]
+  [gpu6] [w118/280] job  53295  34342ms  in=795 out=93  [ok]
+  [gpu7] [w215/280] job  45116  36302ms  in=867 out=90  [ok]
+  [gpu1] [w113/280] job  47057  92215ms  in=738 out=242  [ok]
+  [gpu1] [w201/280] job  45121  35869ms  in=861 out=105  [ok]
+  [gpu4] [w52/280] job  46571  92830ms  in=733 out=261  [ok]
+  [gpu5] [w245/280] job  48946  92198ms  in=753 out=255  [ok]
+  [gpu1] [w257/280] job  45000  45635ms  in=1025 out=117  [ok]
+  [gpu3] [w123/280] job  53355  38878ms  in=717 out=88  [ok]
+  [gpu5] [w269/280] job  45946  44455ms  in=995 out=114  [ok]
+  [gpu2] [w226/280] job  45214  61115ms  in=991 out=182  [ok]
+  [gpu4] [w140/280] job  47760  93082ms  in=753 out=270  [ok]
+  [gpu4] [w36/280] job  51938  44756ms  in=694 out=117  [ok]
+  [gpu7] [w247/280] job  45213  42155ms  in=890 out=127  [ok]
+  [gpu2] [w82/280] job  44954  93830ms  in=632 out=275  [ok]
+  [gpu3] [w219/280] job  45120  35825ms  in=1007 out=92  [ok]
+  [gpu8] [w120/280] job  53323  35739ms  in=734 out=104  [ok]
+  [gpu2] [w66/280] job  52020  43308ms  in=717 out=130  [ok]
+  [gpu6] [w198/280] job  45272  56158ms  in=888 out=159  [ok]
+  [gpu8] [w128/280] job  45288  29718ms  in=1053 out=91  [ok]
+  [gpu6] [w126/280] job  45284  29681ms  in=1053 out=79  [ok]
+  [gpu6] [w11/280] job  51957  32292ms  in=727 out=80  [ok]
+  [gpu4] [w188/280] job  45114  58388ms  in=1262 out=174  [ok]
+  [gpu4] [w124/280] job  53077  28016ms  in=3029 out=72  [ok]
+  [gpu6] [w278/280] job  45135  46854ms  in=1057 out=124  [ok]
+  [gpu8] [w112/280] job  47056  95056ms  in=738 out=272  [ok]
+  [gpu1] [w265/280] job  49622  95039ms  in=1485 out=251  [ok]
+  [gpu1] [w121/280] job  53328  36083ms  in=787 out=86  [ok]
+  [gpu5] [w141/280] job  47793  95555ms  in=793 out=259  [ok]
+  [gpu6] [w134/280] job  45278  31116ms  in=1053 out=87  [ok]
+  [gpu8] [w232/280] job  44900  44483ms  in=537 out=115  [ok]
+  [gpu3] [w115/280] job  53090  60688ms  in=933 out=179  [ok]
+  [gpu7] [w119/280] job  53309  38762ms  in=645 out=100  [ok]
+  [gpu7] [w111/280] job  52994  40031ms  in=2182 out=102  [ok]
+  [gpu5] [w69/280] job  45239  55124ms  in=1209 out=155  [ok]
+  [gpu4] [w196/280] job  45174  59305ms  in=952 out=169  [ok]
+  [gpu7] [w135/280] job  53616  36886ms  in=825 out=103  [ok]
+  [gpu4] [w28/280] job  51306  46218ms  in=809 out=127  [ok]
+  [gpu2] [w74/280] job  45244  33960ms  in=999 out=81  [ok]
+  [gpu5] [w213/280] job  44896  67108ms  in=837 out=211  [ok]
+  [gpu2] [w58/280] job  46616  96854ms  in=668 out=282  [ok]
+  [gpu4] [w84/280] job  49940  45299ms  in=1495 out=127  [ok]
+  [gpu2] [w242/280] job  48076  97641ms  in=1510 out=292  [ok]
+  [gpu4] [w148/280] job  53768  49669ms  in=598 out=139  [ok]
+  [gpu7] [w87/280] job  45098  97141ms  in=1160 out=282  [ok]
+  [gpu6] [w70/280] job  46888  97419ms  in=931 out=282  [ok]
+  [gpu3] [w2/280] job  51696  63986ms  in=1386 out=181  [ok]
+  [gpu3] [w27/280] job  51303  54549ms  in=767 out=156  [ok]
+  [gpu6] [w246/280] job  45115  47494ms  in=969 out=135  [ok]
+  [gpu8] [w32/280] job  51177  60400ms  in=858 out=172  [ok]
+  [gpu1] [w225/280] job  46059  39249ms  in=1158 out=91  [ok]
+  [gpu3] [w8/280] job  51832  40777ms  in=778 out=99  [ok]
+  [gpu6] [w142/280] job  53661  63600ms  in=627 out=177  [ok]
+  [gpu5] [w125/280] job  53434  32519ms  in=725 out=66  [ok]
+  [gpu5] [w173/280] job  44894  63889ms  in=1121 out=194  [ok]
+  [gpu6] [w86/280] job  52396  52252ms  in=724 out=162  [ok]
+  [gpu3] [w131/280] job  45275  54370ms  in=887 out=140  [ok]
+  [gpu5] [w237/280] job  45103  21548ms  in=1153 out=62  [ok]
+  [gpu7] [w103/280] job  46996  100337ms  in=1310 out=281  [ok]
+  [gpu2] [w122/280] job  53344  39909ms  in=650 out=97  [ok]
+  [gpu5] [w133/280] job  45277  44782ms  in=887 out=132  [ok]
+  [gpu2] [w218/280] job  45119  40658ms  in=1007 out=99  [ok]
+  [gpu3] [w179/280] job  45853  44917ms  in=1266 out=109  [ok]
+  [gpu8] [w272/280] job  49619  101957ms  in=991 out=287  [ok]
+  [gpu7] [w231/280] job  44898  17957ms  in=764 out=46  [ok]
+  [gpu8] [w24/280] job  51850  72458ms  in=815 out=206  [ok]
+  [gpu8] [w264/280] job  44997  50199ms  in=1184 out=131  [ok]
+  [gpu8] [w216/280] job  45117  36289ms  in=1007 out=92  [ok]
+  [gpu8] [w168/280] job  45313  49688ms  in=870 out=130  [ok]
+  [gpu7] [w223/280] job  45156  23332ms  in=845 out=65  [ok]
+  [gpu5] [w117/280] job  46757  73798ms  in=1396 out=224  [ok]
+  [gpu8] [w104/280] job  46995  104503ms  in=1310 out=295  [ok]
+  [gpu5] [w85/280] job  45253  40522ms  in=930 out=113  [ok]
+  [gpu1] [w137/280] job  47940  104640ms  in=1733 out=266  [ok]
+  [gpu5] [w21/280] job  52888  58468ms  in=2432 out=170  [ok]
+  [gpu3] [w75/280] job  45246  48652ms  in=999 out=118  [ok]
+  [gpu4] [w276/280] job  45128  53072ms  in=1316 out=137  [ok]
+  [gpu1] [w1/280] job  45166  21087ms  in=722 out=36  [ok]
+  [gpu7] [w239/280] job  45366  50303ms  in=1352 out=139  [ok]
+  [gpu2] [w162/280] job  44885  44209ms  in=983 out=116  [ok]
+  [gpu5] [w14/280] job  52084  37369ms  in=786 out=85  [ok]
+  [gpu2] [w130/280] job  53413  26938ms  in=668 out=70  [ok]
+  [gpu7] [w263/280] job  44983  65488ms  in=1340 out=188  [ok]
+  [gpu4] [w108/280] job  53403  25902ms  in=2109 out=55  [ok]
+  [gpu6] [w182/280] job  45105  48656ms  in=1057 out=125  [ok]
+  [gpu8] [w208/280] job  45171  76987ms  in=1769 out=234  [ok]
+  [gpu4] [w156/280] job  54012  45163ms  in=1525 out=130  [ok]
+  [gpu4] [w236/280] job  44901  66538ms  in=1537 out=187  [ok]
+  [gpu3] [w35/280] job  45233  42547ms  in=932 out=113  [ok]
+  [gpu1] [w185/280] job  45108  72255ms  in=957 out=182  [ok]
+  [gpu1] [w217/280] job  45118  62000ms  in=1007 out=155  [ok]
+  [gpu6] [w254/280] job  45200  76109ms  in=1271 out=222  [ok]
+  [gpu6] [w230/280] job  45346  53932ms  in=846 out=154  [ok]
+  [gpu1] [w18/280] job  51738  65579ms  in=1418 out=178  [ok]
+  [gpu2] [w50/280] job  51991  46957ms  in=1179 out=123  [ok]
+  [gpu2] [w9/280] job  51834  60298ms  in=754 out=179  [ok]
+  [gpu8] [w40/280] job  44980  41717ms  in=969 out=109  [ok]
+  [gpu2] [w106/280] job  53092  59336ms  in=723 out=175  [ok]
+  [gpu6] [w150/280] job  53779  46475ms  in=1386 out=119  [ok]
+  [gpu2] [w114/280] job  47054  108577ms  in=738 out=330  [ok]
+  [gpu1] [w73/280] job  45243  34211ms  in=999 out=81  [ok]
+  [gpu2] [w178/280] job  45327  49227ms  in=1496 out=133  [ok]
+  [gpu3] [w275/280] job  45229  55456ms  in=942 out=151  [ok]
+  [gpu2] [w170/280] job  45315  38870ms  in=1014 out=119  [ok]
+  [gpu1] [w25/280] job  45813  109410ms  in=750 out=292  [ok]
+  [gpu7] [w199/280] job  44892  20992ms  in=737 out=47  [ok]
+  [gpu2] [w26/280] job  45602  34517ms  in=800 out=88  [ok]
+  [gpu4] [w268/280] job  45038  32052ms  in=736 out=90  [ok]
+  [gpu6] [w238/280] job  45110  32150ms  in=1846 out=93  [ok]
+  [gpu7] [w175/280] job  44880  38819ms  in=1165 out=101  [ok]
+  [gpu3] [w195/280] job  45326  34000ms  in=1128 out=75  [ok]
+  [gpu3] [w171/280] job  45199  64899ms  in=1831 out=172  [ok]
+  [gpu6] [w78/280] job  45482  30240ms  in=1051 out=85  [ok]
+  [gpu3] [w139/280] job  53639  58063ms  in=626 out=145  [ok]
+  [gpu3] [w211/280] job  45711  37680ms  in=905 out=82  [ok]
+  [gpu1] [w105/280] job  45280  38557ms  in=1053 out=91  [ok]
+  [gpu5] [w157/280] job  45303  40348ms  in=867 out=101  [ok]
+  [gpu2] [w258/280] job  45019  38293ms  in=823 out=109  [ok]
+  [gpu8] [w280/280] job  45417  34259ms  in=1214 out=94  [ok]
+  [gpu7] [w167/280] job  44889  45401ms  in=942 out=144  [ok]
+  [gpu7] [w79/280] job  52453  54382ms  in=1651 out=148  [ok]
+  [gpu8] [w152/280] job  53794  60193ms  in=621 out=154  [ok]
+  [gpu7] [w71/280] job  45241  28444ms  in=999 out=81  [ok]
+  [gpu5] [w45/280] job  53468  53396ms  in=707 out=156  [ok]
+  [gpu3] [w59/280] job  45565  48890ms  in=1370 out=140  [ok]
+  [gpu3] [w187/280] job  45109  67024ms  in=957 out=182  [ok]
+  [gpu4] [w116/280] job  53208  33728ms  in=1274 out=84  [ok]
+  [gpu5] [w29/280] job  51417  62103ms  in=783 out=176  [ok]
+  [gpu4] [w204/280] job  45146  49241ms  in=815 out=135  [ok]
+  [gpu8] [w256/280] job  45221  78189ms  in=1415 out=209  [ok]
+  [gpu5] [w101/280] job  46737  77346ms  in=1367 out=228  [ok]
+  [gpu5] [w109/280] job  53297  34612ms  in=814 out=91  [ok]
+  [gpu7] [w183/280] job  45106  69299ms  in=940 out=213  [ok]
+  [gpu7] [w255/280] job  45396  35717ms  in=1205 out=113  [ok]
+  [gpu7] [w4/280] job  45129  45587ms  in=1046 out=135  [ok]
+  [gpu5] [w253/280] job  45133  48254ms  in=1030 out=127  [ok]
+  [gpu4] [w68/280] job  52090  52107ms  in=766 out=146  [ok]
+  [gpu5] [w245/280] job  45112  24890ms  in=1162 out=86  [ok]
+  [gpu1] [w65/280] job  45650  53455ms  in=1686 out=143  [ok]
+  [gpu4] [w228/280] job  45344  67418ms  in=1019 out=185  [ok]
+  [gpu8] [w72/280] job  45242  39522ms  in=999 out=116  [ok]
+  [gpu1] [w161/280] job  47921  117491ms  in=3345 out=312  [ok]
+  [gpu7] [w207/280] job  45150  75651ms  in=1100 out=233  [ok]
+  [gpu6] [w38/280] job  45209  62793ms  in=942 out=196  [ok]
+  [gpu6] [w222/280] job  45155  27418ms  in=827 out=89  [ok]
+  [gpu6] [w166/280] job  44888  45748ms  in=1103 out=157  [ok]
+  [gpu6] [w30/280] job  45189  27511ms  in=1162 out=86  [ok]
+  [gpu5] [w141/280] job  53663  23246ms  in=495 out=75  [ok]
+  [gpu3] [w67/280] job  46797  118717ms  in=676 out=337  [ok]
+  [gpu2] [w42/280] job  52116  33542ms  in=720 out=92  [ok]
+  [gpu4] [w76/280] job  52121  50806ms  in=1553 out=149  [ok]
+  [gpu4] [w276/280] job  45401  14425ms  in=1169 out=54  [ok]
+  [gpu4] [w164/280] job  44887  72280ms  in=1103 out=213  [ok]
+  [gpu8] [w88/280] job  45573  37742ms  in=883 out=89  [ok]
+  [gpu8] [w5/280] job  45425  29201ms  in=1256 out=83  [ok]
+  [gpu7] [w279/280] job  45143  31822ms  in=797 out=97  [ok]
+  [gpu6] [w110/280] job  46755  41223ms  in=1394 out=122  [ok]
+  [gpu1] [w33/280] job  45205  33189ms  in=793 out=82  [ok]
+  [gpu6] [w206/280] job  45934  39587ms  in=433 out=123  [ok]
+  [gpu4] [w244/280] job  44969  73398ms  in=1193 out=206  [ok]
+  [gpu1] [w129/280] job  53146  77525ms  in=1983 out=199  [ok]
+  [gpu1] [w177/280] job  45321  41866ms  in=1055 out=106  [ok]
+  [gpu6] [w158/280] job  47081  35685ms  in=1312 out=121  [ok]
+  [gpu3] [w27/280] job  45144  24134ms  in=885 out=66  [ok]
+  [gpu1] [w153/280] job  53796  76342ms  in=324 out=203  [ok]
+  [gpu8] [w224/280] job  46057  75266ms  in=1190 out=224  [ok]
+  [gpu4] [w196/280] job  45348  25569ms  in=1462 out=76  [ok]
+  [gpu4] [w180/280] job  44882  30062ms  in=829 out=90  [ok]
+  [gpu2] [w6/280] job  45494  64452ms  in=748 out=184  [ok]
+  [gpu8] [w80/280] job  51576  71579ms  in=702 out=194  [ok]
+  [gpu6] [w270/280] job  45226  57485ms  in=942 out=176  [ok]
+  [gpu2] [w154/280] job  45300  33753ms  in=1155 out=98  [ok]
+  [gpu5] [w165/280] job  45310  39189ms  in=872 out=113  [ok]
+  [gpu3] [w43/280] job  45236  47434ms  in=932 out=119  [ok]
+  [gpu8] [w144/280] job  53749  54891ms  in=676 out=151  [ok]
+  [gpu8] [w120/280] job  45268  29480ms  in=907 out=75  [ok]
+  [gpu4] [w52/280] job  52094  31358ms  in=733 out=89  [ok]
+  [gpu8] [w176/280] job  44881  53835ms  in=913 out=149  [ok]
+  [gpu8] [w200/280] job  45363  55227ms  in=1074 out=152  [ok]
+  [gpu7] [w159/280] job  45306  43423ms  in=1262 out=116  [ok]
+  [gpu4] [w60/280] job  45571  43763ms  in=558 out=124  [ok]
+  [gpu2] [w146/280] job  45292  35104ms  in=1156 out=99  [ok]
+  [gpu8] [w136/280] job  46112  43653ms  in=910 out=120  [ok]
+  [gpu3] [w107/280] job  45256  38768ms  in=930 out=117  [ok]
+  [gpu1] [w81/280] job  45484  42653ms  in=1258 out=100  [ok]
+  [gpu1] [w121/280] job  45269  29864ms  in=907 out=78  [ok]
+  [gpu5] [w213/280] job  45717  28239ms  in=905 out=76  [ok]
+  [gpu5] [w53/280] job  52065  40019ms  in=1266 out=112  [ok]
+  [gpu5] [w277/280] job  45636  89588ms  in=1780 out=263  [ok]
+  [gpu5] [w221/280] job  49193  125622ms  in=1558 out=371  [ok]
+  [gpu7] [w31/280] job  45434  49394ms  in=1747 out=150  [ok]
+  [gpu3] [w267/280] job  45225  58422ms  in=942 out=163  [ok]
+  [gpu7] [w95/280] job  51676  38568ms  in=728 out=115  [ok]
+  [gpu2] [w194/280] job  45195  51679ms  in=1031 out=155  [ok]
+  [gpu3] [w123/280] job  45271  33387ms  in=962 out=98  [ok]
+  [gpu6] [w174/280] job  45886  52062ms  in=1656 out=172  [ok]
+  [gpu7] [w16/280] job  45207  50045ms  in=1451 out=152  [ok]
+  [gpu3] [w83/280] job  51614  36599ms  in=1430 out=103  [ok]
+  [gpu5] [w61/280] job  48444  69300ms  in=753 out=203  [ok]
+  [gpu4] [w100/280] job  46736  59080ms  in=1261 out=167  [ok]
+  [gpu8] [w240/280] job  45504  40828ms  in=1241 out=114  [ok]
+  [gpu3] [w155/280] job  45301  52924ms  in=1009 out=151  [ok]
+  [gpu2] [w34/280] job  45232  37816ms  in=932 out=113  [ok]
+  [gpu2] [w19/280] job  46189  52761ms  in=1207 out=151  [ok]
+  [gpu8] [w48/280] job  46195  44748ms  in=1198 out=116  [ok]
+  [gpu5] [w261/280] job  45224  56122ms  in=942 out=158  [ok]
+  [gpu7] [w119/280] job  45282  31651ms  in=1053 out=91  [ok]
+  [gpu1] [w193/280] job  45154  66956ms  in=1610 out=179  [ok]
+  [gpu7] [w39/280] job  46192  57057ms  in=1176 out=173  [ok]
+  [gpu2] [w186/280] job  45332  42673ms  in=943 out=141  [ok]
+  [gpu5] [w189/280] job  45335  56988ms  in=926 out=161  [ok]
+  [gpu1] [w273/280] job  45397  40560ms  in=1522 out=103  [ok]
+  [gpu5] [w125/280] job  45283  30182ms  in=1053 out=92  [ok]
+  [gpu7] [w55/280] job  45217  58235ms  in=484 out=171  [ok]
+  [gpu3] [w251/280] job  45500  44076ms  in=1294 out=138  [ok]
+  [gpu7] [w143/280] job  53710  61257ms  in=530 out=199  [ok]
+  [gpu1] [w169/280] job  45314  39016ms  in=870 out=97  [ok]
+  [gpu6] [w278/280] job  45405  35520ms  in=1274 out=83  [ok]
+  [gpu2] [w90/280] job  52275  83101ms  in=1314 out=259  [ok]
+  [gpu7] [w63/280] job  45583  56803ms  in=1032 out=172  [ok]
+  [gpu7] [w127/280] job  45737  73720ms  in=1014 out=214  [ok]
+  [gpu2] [w122/280] job  45270  30241ms  in=962 out=98  [ok]
+  [gpu1] [w49/280] job  51952  39726ms  in=729 out=96  [ok]
+  [gpu4] [w20/280] job  52407  84476ms  in=753 out=225  [ok]
+  [gpu2] [w162/280] job  45309  26363ms  in=872 out=83  [ok]
+  [gpu8] [w96/280] job  45267  42333ms  in=907 out=116  [ok]
+  [gpu4] [w132/280] job  45532  43076ms  in=1385 out=127  [ok]
+  [gpu6] [w102/280] job  45088  71539ms  in=1702 out=205  [ok]
+  [gpu6] [w262/280] job  45005  97763ms  in=656 out=280  [ok]
+  [gpu4] [w220/280] job  45426  94164ms  in=1588 out=273  [ok]
+  [gpu4] [w124/280] job  45745  38805ms  in=1021 out=100  [ok]
+  [gpu1] [w241/280] job  45111  73149ms  in=1033 out=191  [ok]
+  [gpu7] [w103/280] job  52190  34475ms  in=1659 out=101  [ok]
+  [gpu4] [w10/280] job  45873  59293ms  in=1656 out=173  [ok]
+  [gpu6] [w70/280] job  52041  37597ms  in=1347 out=109  [ok]
+  [gpu1] [w257/280] job  45361  42888ms  in=787 out=105  [ok]
+  [gpu6] [w190/280] job  45322  56440ms  in=1524 out=171  [ok]
+  [gpu2] [w226/280] job  46060  42573ms  in=809 out=129  [ok]
+  [gpu3] [w227/280] job  45215  56727ms  in=913 out=160  [ok]
+  [gpu2] [w250/280] job  45497  55945ms  in=1302 out=164  [ok]
+  [gpu3] [w8/280] job  45131  37001ms  in=893 out=111  [ok]
+  [gpu2] [w138/280] job  46116  47997ms  in=937 out=138  [ok]
+  [gpu5] [w197/280] job  45211  69209ms  in=987 out=190  [ok]
+  [gpu3] [w35/280] job  45441  29278ms  in=1685 out=100  [ok]
+  [gpu8] [w40/280] job  45451  28155ms  in=1628 out=74  [ok]
+  [gpu2] [w218/280] job  45495  35242ms  in=1241 out=110  [ok]
+  [gpu4] [w36/280] job  45234  43209ms  in=932 out=113  [ok]
+  [gpu4] [w212/280] job  45480  57256ms  in=1128 out=155  [ok]
+  [gpu6] [w86/280] job  45254  37290ms  in=930 out=113  [ok]
+  [gpu5] [w173/280] job  45318  37632ms  in=1039 out=107  [ok]
+  [gpu6] [w126/280] job  47205  42890ms  in=1620 out=126  [ok]
+  [gpu5] [w205/280] job  45379  70918ms  in=889 out=184  [ok]
+  [gpu3] [w51/280] job  52327  49653ms  in=1833 out=146  [ok]
+  [gpu5] [w3/280] job  50985  61653ms  in=1879 out=181  [ok]
+  [gpu2] [w9/280] job  45136  30567ms  in=636 out=78  [ok]
+  [gpu1] [w41/280] job  45210  54445ms  in=942 out=137  [ok]
+  [gpu7] [w23/280] job  52545  95411ms  in=677 out=280  [ok]
+  [gpu3] [w203/280] job  45139  49754ms  in=784 out=151  [ok]
+  [gpu5] [w149/280] job  45296  55653ms  in=904 out=161  [ok]
+  [gpu8] [w24/280] job  45084  37574ms  in=1075 out=111  [ok]
+  [gpu8] [w160/280] job  54126  58259ms  in=546 out=169  [ok]
+  [gpu3] [w115/280] job  45264  44434ms  in=1211 out=145  [ok]
+  [gpu8] [w168/280] job  45552  36554ms  in=1246 out=101  [ok]
+  [gpu5] [w69/280] job  45468  44040ms  in=1077 out=134  [ok]
+  [gpu3] [w13/280] job  51374  66411ms  in=2249 out=199  [ok]
+  [gpu8] [w264/280] job  45380  38081ms  in=590 out=107  [ok]
+  [gpu7] [w87/280] job  51616  44222ms  in=790 out=120  [ok]
+  [gpu4] [w148/280] job  45295  44473ms  in=878 out=118  [ok]
+  [gpu4] [w92/280] job  52026  53076ms  in=797 out=153  [ok]
+  [gpu7] [w271/280] job  45197  86579ms  in=1631 out=247  [ok]
+  [gpu6] [w142/280] job  46121  43138ms  in=910 out=126  [ok]
+  [gpu2] [w82/280] job  51744  48722ms  in=707 out=151  [ok]
+  [gpu2] [w210/280] job  45706  64878ms  in=1087 out=189  [ok]
+  [gpu6] [w118/280] job  45281  50957ms  in=1053 out=144  [ok]
+  [gpu3] [w163/280] job  45336  65876ms  in=858 out=188  [ok]
+  [gpu8] [w184/280] job  45107  73381ms  in=940 out=217  [ok]
+  [gpu7] [w191/280] job  45152  90575ms  in=938 out=279  [ok]
+  [gpu7] [w247/280] job  45384  50337ms  in=1205 out=143  [ok]
+  [gpu1] [w145/280] job  53738  71892ms  in=842 out=218  [ok]
+  [gpu4] [w228/280] job  46063  27090ms  in=488 out=51  [ok]
+  [gpu1] [w201/280] job  45368  52180ms  in=1074 out=156  [ok]
+  [gpu1] [w225/280] job  45670  45541ms  in=889 out=154  [ok]
+  [gpu4] [w180/280] job  46387  22593ms  in=145 out=42  [ok]
+  [gpu6] [w238/280] job  45359  34672ms  in=601 out=99  [ok]
+  [gpu7] [w151/280] job  53791  52939ms  in=667 out=161  [ok]
+  [gpu8] [w112/280] job  53016  49853ms  in=1746 out=148  [ok]
+  [gpu7] [w111/280] job  45260  49334ms  in=1212 out=146  [ok]
+  [gpu7] [w175/280] job  45319  34834ms  in=1055 out=108  [ok]
+  [gpu5] [w29/280] job  45159  30597ms  in=1162 out=85  [ok]
+  [gpu4] [w252/280] job  45390  67678ms  in=1205 out=185  [ok]
+  [gpu7] [w215/280] job  45337  53718ms  in=858 out=164  [ok]
+  [gpu1] [w33/280] job  45437  24975ms  in=1628 out=84  [ok]
+  [gpu2] [w170/280] job  45558  36810ms  in=1246 out=101  [ok]
+  [gpu6] [w94/280] job  45600  81393ms  in=970 out=245  [ok]
+  [gpu6] [w134/280] job  45548  51045ms  in=984 out=145  [ok]
+  [gpu2] [w202/280] job  45371  60887ms  in=1074 out=172  [ok]
+  [gpu7] [w239/280] job  46514  41251ms  in=1945 out=130  [ok]
+  [gpu6] [w198/280] job  45355  52060ms  in=1074 out=156  [ok]
+  [gpu3] [w2/280] job  45202  49040ms  in=624 out=156  [ok]
+  [gpu1] [w161/280] job  44884  29319ms  in=997 out=104  [ok]
+  [gpu3] [w179/280] job  46386  45678ms  in=1214 out=141  [ok]
+  [gpu1] [w233/280] job  44902  102111ms  in=1197 out=296  [ok]
+  [gpu5] [w14/280] job  45140  41602ms  in=1203 out=128  [ok]
+  [gpu6] [w214/280] job  44897  59806ms  in=837 out=202  [ok]
+  [gpu5] [w21/280] job  45141  43090ms  in=979 out=129  [ok]
+  [gpu1] [w209/280] job  45172  108940ms  in=2123 out=324  [ok]
+  [gpu1] [w1/280] job  45419  43376ms  in=1214 out=151  [ok]
+  [gpu1] [w249/280] job  45388  65015ms  in=1205 out=194  [ok]
+  [gpu1] [w113/280] job  53038  56406ms  in=1706 out=172  [ok]
+  [gpu8] [w64/280] job  45591  63410ms  in=1120 out=187  [ok]
+  [gpu2] [w66/280] job  45654  54897ms  in=574 out=168  [ok]
+  [gpu2] [w106/280] job  45255  41293ms  in=930 out=113  [ok]
+  [gpu2] [w6/280] job  45427  27604ms  in=1256 out=83  [ok]
+  [gpu5] [w45/280] job  45179  36413ms  in=661 out=118  [ok]
+  [gpu5] [w117/280] job  45266  45923ms  in=1211 out=145  [ok]
+  [gpu4] [w108/280] job  45257  43480ms  in=1212 out=130  [ok]
+  [gpu2] [w266/280] job  45196  79107ms  in=1999 out=249  [ok]
+  [gpu8] [w17/280] job  45208  76980ms  in=1451 out=237  [ok]
+  [gpu2] [w58/280] job  52171  53602ms  in=762 out=170  [ok]
+  [gpu8] [w80/280] job  45250  28423ms  in=999 out=84  [ok]
+  [gpu3] [w139/280] job  45358  38905ms  in=882 out=113  [ok]
+  [gpu2] [w98/280] job  45613  86311ms  in=1384 out=266  [ok]
+  [gpu2] [w42/280] job  45235  31930ms  in=932 out=113  [ok]
+  [gpu3] [w243/280] job  46184  86249ms  in=1196 out=249  [ok]
+  [gpu2] [w178/280] job  45605  42368ms  in=1241 out=124  [ok]
+  [gpu1] [w25/280] job  51961  41832ms  in=1904 out=129  [ok]
+  [gpu3] [w91/280] job  45587  60807ms  in=1157 out=186  [ok]
+  [gpu5] [w237/280] job  45354  51721ms  in=589 out=154  [ok]
+  [gpu7] [w279/280] job  45407  31805ms  in=1274 out=85  [ok]
+  [gpu4] [w188/280] job  45334  58027ms  in=926 out=162  [ok]
+  [gpu4] [w84/280] job  45607  55895ms  in=707 out=160  [ok]
+  [gpu8] [w208/280] job  45692  46306ms  in=1281 out=144  [ok]
+  [gpu4] [w76/280] job  45247  33971ms  in=999 out=84  [ok]
+  [gpu6] [w206/280] job  45608  32231ms  in=720 out=81  [ok]
+  [gpu8] [w256/280] job  47082  38148ms  in=1478 out=121  [ok]
+  [gpu4] [w44/280] job  45093  76032ms  in=1777 out=209  [ok]
+  [gpu4] [w276/280] job  45720  34761ms  in=1302 out=86  [ok]
+  [gpu2] [w194/280] job  45325  28076ms  in=1128 out=75  [ok]
+  [gpu2] [w130/280] job  45274  48133ms  in=887 out=152  [ok]
+  [gpu6] [w174/280] job  45574  28027ms  in=1258 out=83  [ok]
+  [gpu3] [w75/280] job  45478  49843ms  in=989 out=168  [ok]
+  [gpu4] [w260/280] job  45223  87502ms  in=2158 out=252  [ok]
+  [gpu8] [w144/280] job  45291  31944ms  in=819 out=97  [ok]
+  [gpu7] [w4/280] job  45594  38767ms  in=843 out=95  [ok]
+  [gpu6] [w54/280] job  45192  85969ms  in=1854 out=269  [ok]
+  [gpu6] [w11/280] job  45137  61239ms  in=1080 out=167  [ok]
+  [gpu5] [w77/280] job  45479  69831ms  in=2100 out=214  [ok]
+  [gpu6] [w150/280] job  45297  48042ms  in=1140 out=136  [ok]
+  [gpu3] [w99/280] job  45616  85815ms  in=1780 out=267  [ok]
+  [gpu6] [w222/280] job  45343  38405ms  in=853 out=111  [ok]
+  [gpu6] [w62/280] job  52351  114612ms  in=1660 out=352  [ok]
+  [gpu7] [w79/280] job  45249  44306ms  in=999 out=118  [ok]
+  [gpu4] [w116/280] job  45265  42634ms  in=1211 out=128  [ok]
+  [gpu6] [w182/280] job  45329  50389ms  in=865 out=162  [ok]
+  [gpu1] [w185/280] job  45485  50042ms  in=877 out=142  [ok]
+  [gpu6] [w166/280] job  45311  38982ms  in=870 out=97  [ok]
+  [gpu6] [w278/280] job  45729  27114ms  in=1302 out=86  [ok]
+  [gpu8] [w280/280] job  45738  44963ms  in=1275 out=153  [ok]
+  [gpu3] [w275/280] job  45399  48650ms  in=1522 out=163  [ok]
+  [gpu3] [w267/280] job  45389  31746ms  in=1019 out=93  [ok]
+  [w46/280] job  51629  ERROR: Connection error.
+  [w208/280] job  45620  ERROR: Connection error.
+  [w92/280] job  45592  ERROR: Connection error.
+  [w269/280] job  45413  ERROR: Connection error.
+  [w263/280] job  45375  ERROR: Connection error.
+  [w248/280] job  44971  ERROR: Connection error.
+  [w140/280] job  53634  ERROR: Connection error.
+  [w232/280] job  45349  ERROR: Connection error.
+  [w25/280] job  45983  ERROR: Connection error.
+  [w11/280] job  45404  ERROR: Connection error.
+  [w225/280] job  46054  ERROR: Connection error.
+  [w246/280] job  45382  ERROR: Connection error.
+  [w147/280] job  45293  ERROR: Connection error.
+  [w40/280] job  45767  ERROR: Connection error.
+  [w94/280] job  45533  ERROR: Connection error.
+  [w35/280] job  45777  ERROR: Connection error.
+  [w8/280] job  45431  ERROR: Connection error.
+  [w186/280] job  45590  ERROR: Connection error.
+  [w56/280] job  45218  ERROR: Connection error.
+  [w76/280] job  45541  ERROR: Connection error.
+  [w219/280] job  45340  ERROR: Connection error.
+  [w15/280] job  51705  ERROR: Connection error.
+  [w169/280] job  45555  ERROR: Connection error.
+  [w272/280] job  45703  ERROR: Connection error.
+  [w101/280] job  45625  ERROR: Connection error.
+  [w152/280] job  45298  ERROR: Connection error.
+  [w131/280] job  45530  ERROR: Connection error.
+  [w250/280] job  45704  ERROR: Connection error.
+  [w109/280] job  45258  ERROR: Connection error.
+  [w97/280] job  45609  ERROR: Connection error.
+  [w234/280] job  44904  ERROR: Connection error.
+  [w207/280] job  45381  ERROR: Connection error.
+  [w213/280] job  45624  ERROR: Connection error.
+  [w260/280] job  45370  ERROR: Connection error.
+  [w78/280] job  46172  ERROR: Connection error.
+  [w119/280] job  45534  ERROR: Connection error.
+  [w20/280] job  45231  ERROR: Connection error.
+  [w188/280] job  45618  ERROR: Connection error.
+  [w107/280] job  45880  ERROR: Connection error.
+  [w270/280] job  45391  ERROR: Connection error.
+  [w256/280] job  45718  ERROR: Connection error.
+  [w44/280] job  45446  ERROR: Connection error.
+  [w251/280] job  45708  ERROR: Connection error.
+  [w224/280] job  45667  ERROR: Connection error.
+  [w231/280] job  45347  ERROR: Connection error.
+  [w205/280] job  46399  ERROR: Connection error.
+  [w203/280] job  45374  ERROR: Connection error.
+  [w199/280] job  45360  ERROR: Connection error.
+  [w55/280] job  45465  ERROR: Connection error.
+  [w57/280] job  45219  ERROR: Connection error.
+  [w130/280] job  45527  ERROR: Connection error.
+  [w120/280] job  45536  ERROR: Connection error.
+  [w182/280] job  45572  ERROR: Connection error.
+  [w180/280] job  45615  ERROR: Connection error.
+  [w166/280] job  45659  ERROR: Connection error.
+  [w82/280] job  45252  ERROR: Connection error.
+  [w67/280] job  52022  ERROR: Connection error.
+  [w58/280] job  45220  ERROR: Connection error.
+  [w217/280] job  45339  ERROR: Connection error.
+  [w252/280] job  45714  ERROR: Connection error.
+  [w275/280] job  45716  ERROR: Connection error.
+  [w149/280] job  45569  ERROR: Connection error.
+  [w38/280] job  45447  ERROR: Connection error.
+  [w226/280] job  45693  ERROR: Connection error.
+  [w202/280] job  45675  ERROR: Connection error.
+  [w271/280] job  45393  ERROR: Connection error.
+  [w215/280] job  45631  ERROR: Connection error.
+  [w19/280] job  45433  ERROR: Connection error.
+  [w259/280] job  45222  ERROR: Connection error.
+  [w95/280] job  45603  ERROR: Connection error.
+  [w29/280] job  45430  ERROR: Connection error.
+  [w240/280] job  45915  ERROR: Connection error.
+  [w16/280] job  45414  ERROR: Connection error.
+  [w84/280] job  45489  ERROR: Connection error.
+  [w168/280] job  47806  ERROR: Connection error.
+  [w262/280] job  45409  ERROR: Connection error.
+  [w181/280] job  45328  ERROR: Connection error.
+  [w72/280] job  45472  ERROR: Connection error.
+  [w165/280] job  45655  ERROR: Connection error.
+  [w137/280] job  53603  ERROR: Connection error.
+  [w128/280] job  45545  ERROR: Connection error.
+  [w154/280] job  45599  ERROR: Connection error.
+  [w27/280] job  45872  ERROR: Connection error.
+  [w103/280] job  45632  ERROR: Connection error.
+  [w171/280] job  45316  ERROR: Connection error.
+  [w17/280] job  45416  ERROR: Connection error.
+  [w206/280] job  46043  ERROR: Connection error.
+  [w204/280] job  45377  ERROR: Connection error.
+  [w211/280] job  45646  ERROR: Connection error.
+  [w268/280] job  45411  ERROR: Connection error.
+  [w244/280] job  45378  ERROR: Connection error.
+  [w178/280] job  45890  ERROR: Connection error.
+  [w33/280] job  45769  ERROR: Connection error.
+  [w51/280] job  45187  ERROR: Connection error.
+  [w177/280] job  45593  ERROR: Connection error.
+  [w100/280] job  45621  ERROR: Connection error.
+  [w192/280] job  45153  ERROR: Connection error.
+  [w26/280] job  45420  ERROR: Connection error.
+  [w127/280] job  45286  ERROR: Connection error.
+  [w175/280] job  45579  ERROR: Connection error.
+  [w99/280] job  45490  ERROR: Connection error.
+  [w81/280] job  47238  ERROR: Connection error.
+  [w266/280] job  45385  ERROR: Connection error.
+  [w253/280] job  45392  ERROR: Connection error.
+  [w195/280] job  45648  ERROR: Connection error.
+  [w122/280] job  45506  ERROR: Connection error.
+  [w212/280] job  45653  ERROR: Connection error.
+  [w108/280] job  45882  ERROR: Connection error.
+  [w201/280] job  45671  ERROR: Connection error.
+  [w196/280] job  45652  ERROR: Connection error.
+  [w236/280] job  45387  ERROR: Connection error.
+  [w48/280] job  45454  ERROR: Connection error.
+  [w59/280] job  45471  ERROR: Connection error.
+  [w156/280] job  45302  ERROR: Connection error.
+  [w237/280] job  45683  ERROR: Connection error.
+  [w91/280] job  45529  ERROR: Connection error.
+  [w52/280] job  45188  ERROR: Connection error.
+  [w249/280] job  45695  ERROR: Connection error.
+  [w159/280] job  45630  ERROR: Connection error.
+  [w87/280] job  45245  ERROR: Connection error.
+  [w75/280] job  45836  ERROR: Connection error.
+  [w64/280] job  45457  ERROR: Connection error.
+  [w77/280] job  45844  ERROR: Connection error.
+  [w28/280] job  45145  ERROR: Connection error.
+  [w190/280] job  45629  ERROR: Connection error.
+  [w4/280] job  45759  ERROR: Connection error.
+  [w216/280] job  45338  ERROR: Connection error.
+  [w111/280] job  45498  ERROR: Connection error.
+  [w129/280] job  45273  ERROR: Connection error.
+  [w209/280] job  45700  ERROR: Connection error.
+  [w30/280] job  45432  ERROR: Connection error.
+  [w227/280] job  46061  ERROR: Connection error.
+  [w218/280] job  45641  ERROR: Connection error.
+  [w24/280] job  45440  ERROR: Connection error.
+  [w261/280] job  45372  ERROR: Connection error.
+  [w153/280] job  45299  ERROR: Connection error.
+  [w114/280] job  46728  ERROR: Connection error.
+  [w241/280] job  45369  ERROR: Connection error.
+  [w83/280] job  46058  ERROR: Connection error.
+  [w62/280] job  45575  ERROR: Connection error.
+  [w170/280] job  45869  ERROR: Connection error.
+  [w70/280] job  45240  ERROR: Connection error.
+  [w98/280] job  45488  ERROR: Connection error.
+  [w143/280] job  45290  ERROR: Connection error.
+  [w273/280] job  45707  ERROR: Connection error.
+  [w245/280] job  45493  ERROR: Connection error.
+  [w37/280] job  45151  ERROR: Connection error.
+  [w280/280] job  46409  ERROR: Connection error.
+  [w113/280] job  45262  ERROR: Connection error.
+  [w74/280] job  45476  ERROR: Connection error.
+  [w164/280] job  45883  ERROR: Connection error.
+  [w3/280] job  45216  ERROR: Connection error.
+  [w135/280] job  46108  ERROR: Connection error.
+  [w86/280] job  45544  ERROR: Connection error.
+  [w117/280] job  45528  ERROR: Connection error.
+  [w184/280] job  45331  ERROR: Connection error.
+  [w150/280] job  45576  ERROR: Connection error.
+  [w125/280] job  45523  ERROR: Connection error.
+  [w255/280] job  45686  ERROR: Connection error.
+  [w194/280] job  45724  ERROR: Connection error.
+  [w14/280] job  45412  ERROR: Connection error.
+  [w167/280] job  45312  ERROR: Connection error.
+  [w254/280] job  45394  ERROR: Connection error.
+  [w43/280] job  45444  ERROR: Connection error.
+  [w142/280] job  45547  ERROR: Connection error.
+  [w179/280] job  45611  ERROR: Connection error.
+  [w173/280] job  45570  ERROR: Connection error.
+  [w222/280] job  45661  ERROR: Connection error.
+  [w32/280] job  45204  ERROR: Connection error.
+  [w235/280] job  49662  ERROR: Connection error.
+  [w68/280] job  45238  ERROR: Connection error.
+  [w90/280] job  45582  ERROR: Connection error.
+  [w183/280] job  45330  ERROR: Connection error.
+  [w278/280] job  46407  ERROR: Connection error.
+  [w6/280] job  45772  ERROR: Connection error.
+  [w242/280] job  46693  ERROR: Connection error.
+  [w141/280] job  46119  ERROR: Connection error.
+  [w223/280] job  46056  ERROR: Connection error.
+  [w9/280] job  45400  ERROR: Connection error.
+  [w257/280] job  45691  ERROR: Connection error.
+  [w61/280] job  45304  ERROR: Connection error.
+  [w5/280] job  45768  ERROR: Connection error.
+  [w10/280] job  45402  ERROR: Connection error.
+  [w274/280] job  47096  ERROR: Connection error.
+  [w163/280] job  45647  ERROR: Connection error.
+  [w1/280] job  45743  ERROR: Connection error.
+  [w7/280] job  51020  ERROR: Connection error.
+  [w45/280] job  45448  ERROR: Connection error.
+  [w124/280] job  45516  ERROR: Connection error.
+  [w36/280] job  45443  ERROR: Connection error.
+  [w96/280] job  45540  ERROR: Connection error.
+  [w66/280] job  45461  ERROR: Connection error.
+  [w146/280] job  45557  ERROR: Connection error.
+  [w228/280] job  46511  ERROR: Connection error.
+  [w132/280] job  45868  ERROR: Connection error.
+  [w12/280] job  45230  ERROR: Connection error.
+  [w187/280] job  45333  ERROR: Connection error.
+  [w258/280] job  45364  ERROR: Connection error.
+  [w60/280] job  45473  ERROR: Connection error.
+  [w126/280] job  45852  ERROR: Connection error.
+  [w71/280] job  45470  ERROR: Connection error.
+  [w85/280] job  45492  ERROR: Connection error.
+  [w102/280] job  45628  ERROR: Connection error.
+  [w112/280] job  45261  ERROR: Connection error.
+  [w158/280] job  47229  ERROR: Connection error.
+  [w193/280] job  45324  ERROR: Connection error.
+  [w110/280] job  45259  ERROR: Connection error.
+  [w198/280] job  45660  ERROR: Connection error.
+  [w151/280] job  45879  ERROR: Connection error.
+  [w148/280] job  45564  ERROR: Connection error.
+  [w133/280] job  45535  ERROR: Connection error.
+  [w116/280] job  45525  ERROR: Connection error.
+  [w230/280] job  46198  ERROR: Connection error.
+  [w134/280] job  45889  ERROR: Connection error.
+  [w118/280] job  45531  ERROR: Connection error.
+  [w210/280] job  45644  ERROR: Connection error.
+  [w161/280] job  45308  ERROR: Connection error.
+  [w144/280] job  45554  ERROR: Connection error.
+  [w138/280] job  45562  ERROR: Connection error.
+  [w50/280] job  45186  ERROR: Connection error.
+  [w80/280] job  45481  ERROR: Connection error.
+  [w89/280] job  45578  ERROR: Connection error.
+  [w93/280] job  47203  ERROR: Connection error.
+  [w162/280] job  45643  ERROR: Connection error.
+  [w160/280] job  45307  ERROR: Connection error.
+  [w121/280] job  45539  ERROR: Connection error.
+  [w139/280] job  47207  ERROR: Connection error.
+  [w265/280] job  45194  ERROR: Connection error.
+  [w13/280] job  45138  ERROR: Connection error.
+  [w18/280] job  45876  ERROR: Connection error.
+  [w189/280] job  45623  ERROR: Connection error.
+  [w264/280] job  45730  ERROR: Connection error.
+  [w106/280] job  45877  ERROR: Connection error.
+  [w53/280] job  45190  ERROR: Connection error.
+  [w34/280] job  45439  ERROR: Connection error.
+  [w69/280] job  45807  ERROR: Connection error.
+  [w277/280] job  45403  ERROR: Connection error.
+  [w54/280] job  45463  ERROR: Connection error.
+  [w172/280] job  44891  ERROR: Connection error.
+  [w197/280] job  45352  ERROR: Connection error.
+  [w105/280] job  45875  ERROR: Connection error.
+  [w47/280] job  45212  ERROR: Connection error.
+  [w65/280] job  45459  ERROR: Connection error.
+  [w21/280] job  47199  ERROR: Connection error.
+  [w155/280] job  45604  ERROR: Connection error.
+  [w247/280] job  45685  ERROR: Connection error.
+  [w238/280] job  45689  ERROR: Connection error.
+  [w63/280] job  45538  ERROR: Connection error.
+  [w22/280] job  45079  ERROR: Connection error.
+  [w145/280] job  45614  ERROR: Connection error.
+  [w239/280] job  46181  ERROR: Connection error.
+  [w279/280] job  45733  ERROR: Connection error.
+  [w104/280] job  52563  ERROR: Connection error.
+  [w185/280] job  45586  ERROR: Connection error.
+  [w79/280] job  45483  ERROR: Connection error.
+  [w41/280] job  45453  ERROR: Connection error.
+  [w191/280] job  45722  ERROR: Connection error.
+  [w221/280] job  45132  ERROR: Connection error.
+  [w208/280] job  46073  ERROR: Connection error.
+  [w46/280] job  45180  ERROR: Connection error.
+  [w123/280] job  45512  ERROR: Connection error.
+  [w49/280] job  46692  ERROR: Connection error.
+  [w88/280] job  45513  ERROR: Connection error.
+  [w200/280] job  45763  ERROR: Connection error.
+  [w23/280] job  45142  ERROR: Connection error.
+  [w272/280] job  45395  ERROR: Connection error.
+  [w115/280] job  45522  ERROR: Connection error.
+  [w11/280] job  45715  ERROR: Connection error.
+  [w176/280] job  45320  ERROR: Connection error.
+  [w157/280] job  45619  ERROR: Connection error.
+  [w25/280] job  45442  ERROR: Connection error.
+  [w40/280] job  46444  ERROR: Connection error.
+  [w35/280] job  46438  ERROR: Connection error.
+  [w174/280] job  45881  ERROR: Connection error.
+  [w92/280] job  45598  ERROR: Connection error.
+  [w225/280] job  46234  ERROR: Connection error.
+  [w147/280] job  45560  ERROR: Connection error.
+  [w233/280] job  45353  ERROR: Connection error.
+  [w220/280] job  45341  ERROR: Connection error.
+  [w2/280] job  45421  ERROR: Connection error.
+  [w214/280] job  45740  ERROR: Connection error.
+  [w219/280] job  45645  ERROR: Connection error.
+  [w276/280] job  46405  ERROR: Connection error.
+  [w15/280] job  45206  ERROR: Connection error.
+  [w131/280] job  45865  ERROR: Connection error.
+  [w260/280] job  45705  ERROR: Connection error.
+  [w78/280] job  46140  ERROR: Connection error.
+  [w248/280] job  45386  ERROR: Connection error.
+  [w269/280] job  45684  ERROR: Connection error.
+  [w73/280] job  45474  ERROR: Connection error.
+  [w56/280] job  45467  ERROR: Connection error.
+  [w8/280] job  45687  ERROR: Connection error.
+  [w97/280] job  45543  ERROR: Connection error.
+  [w76/280] job  45840  ERROR: Connection error.
+  [w267/280] job  45678  ERROR: Connection error.
+  [w42/280] job  45455  ERROR: Connection error.
+  [w39/280] job  45449  ERROR: Connection error.
+  [w31/280] job  45762  ERROR: Connection error.
+  [w94/280] job  45839  ERROR: Connection error.
+  [w152/280] job  45589  ERROR: Connection error.
+  [w205/280] job  46042  ERROR: Connection error.
+  [w232/280] job  45666  ERROR: Connection error.
+  [w140/280] job  46118  ERROR: Connection error.
+  [w109/280] job  45918  ERROR: Connection error.
+  [w207/280] job  45617  ERROR: Connection error.
+  [w169/280] job  45867  ERROR: Connection error.
+  [w251/280] job  45957  ERROR: Connection error.
+  [w107/280] job  45933  ERROR: Connection error.
+  [w243/280] job  45376  ERROR: Connection error.
+  [w188/280] job  45913  ERROR: Connection error.
+  [w263/280] job  45726  ERROR: Connection error.
+  [w119/280] job  45830  ERROR: Connection error.
+  [w224/280] job  46053  ERROR: Connection error.
+  [w186/280] job  45910  ERROR: Connection error.
+  [w203/280] job  45601  ERROR: Connection error.
+  [w136/280] job  45553  ERROR: Connection error.
+  [w250/280] job  46083  ERROR: Connection error.
+  [w234/280] job  45356  ERROR: Connection error.
+  [w55/280] job  45825  ERROR: Connection error.
+  [w213/280] job  45927  ERROR: Connection error.
+  [w44/280] job  45781  ERROR: Connection error.
+  [w20/280] job  45424  ERROR: Connection error.
+  [w229/280] job  45345  ERROR: Connection error.
+  [w101/280] job  45514  ERROR: Connection error.
+  [w57/280] job  45517  ERROR: Connection error.
+  [w270/280] job  45688  ERROR: Connection error.
+  [w266/280] job  45764  ERROR: Connection error.
+  [w165/280] job  46395  ERROR: Connection error.
+  [w275/280] job  45994  ERROR: Connection error.
+  [w256/280] job  46080  ERROR: Connection error.
+  [w48/280] job  45798  ERROR: Connection error.
+  [w215/280] job  45929  ERROR: Connection error.
+  [w252/280] job  46686  ERROR: Connection error.
+  [w246/280] job  45679  ERROR: Connection error.
+  [w244/280] job  45674  ERROR: Connection error.
+  [w29/280] job  47232  ERROR: Connection error.
+  [w130/280] job  45862  ERROR: Connection error.
+  [w103/280] job  45524  ERROR: Connection error.
+  [w171/280] job  45561  ERROR: Connection error.
+  [w180/280] job  45900  ERROR: Connection error.
+  [w100/280] job  45508  ERROR: Connection error.
+  [w27/280] job  45752  ERROR: Connection error.
+  [w17/280] job  45746  ERROR: Connection error.
+  [w99/280] job  45810  ERROR: Connection error.
+  [w81/280] job  46097  ERROR: Connection error.
+  [w149/280] job  45866  ERROR: Connection error.
+  [w75/280] job  46093  ERROR: Connection error.
+  [w217/280] job  45637  ERROR: Connection error.
+  [w192/280] job  45323  ERROR: Connection error.
+  [w268/280] job  45702  ERROR: Connection error.
+  [w120/280] job  45833  ERROR: Connection error.
+  [w154/280] job  46356  ERROR: Connection error.
+  [w58/280] job  45469  ERROR: Connection error.
+  [w195/280] job  45898  ERROR: Connection error.
+  [w26/280] job  45747  ERROR: Connection error.
+  [w181/280] job  45622  ERROR: Connection error.
+  [w4/280] job  46413  ERROR: Connection error.
+  [w33/280] job  46206  ERROR: Connection error.
+  [w82/280] job  45486  ERROR: Connection error.
+  [w30/280] job  45760  ERROR: Connection error.
+  [w262/280] job  45713  ERROR: Connection error.
+  [w175/280] job  47807  ERROR: Connection error.
+  [w271/280] job  45697  ERROR: Connection error.
+  [w129/280] job  45546  ERROR: Connection error.
+  [w38/280] job  45790  ERROR: Connection error.
+  [w196/280] job  46538  ERROR: Connection error.
+  [w159/280] job  46390  ERROR: Connection error.
+  [w216/280] job  45635  ERROR: Connection error.
+  [w177/280] job  45887  ERROR: Connection error.
+  [w211/280] job  45917  ERROR: Connection error.
+  [w178/280] job  46196  ERROR: Connection error.
+  [w201/280] job  46534  ERROR: Connection error.
+  [w52/280] job  45460  ERROR: Connection error.
+  [w166/280] job  46396  ERROR: Connection error.
+  [w206/280] job  46371  ERROR: Connection error.
+  [w226/280] job  46055  ERROR: Connection error.
+  [w19/280] job  45755  ERROR: Connection error.
+  [w137/280] job  46114  ERROR: Connection error.
+  [w72/280] job  45811  ERROR: Connection error.
+  [w127/280] job  45542  ERROR: Connection error.
+  [w204/280] job  45606  ERROR: Connection error.
+  [w212/280] job  45924  ERROR: Connection error.
+  [w64/280] job  45930  ERROR: Connection error.
+  [w67/280] job  45237  ERROR: Connection error.
+  [w249/280] job  46082  ERROR: Connection error.
+  [w237/280] job  45926  ERROR: Connection error.
+  [w59/280] job  45845  ERROR: Connection error.
+  [w253/280] job  45677  ERROR: Connection error.
+  [w240/280] job  46400  ERROR: Connection error.
+  [w218/280] job  45935  ERROR: Connection error.
+  [w236/280] job  45680  ERROR: Connection error.
+  [w168/280] job  46273  ERROR: Connection error.
+  [w182/280] job  45905  ERROR: Connection error.
+  [w91/280] job  45801  ERROR: Connection error.
+  [w202/280] job  46539  ERROR: Connection error.
+  [w95/280] job  45537  ERROR: Connection error.
+  [w241/280] job  45916  ERROR: Connection error.
+  [w125/280] job  45861  ERROR: Connection error.
+  [w135/280] job  45550  ERROR: Connection error.
+  [w117/280] job  45823  ERROR: Connection error.
+  [w114/280] job  45263  ERROR: Connection error.
+  [w87/280] job  45510  ERROR: Connection error.
+  [w98/280] job  45821  ERROR: Connection error.
+  [w84/280] job  45864  ERROR: Connection error.
+  [w156/280] job  45610  ERROR: Connection error.
+  [w199/280] job  45665  ERROR: Connection error.
+  [w108/280] job  45985  ERROR: Connection error.
+  [w280/280] job  46481  ERROR: Connection error.
+  [w51/280] job  47201  ERROR: Connection error.
+  [w113/280] job  45505  ERROR: Connection error.
+  [w122/280] job  45850  ERROR: Connection error.
+  [w28/280] job  45428  ERROR: Connection error.
+  [w190/280] job  45885  ERROR: Connection error.
+  [w231/280] job  45662  ERROR: Connection error.
+  [w86/280] job  45784  ERROR: Connection error.
+  [w227/280] job  45698  ERROR: Connection error.
+  [w259/280] job  45367  ERROR: Connection error.
+  [w16/280] job  45741  ERROR: Connection error.
+  [w194/280] job  45896  ERROR: Connection error.
+  [w3/280] job  45423  ERROR: Connection error.
+  [w274/280] job  45712  ERROR: Connection error.
+  [w209/280] job  45640  ERROR: Connection error.
+  [w142/280] job  45908  ERROR: Connection error.
+  [w273/280] job  46533  ERROR: Connection error.
+  [w146/280] job  45854  ERROR: Connection error.
+  [w1/280] job  46410  ERROR: Connection error.
+  [w43/280] job  45779  ERROR: Connection error.
+  [w111/280] job  45797  ERROR: Connection error.
+  [w68/280] job  45466  ERROR: Connection error.
+  [w74/280] job  45824  ERROR: Connection error.
+  [w70/280] job  47619  ERROR: Connection error.
+  [w153/280] job  45595  ERROR: Connection error.
+  [w158/280] job  45626  ERROR: Connection error.
+  [w32/280] job  45435  ERROR: Connection error.
+  [w278/280] job  47068  ERROR: Connection error.
+  [w37/280] job  45445  ERROR: Connection error.
+  [w222/280] job  46051  ERROR: Connection error.
+  [w150/280] job  46279  ERROR: Connection error.
+  [w167/280] job  45549  ERROR: Connection error.
+  [w257/280] job  46203  ERROR: Connection error.
+  [w223/280] job  45663  ERROR: Connection error.
+  [w261/280] job  45709  ERROR: Connection error.
+  [w10/280] job  45710  ERROR: Connection error.
+  [w66/280] job  45791  ERROR: Connection error.
+  [w93/280] job  45808  ERROR: Connection error.
+  [w36/280] job  45782  ERROR: Connection error.
+  [w102/280] job  45519  ERROR: Connection error.
+  [w24/280] job  45739  ERROR: Connection error.
+  [w6/280] job  46459  ERROR: Connection error.
+  [w242/280] job  45373  ERROR: Connection error.
+  [w162/280] job  46392  ERROR: Connection error.
+  [w173/280] job  45878  ERROR: Connection error.
+  [w62/280] job  45477  ERROR: Connection error.
+  [w85/280] job  45780  ERROR: Connection error.
+  [w254/280] job  45682  ERROR: Connection error.
+  [w198/280] job  45936  ERROR: Connection error.
+  [w141/280] job  45567  ERROR: Connection error.
+  [w264/280] job  46403  ERROR: Connection error.
+  [w5/280] job  46414  ERROR: Connection error.
+  [w50/280] job  45458  ERROR: Connection error.
+  [w210/280] job  46517  ERROR: Connection error.
+  [w118/280] job  45827  ERROR: Connection error.
+  [w14/280] job  45731  ERROR: Connection error.
+  [w187/280] job  47211  ERROR: Connection error.
+  [w179/280] job  45897  ERROR: Connection error.
+  [w45/280] job  45786  ERROR: Connection error.
+  [w112/280] job  45502  ERROR: Connection error.
+  [w164/280] job  45651  ERROR: Connection error.
+  [w258/280] job  45696  ERROR: Connection error.
+  [w143/280] job  45551  ERROR: Connection error.
+  [w83/280] job  45487  ERROR: Connection error.
+  [w9/280] job  45694  ERROR: Connection error.
+  [w110/280] job  45496  ERROR: Connection error.
+  [w71/280] job  46047  ERROR: Connection error.
+  [w124/280] job  45859  ERROR: Connection error.
+  [w126/280] job  46133  ERROR: Connection error.
+  [w184/280] job  45581  ERROR: Connection error.
+  [w245/280] job  47228  ERROR: Connection error.
+  [w183/280] job  45577  ERROR: Connection error.
+  [w90/280] job  45526  ERROR: Connection error.
+  [w228/280] job  46519  ERROR: Connection error.
+  [w138/280] job  47753  ERROR: Connection error.
+  [w13/280] job  45410  ERROR: Connection error.
+  [w163/280] job  46393  ERROR: Connection error.
+  [w151/280] job  45584  ERROR: Connection error.
+  [w235/280] job  44907  ERROR: Connection error.
+  [w7/280] job  45130  ERROR: Connection error.
+  [w12/280] job  45408  ERROR: Connection error.
+  [w170/280] job  46174  ERROR: Connection error.
+  [w77/280] job  46138  ERROR: Connection error.
+  [w133/280] job  47241  ERROR: Connection error.
+  [w255/280] job  45970  ERROR: Connection error.
+  [w134/280] job  46145  ERROR: Connection error.
+  [w106/280] job  45841  ERROR: Connection error.
+  [w96/280] job  45815  ERROR: Connection error.
+  [w160/280] job  45634  ERROR: Connection error.
+  [w34/280] job  45773  ERROR: Connection error.
+  [w193/280] job  45642  ERROR: Connection error.
+  [w197/280] job  45656  ERROR: Connection error.
+  [w144/280] job  47805  ERROR: Connection error.
+  [w105/280] job  47240  ERROR: Connection error.
+  [w128/280] job  45858  ERROR: Connection error.
+  [w80/280] job  47236  ERROR: Connection error.
+  [w161/280] job  45639  ERROR: Connection error.
+  [w63/280] job  45783  ERROR: Connection error.
+  [w21/280] job  45775  ERROR: Connection error.
+  [w148/280] job  45863  ERROR: Connection error.
+  [w230/280] job  45658  ERROR: Connection error.
+  [w132/280] job  46143  ERROR: Connection error.
+  [w189/280] job  46537  ERROR: Connection error.
+  [w116/280] job  45818  ERROR: Connection error.
+  [w65/280] job  46044  ERROR: Connection error.
+  [w145/280] job  47209  ERROR: Connection error.
+  [w23/280] job  45438  ERROR: Connection error.
+  [w238/280] job  46178  ERROR: Connection error.
+  [w22/280] job  45436  ERROR: Connection error.
+  [w60/280] job  45848  ERROR: Connection error.
+  [w172/280] job  45317  ERROR: Connection error.
+  [w35/280] job  46486  ERROR: Connection error.
+  [w176/280] job  45585  ERROR: Connection error.
+  [w276/280] job  46474  ERROR: Connection error.
+  [w247/280] job  46605  ERROR: Connection error.
+  [w104/280] job  45279  ERROR: Connection error.
+  [w208/280] job  46374  ERROR: Connection error.
+  [w279/280] job  46408  ERROR: Connection error.
+  [w69/280] job  46077  ERROR: Connection error.
+  [w265/280] job  45383  ERROR: Connection error.
+  [w155/280] job  45086  ERROR: Connection error.
+  [w185/280] job  45909  ERROR: Connection error.
+  [w53/280] job  45462  ERROR: Connection error.
+  [w61/280] job  45475  ERROR: Connection error.
+  [w139/280] job  45902  ERROR: Connection error.
+  [w41/280] job  45771  ERROR: Connection error.
+  [w157/280] job  46388  ERROR: Connection error.
+  [w200/280] job  46531  ERROR: Connection error.
+  [w79/280] job  46177  ERROR: Connection error.
+  [w11/280] job  46419  ERROR: Connection error.
+  [w277/280] job  45725  ERROR: Connection error.
+  [w121/280] job  45837  ERROR: Connection error.
+  [w92/280] job  45805  ERROR: Connection error.
+  [w54/280] job  45822  ERROR: Connection error.
+  [w97/280] job  45819  ERROR: Connection error.
+  [w49/280] job  45456  ERROR: Connection error.
+  [w40/280] job  46498  ERROR: Connection error.
+  [w220/280] job  45649  ERROR: Connection error.
+  [w239/280] job  46249  ERROR: Connection error.
+  [w219/280] job  46048  ERROR: Connection error.
+  [w109/280] job  46038  ERROR: Connection error.
+  [w174/280] job  46185  ERROR: Connection error.
+  [w15/280] job  45422  ERROR: Connection error.
+  [w46/280] job  45450  ERROR: Connection error.
+  [w191/280] job  45633  ERROR: Connection error.
+  [w25/280] job  45742  ERROR: Connection error.
+  [w221/280] job  45342  ERROR: Connection error.
+  [w88/280] job  45792  ERROR: Connection error.
+  [w115/280] job  45846  ERROR: Connection error.
+  [w56/280] job  45834  ERROR: Connection error.
+  [w152/280] job  46282  ERROR: Connection error.
+  [w267/280] job  48126  ERROR: Connection error.
+  [w131/280] job  46141  ERROR: Connection error.
+  [w214/280] job  45627  ERROR: Connection error.
+  [w269/280] job  46520  ERROR: Connection error.
+  [w47/280] job  45452  ERROR: Connection error.
+  [w89/280] job  45520  ERROR: Connection error.
+  [w272/280] job  45701  ERROR: Connection error.
+  [w73/280] job  45817  ERROR: Connection error.
+  [w78/280] job  46331  ERROR: Connection error.
+  [w233/280] job  45668  ERROR: Connection error.
+  [w123/280] job  45856  ERROR: Connection error.
+  [w225/280] job  46608  ERROR: Connection error.
+  [w39/280] job  46542  ERROR: Connection error.
+  [w42/280] job  47234  ERROR: Connection error.
+  [w243/280] job  45669  ERROR: Connection error.
+  [w2/280] job  45748  ERROR: Connection error.
+  [w188/280] job  46218  ERROR: Connection error.
+  [w213/280] job  46468  ERROR: Connection error.
+  [w224/280] job  46233  ERROR: Connection error.
+  [w119/280] job  46127  ERROR: Connection error.
+  [w76/280] job  46094  ERROR: Connection error.
+  [w20/280] job  45757  ERROR: Connection error.
+  [w48/280] job  46456  ERROR: Connection error.
+  [w186/280] job  46216  ERROR: Connection error.
+  [w55/280] job  46451  ERROR: Connection error.
+  [w251/280] job  46256  ERROR: Connection error.
+  [w250/280] job  45102  ERROR: Connection error.
+  [w140/280] job  45563  ERROR: Connection error.
+  [w44/280] job  46448  ERROR: Connection error.
+  [w203/280] job  45914  ERROR: Connection error.
+  [w169/280] job  46171  ERROR: Connection error.
+  [w275/280] job  46472  ERROR: Connection error.
+  [w8/280] job  46416  ERROR: Connection error.
+  [w165/280] job  46165  ERROR: Connection error.
+  [w94/280] job  46107  ERROR: Connection error.
+  [w136/280] job  45895  ERROR: Connection error.
+  [w205/280] job  45971  ERROR: Connection error.
+  [w263/280] job  46402  ERROR: Connection error.
+  [w207/280] job  46046  ERROR: Connection error.
+  [w31/280] job  46436  ERROR: Connection error.
+  [w147/280] job  45857  ERROR: Connection error.
+  [w260/280] job  46086  ERROR: Connection error.
+  [w232/280] job  45078  ERROR: Connection error.
+  [w101/280] job  45829  ERROR: Connection error.
+  [w270/280] job  46524  ERROR: Connection error.
+  [w18/280] job  45418  ERROR: Connection error.
+  [w81/280] job  46335  ERROR: Connection error.
+  [w256/280] job  46264  ERROR: Connection error.
+  [w234/280] job  45672  ERROR: Connection error.
+  [w266/280] job  46088  ERROR: Connection error.
+  [w248/280] job  45690  ERROR: Connection error.
+  [w57/280] job  45838  ERROR: Connection error.
+  [w107/280] job  46128  ERROR: Connection error.
+  [w217/280] job  45932  ERROR: Connection error.
+  [w246/280] job  45963  ERROR: Connection error.
+  [w17/280] job  46424  ERROR: Connection error.
+  [w154/280] job  46180  ERROR: Connection error.
+  [w27/280] job  46432  ERROR: Connection error.
+  [w229/280] job  46064  ERROR: Connection error.
+  [w130/280] job  46139  ERROR: Connection error.
+  [w180/280] job  46207  ERROR: Connection error.
+  [w215/280] job  46473  ERROR: Connection error.
+  [w99/280] job  46150  ERROR: Connection error.
+  [w103/280] job  45835  ERROR: Connection error.
+  [w29/280] job  46434  ERROR: Connection error.
+  [w244/280] job  46201  ERROR: Connection error.
+  [w100/280] job  45826  ERROR: Connection error.
+  [w178/280] job  47179  ERROR: Connection error.
+  [w58/280] job  45842  ERROR: Connection error.
+  [w195/280] job  46223  ERROR: Connection error.
+  [w177/280] job  46194  ERROR: Connection error.
+  [w52/280] job  45816  ERROR: Connection error.
+  [w268/280] job  46404  ERROR: Connection error.
+  [w175/280] job  46188  ERROR: Connection error.
+  [w75/280] job  47102  ERROR: Connection error.
+  [w30/280] job  46435  ERROR: Connection error.
+  [w149/280] job  46168  ERROR: Connection error.
+  [w120/280] job  46202  ERROR: Connection error.
+  [w252/280] job  46258  ERROR: Connection error.
+  [w181/280] job  45903  ERROR: Connection error.
+  [w271/280] job  44995  ERROR: Connection error.
+  [w127/280] job  45855  ERROR: Connection error.
+  [w218/280] job  46325  ERROR: Connection error.
+  [w166/280] job  46167  ERROR: Connection error.
+  [w108/280] job  46130  ERROR: Connection error.
+  [w216/280] job  45931  ERROR: Connection error.
+  [w26/280] job  46431  ERROR: Connection error.
+  [w38/280] job  46442  ERROR: Connection error.
+  [w192/280] job  45638  ERROR: Connection error.
+  [w72/280] job  46090  ERROR: Connection error.
+  [w231/280] job  45919  ERROR: Connection error.
+  [w51/280] job  45809  ERROR: Connection error.
+  [w171/280] job  45871  ERROR: Connection error.
+  [w168/280] job  46548  ERROR: Connection error.
+  [w82/280] job  45847  ERROR: Connection error.
+  [w262/280] job  45978  ERROR: Connection error.
+  [w129/280] job  45860  ERROR: Connection error.
+  [w182/280] job  46213  ERROR: Connection error.
+  [w201/280] job  46227  ERROR: Connection error.
+  [w59/280] job  46470  ERROR: Connection error.
+  [w211/280] job  47664  ERROR: Connection error.
+  [w117/280] job  46124  ERROR: Connection error.
+  [w159/280] job  46193  ERROR: Connection error.
+  [w206/280] job  46581  ERROR: Connection error.
+  [w98/280] job  46148  ERROR: Connection error.
+  [w114/280] job  45507  ERROR: Connection error.
+  [w227/280] job  46385  ERROR: Connection error.
+  [w196/280] job  46224  ERROR: Connection error.
+  [w137/280] job  45559  ERROR: Connection error.
+  [w3/280] job  45753  ERROR: Connection error.
+  [w153/280] job  46308  ERROR: Connection error.
+  [w135/280] job  45892  ERROR: Connection error.
+  [w33/280] job  46483  ERROR: Connection error.
+  [w4/280] job  46491  ERROR: Connection error.
+  [w19/280] job  47662  ERROR: Connection error.
+  [w70/280] job  46045  ERROR: Connection error.
+  [w212/280] job  46465  ERROR: Connection error.
+  [w280/280] job  46662  ERROR: Connection error.
+  [w237/280] job  46247  ERROR: Connection error.
+  [w202/280] job  46228  ERROR: Connection error.
+  [w226/280] job  46235  ERROR: Connection error.
+  [w240/280] job  46251  ERROR: Connection error.
+  [w87/280] job  45788  ERROR: Connection error.
+  [w249/280] job  46254  ERROR: Connection error.
+  [w122/280] job  46208  ERROR: Connection error.
+  [w1/280] job  46484  ERROR: Connection error.
+  [w158/280] job  46389  ERROR: Connection error.
+  [w146/280] job  46164  ERROR: Connection error.
+  [w67/280] job  45464  ERROR: Connection error.
+  [w113/280] job  45806  ERROR: Connection error.
+  [w91/280] job  46144  ERROR: Connection error.
+  [w142/280] job  46157  ERROR: Connection error.
+  [w199/280] job  46510  ERROR: Connection error.
+  [w95/280] job  45812  ERROR: Connection error.
+  [w241/280] job  45948  ERROR: Connection error.
+  [w156/280] job  46358  ERROR: Connection error.
+  [w194/280] job  45967  ERROR: Connection error.
+  [w273/280] job  49945  ERROR: Connection error.
+  [w204/280] job  46040  ERROR: Connection error.
+  [w111/280] job  46152  ERROR: Connection error.
+  [w84/280] job  46099  ERROR: Connection error.
+  [w125/280] job  46131  ERROR: Connection error.
+  [w74/280] job  46092  ERROR: Connection error.
+  [w64/280] job  46071  ERROR: Connection error.
+  [w187/280] job  45912  ERROR: Connection error.
+  [w62/280] job  45778  ERROR: Connection error.
+  [w198/280] job  46226  ERROR: Connection error.
+  [w68/280] job  45804  ERROR: Connection error.
+  [w190/280] job  46219  ERROR: Connection error.
+  [w28/280] job  45756  ERROR: Connection error.
+  [w259/280] job  45699  ERROR: Connection error.
+  [w209/280] job  46515  ERROR: Connection error.
+  [w254/280] job  45952  ERROR: Connection error.
+  [w253/280] job  46066  ERROR: Connection error.
+  [w86/280] job  46142  ERROR: Connection error.
+  [w242/280] job  45664  ERROR: Connection error.
+  [w32/280] job  45766  ERROR: Connection error.
+  [w236/280] job  45925  ERROR: Connection error.
+  [w162/280] job  46204  ERROR: Connection error.
+  [w150/280] job  46170  ERROR: Connection error.
+  [w36/280] job  46441  ERROR: Connection error.
+  [w14/280] job  49902  ERROR: Connection error.
+  [w83/280] job  45851  ERROR: Connection error.
+  [w124/280] job  46129  ERROR: Connection error.
+  [w167/280] job  46398  ERROR: Connection error.
+  [w278/280] job  46660  ERROR: Connection error.
+  [w257/280] job  46265  ERROR: Connection error.
+  [w223/280] job  46052  ERROR: Connection error.
+  [w164/280] job  46394  ERROR: Connection error.
+  [w143/280] job  45980  ERROR: Connection error.
+  [w24/280] job  46461  ERROR: Connection error.
+  [w274/280] job  46536  ERROR: Connection error.
+  [w264/280] job  46274  ERROR: Connection error.
+  [w43/280] job  46446  ERROR: Connection error.
+  [w258/280] job  46084  ERROR: Connection error.
+  [w16/280] job  46423  ERROR: Connection error.
+  [w112/280] job  45803  ERROR: Connection error.
+  [w261/280] job  45030  ERROR: Connection error.
+  [w10/280] job  46418  ERROR: Connection error.
+  [w255/280] job  49944  ERROR: Connection error.
+  [w197/280] job  45901  ERROR: Connection error.
+  [w179/280] job  47663  ERROR: Connection error.
+  [w66/280] job  46074  ERROR: Connection error.
+  [w12/280] job  45721  ERROR: Connection error.
+  [w173/280] job  46182  ERROR: Connection error.
+  [w230/280] job  46523  ERROR: Connection error.
+  [w210/280] job  46462  ERROR: Connection error.
+  [w245/280] job  45951  ERROR: Connection error.
+  [w96/280] job  46110  ERROR: Connection error.
+  [w183/280] job  47808  ERROR: Connection error.
+  [w102/280] job  45832  ERROR: Connection error.
+  [w45/280] job  46450  ERROR: Connection error.
+  [w37/280] job  45785  ERROR: Connection error.
+  [w85/280] job  46100  ERROR: Connection error.
+  [w118/280] job  46125  ERROR: Connection error.
+  [w151/280] job  46280  ERROR: Connection error.
+  [w222/280] job  46232  ERROR: Connection error.
+  [w141/280] job  45906  ERROR: Connection error.
+  [w170/280] job  46554  ERROR: Connection error.
+  [w144/280] job  46159  ERROR: Connection error.
+  [w126/280] job  46382  ERROR: Connection error.
+  [w5/280] job  46493  ERROR: Connection error.
+  [w105/280] job  46123  ERROR: Connection error.
+  [w6/280] job  46495  ERROR: Connection error.
+  [w80/280] job  46096  ERROR: Connection error.
+  [w93/280] job  46106  ERROR: Connection error.
+  [w50/280] job  45802  ERROR: Connection error.
+  [w133/280] job  46492  ERROR: Connection error.
+  [w161/280] job  45960  ERROR: Connection error.
+  [w148/280] job  46612  ERROR: Connection error.
+  [w13/280] job  45728  ERROR: Connection error.
+  [w247/280] job  46250  ERROR: Connection error.
+  [w235/280] job  45499  ERROR: Connection error.
+  [w116/280] job  46160  ERROR: Connection error.
+  [w138/280] job  46494  ERROR: Connection error.
+  [w69/280] job  46318  ERROR: Connection error.
+  [w35/280] job  46893  ERROR: Connection error.
+  [w276/280] job  46658  ERROR: Connection error.
+  [w21/280] job  46427  ERROR: Connection error.
+  [w157/280] job  46190  ERROR: Connection error.
+  [w7/280] job  45429  ERROR: Connection error.
+  [w279/280] job  46478  ERROR: Connection error.
+  [w176/280] job  45884  ERROR: Connection error.
+  [w11/280] job  46276  ERROR: Connection error.
+  [w163/280] job  47171  ERROR: Connection error.
+  [w185/280] job  46215  ERROR: Connection error.
+  [w23/280] job  44967  ERROR: Connection error.
+  [w208/280] job  46583  ERROR: Connection error.
+  [w90/280] job  45799  ERROR: Connection error.
+  [w184/280] job  45907  ERROR: Connection error.
+  [w193/280] job  45894  ERROR: Connection error.
+  [w121/280] job  46205  ERROR: Connection error.
+  [w63/280] job  46070  ERROR: Connection error.
+  [w71/280] job  46136  ERROR: Connection error.
+  [w110/280] job  45793  ERROR: Connection error.
+  [w145/280] job  46379  ERROR: Connection error.
+  [w65/280] job  46072  ERROR: Connection error.
+  [w128/280] job  46359  ERROR: Connection error.
+  [w228/280] job  46687  ERROR: Connection error.
+  [w132/280] job  46509  ERROR: Connection error.
+  [w97/280] job  46146  ERROR: Connection error.
+  [w174/280] job  46560  ERROR: Connection error.
+  [w25/280] job  46430  ERROR: Connection error.
+  [w9/280] job  46417  ERROR: Connection error.
+  [w79/280] job  46095  ERROR: Connection error.
+  [w34/280] job  45032  ERROR: Connection error.
+  [w54/280] job  46449  ERROR: Connection error.
+  [w189/280] job  47944  ERROR: Connection error.
+  [w41/280] job  46445  ERROR: Connection error.
+  [w77/280] job  46330  ERROR: Connection error.
+  [w134/280] job  46512  ERROR: Connection error.
+  [w200/280] job  47067  ERROR: Connection error.
+  [w155/280] job  46183  ERROR: Connection error.
+  [w160/280] job  46391  ERROR: Connection error.
+  [w106/280] job  46126  ERROR: Connection error.
+  [w265/280] job  45749  ERROR: Connection error.
+  [w214/280] job  46464  ERROR: Connection error.
+  [w139/280] job  46153  ERROR: Connection error.
+  [w46/280] job  45789  ERROR: Connection error.
+  [w250/280] job  46638  ERROR: Connection error.
+  [w49/280] job  45928  ERROR: Connection error.
+  [w60/280] job  46068  ERROR: Connection error.
+  [w172/280] job  45566  ERROR: Connection error.
+  [w277/280] job  46406  ERROR: Connection error.
+  [w22/280] job  47230  ERROR: Connection error.
+  [w221/280] job  45657  ERROR: Connection error.
+  [w15/280] job  45735  ERROR: Connection error.
+  [w89/280] job  45795  ERROR: Connection error.
+  [w191/280] job  45888  ERROR: Connection error.
+  [w88/280] job  46102  ERROR: Connection error.
+  [w56/280] job  46453  ERROR: Connection error.
+  [w61/280] job  45849  ERROR: Connection error.
+  [w272/280] job  46081  ERROR: Connection error.
+  [w239/280] job  46624  ERROR: Connection error.
+  [w219/280] job  46229  ERROR: Connection error.
+  [w40/280] job  46854  ERROR: Connection error.
+  [w152/280] job  46175  ERROR: Connection error.
+  [w233/280] job  45920  ERROR: Connection error.
+  [w104/280] job  45870  ERROR: Connection error.
+  [w115/280] job  46199  ERROR: Connection error.
+  [w123/280] job  46211  ERROR: Connection error.
+  [w220/280] job  46049  ERROR: Connection error.
+  [w92/280] job  46105  ERROR: Connection error.
+  [w2/280] job  46411  ERROR: Connection error.
+  [w42/280] job  46758  ERROR: Connection error.
+  [w269/280] job  46261  ERROR: Connection error.
+  [w188/280] job  46584  ERROR: Connection error.
+  [w263/280] job  46327  ERROR: Connection error.
+  [w131/280] job  46507  ERROR: Connection error.
+  [w8/280] job  46289  ERROR: Connection error.
+  [w119/280] job  46375  ERROR: Connection error.
+  [w73/280] job  46091  ERROR: Connection error.
+  [w238/280] job  46704  ERROR: Connection error.
+  [w267/280] job  46259  ERROR: Connection error.
+  [w55/280] job  46304  ERROR: Connection error.
+  [w20/280] job  46426  ERROR: Connection error.
+  [w213/280] job  46593  ERROR: Connection error.
+  [w47/280] job  45794  ERROR: Connection error.
+  [w109/280] job  46132  ERROR: Connection error.
+  [w186/280] job  46579  ERROR: Connection error.
+  [w169/280] job  46552  ERROR: Connection error.
+  [w140/280] job  45904  ERROR: Connection error.
+  [w270/280] job  46263  ERROR: Connection error.
+  [w205/280] job  46578  ERROR: Connection error.
+  [w224/280] job  46681  ERROR: Connection error.
+  [w147/280] job  46166  ERROR: Connection error.
+  [w232/280] job  46241  ERROR: Connection error.
+  [w154/280] job  46770  ERROR: Connection error.
+  [w48/280] job  46298  ERROR: Connection error.
+  [w17/280] job  46284  ERROR: Connection error.
+  [w107/280] job  46360  ERROR: Connection error.
+  [w234/280] job  45921  ERROR: Connection error.
+  [w27/280] job  46525  ERROR: Connection error.
+  [w53/280] job  45820  ERROR: Connection error.
+  [w76/280] job  46329  ERROR: Connection error.
+  [w165/280] job  46783  ERROR: Connection error.
+  [w44/280] job  47847  ERROR: Connection error.
+  [w18/280] job  45751  ERROR: Connection error.
+  [w94/280] job  47126  ERROR: Connection error.
+  [w52/280] job  46463  ERROR: Connection error.
+  [w243/280] job  46039  ERROR: Connection error.
+  [w244/280] job  46246  ERROR: Connection error.
+  [w207/280] job  46372  ERROR: Connection error.
+  [w136/280] job  46149  ERROR: Connection error.
+  [w246/280] job  46248  ERROR: Connection error.
+  [w103/280] job  46117  ERROR: Connection error.
+  [w248/280] job  45950  ERROR: Connection error.
+  [w275/280] job  48213  ERROR: Connection error.
+  [w29/280] job  46479  ERROR: Connection error.
+  [w271/280] job  46267  ERROR: Connection error.
+  [w229/280] job  45673  ERROR: Connection error.
+  [w130/280] job  46505  ERROR: Connection error.
+  [w175/280] job  46562  ERROR: Connection error.
+  [w39/280] job  46443  ERROR: Connection error.
+  [w31/280] job  46482  ERROR: Connection error.
+  [w251/280] job  46801  ERROR: Connection error.
+  [w57/280] job  46455  ERROR: Connection error.
+  [w203/280] job  46212  ERROR: Connection error.
+  [w256/280] job  46642  ERROR: Connection error.
+  [w215/280] job  46603  ERROR: Connection error.
+  [w127/280] job  46135  ERROR: Connection error.
+  [w149/280] job  46553  ERROR: Connection error.
+  [w195/280] job  46597  ERROR: Connection error.
+  [w266/280] job  46257  ERROR: Connection error.
+  [w252/280] job  46802  ERROR: Connection error.
+  [w30/280] job  46480  ERROR: Connection error.
+  [w180/280] job  46566  ERROR: Connection error.
+  [w101/280] job  46113  ERROR: Connection error.
+  [w100/280] job  46111  ERROR: Connection error.
+  [w268/280] job  46315  ERROR: Connection error.
+  [w260/280] job  46270  ERROR: Connection error.
+  [w217/280] job  46535  ERROR: Connection error.
+  [w99/280] job  46350  ERROR: Connection error.
+  [w72/280] job  46321  ERROR: Connection error.
+  [w120/280] job  45045  ERROR: Connection error.
+  [w231/280] job  46239  ERROR: Connection error.
+  [w38/280] job  46490  ERROR: Connection error.
+  [w201/280] job  45037  ERROR: Connection error.
+  [w58/280] job  46467  ERROR: Connection error.
+  [w216/280] job  46526  ERROR: Connection error.
+  [w59/280] job  46307  ERROR: Connection error.
+  [w26/280] job  46475  ERROR: Connection error.
+  [w177/280] job  46564  ERROR: Connection error.
+  [w218/280] job  46602  ERROR: Connection error.
+  [w166/280] job  46784  ERROR: Connection error.
+  [w262/280] job  46272  ERROR: Connection error.
+  [w227/280] job  46236  ERROR: Connection error.
+  [w108/280] job  46815  ERROR: Connection error.
+  [w192/280] job  45891  ERROR: Connection error.
+  [w159/280] job  46776  ERROR: Connection error.
+  [w171/280] job  46176  ERROR: Connection error.
+  [w117/280] job  46370  ERROR: Connection error.
+  [w82/280] job  46098  ERROR: Connection error.
+  [w87/280] job  46101  ERROR: Connection error.
+  [w181/280] job  46209  ERROR: Connection error.
+  [w70/280] job  46078  ERROR: Connection error.
+  [w51/280] job  49911  ERROR: Connection error.
+  [w33/280] job  46711  ERROR: Connection error.
+  [w194/280] job  46596  ERROR: Connection error.
+  [w113/280] job  46156  ERROR: Connection error.
+  [w241/280] job  46253  ERROR: Connection error.
+  [w98/280] job  46349  ERROR: Connection error.
+  [w135/280] job  46147  ERROR: Connection error.
+  [w202/280] job  46570  ERROR: Connection error.
+  [w237/280] job  46621  ERROR: Connection error.
+  [w3/280] job  46412  ERROR: Connection error.
+  [w196/280] job  46634  ERROR: Connection error.
+  [w226/280] job  46609  ERROR: Connection error.
+  [w240/280] job  46625  ERROR: Connection error.
+  [w212/280] job  46590  ERROR: Connection error.
+  [w249/280] job  46637  ERROR: Connection error.
+  [w4/280] job  46666  ERROR: Connection error.
+  [w19/280] job  46286  ERROR: Connection error.
+  [w211/280] job  46588  ERROR: Connection error.
+  [w162/280] job  46779  ERROR: Connection error.
+  [w142/280] job  46532  ERROR: Connection error.
+  [w182/280] job  46569  ERROR: Connection error.
+  [w199/280] job  45968  ERROR: Connection error.
+  [w114/280] job  45843  ERROR: Connection error.
+  [w153/280] job  45937  ERROR: Connection error.
+  [w198/280] job  46599  ERROR: Connection error.
+  [w158/280] job  45938  ERROR: Connection error.
+  [w1/280] job  46663  ERROR: Connection error.
+  [w95/280] job  46109  ERROR: Connection error.
+  [w137/280] job  45899  ERROR: Connection error.
+  [w204/280] job  46369  ERROR: Connection error.
+  [w129/280] job  46137  ERROR: Connection error.
+  [w125/280] job  46381  ERROR: Connection error.
+  [w111/280] job  46363  ERROR: Connection error.
+  [w91/280] job  46343  ERROR: Connection error.
+  [w68/280] job  46076  ERROR: Connection error.
+  [w146/280] job  46547  ERROR: Connection error.
+  [w190/280] job  46589  ERROR: Connection error.
+  [w36/280] job  46487  ERROR: Connection error.
+  [w264/280] job  46035  ERROR: Connection error.
+  [w209/280] job  46458  ERROR: Connection error.
+  [w122/280] job  46377  ERROR: Connection error.
+  [w67/280] job  45800  ERROR: Connection error.
+  [w124/280] job  46380  ERROR: Connection error.
+  [w83/280] job  46122  ERROR: Connection error.
+  [w242/280] job  46079  ERROR: Connection error.
+  [w28/280] job  46433  ERROR: Connection error.
+  [w74/280] job  46323  ERROR: Connection error.
+  [w167/280] job  46169  ERROR: Connection error.
+  [w86/280] job  47174  ERROR: Connection error.
+  [w64/280] job  46313  ERROR: Connection error.
+  [w156/280] job  46186  ERROR: Connection error.
+  [w254/280] job  46262  ERROR: Connection error.
+  [w259/280] job  46085  ERROR: Connection error.
+  [w143/280] job  46565  ERROR: Connection error.
+  [w32/280] job  46437  ERROR: Connection error.
+  [w257/280] job  46805  ERROR: Connection error.
+  [w14/280] job  46290  ERROR: Connection error.
+  [w253/280] job  46260  ERROR: Connection error.
+  [w62/280] job  46089  ERROR: Connection error.
+  [w187/280] job  46217  ERROR: Connection error.
+  [w43/280] job  46316  ERROR: Connection error.
+  [w179/280] job  47182  ERROR: Connection error.
+  [w273/280] job  46656  ERROR: Connection error.
+  [w223/280] job  45972  ERROR: Connection error.
+  [w84/280] job  46357  ERROR: Connection error.
+  [w24/280] job  46296  ERROR: Connection error.
+  [w261/280] job  46271  ERROR: Connection error.
+  [w274/280] job  46469  ERROR: Connection error.
+  [w80/280] job  46334  ERROR: Connection error.
+  [w258/280] job  46266  ERROR: Connection error.
+  [w183/280] job  46214  ERROR: Connection error.
+  [w10/280] job  46275  ERROR: Connection error.
+  [w236/280] job  46245  ERROR: Connection error.
+  [w112/280] job  46154  ERROR: Connection error.
+  [w150/280] job  46555  ERROR: Connection error.
+  [w144/280] job  46543  ERROR: Connection error.
+  [w16/280] job  46281  ERROR: Connection error.
+  [w118/280] job  46373  ERROR: Connection error.
+  [w66/280] job  47849  ERROR: Connection error.
+  [w173/280] job  46561  ERROR: Connection error.
+  [w96/280] job  46347  ERROR: Connection error.
+  [w247/280] job  46635  ERROR: Connection error.
+  [w37/280] job  46210  ERROR: Connection error.
+  [w245/280] job  46326  ERROR: Connection error.
+  [w12/280] job  46420  ERROR: Connection error.
+  [w45/280] job  46504  ERROR: Connection error.
+  [w141/280] job  46161  ERROR: Connection error.
+  [w133/280] job  46782  ERROR: Connection error.
+  [w105/280] job  46499  ERROR: Connection error.
+  [w116/280] job  46367  ERROR: Connection error.
+  [w148/280] job  46551  ERROR: Connection error.
+  [w235/280] job  45676  ERROR: Connection error.
+  [w151/280] job  46173  ERROR: Connection error.
+  [w210/280] job  46586  ERROR: Connection error.
+  [w255/280] job  46641  ERROR: Connection error.
+  [w161/280] job  46200  ERROR: Connection error.
+  [w50/280] job  46460  ERROR: Connection error.
+  [w230/280] job  46238  ERROR: Connection error.
+  [w164/280] job  46163  ERROR: Connection error.
+  [w222/280] job  46607  ERROR: Connection error.
+  [w85/280] job  46338  ERROR: Connection error.
+  [w139/280] job  46528  ERROR: Connection error.
+  [w71/280] job  46320  ERROR: Connection error.
+  [w279/280] job  46661  ERROR: Connection error.
+  [w106/280] job  46501  ERROR: Connection error.
+  [w110/280] job  46134  ERROR: Connection error.
+  [w265/280] job  46087  ERROR: Connection error.
+  [w138/280] job  46522  ERROR: Connection error.
+  [w34/280] job  46485  ERROR: Connection error.
+  [w23/280] job  46429  ERROR: Connection error.
+  [w25/280] job  46297  ERROR: Connection error.
+  [w128/280] job  47137  ERROR: Connection error.
+  [w5/280] job  46809  ERROR: Connection error.
+  [w197/280] job  46225  ERROR: Connection error.
+  [w21/280] job  46288  ERROR: Connection error.
+  [w49/280] job  46457  ERROR: Connection error.
+  [w6/280] job  46667  ERROR: Connection error.
+  [w157/280] job  46774  ERROR: Connection error.
+  [w89/280] job  46103  ERROR: Connection error.
+  [w102/280] job  46115  ERROR: Connection error.
+  [w41/280] job  46500  ERROR: Connection error.
+  [w13/280] job  46421  ERROR: Connection error.
+  [w22/280] job  46428  ERROR: Connection error.
+  [w60/280] job  46309  ERROR: Connection error.
+  [w189/280] job  46587  ERROR: Connection error.
+  [w63/280] job  46312  ERROR: Connection error.
+  [w93/280] job  46345  ERROR: Connection error.
+  [w145/280] job  46162  ERROR: Connection error.
+  [w277/280] job  46476  ERROR: Connection error.
+  [w163/280] job  46780  ERROR: Connection error.
+  [w7/280] job  45681  ERROR: Connection error.
+  [w228/280] job  46611  ERROR: Connection error.
+  [w214/280] job  46471  ERROR: Connection error.
+  [w56/280] job  46305  ERROR: Connection error.
+  [w11/280] job  46844  ERROR: Connection error.
+  [w104/280] job  45814  ERROR: Connection error.
+  [w9/280] job  46527  ERROR: Connection error.
+  [w20/280] job  46287  ERROR: Connection error.
+  [w15/280] job  46422  ERROR: Connection error.
+  [w90/280] job  46104  ERROR: Connection error.
+  [w200/280] job  46568  ERROR: Connection error.
+  [w176/280] job  46191  ERROR: Connection error.
+  [w193/280] job  46222  ERROR: Connection error.
+  [w185/280] job  47186  ERROR: Connection error.
+  [w65/280] job  46314  ERROR: Connection error.
+  [w79/280] job  46333  ERROR: Connection error.
+  [w155/280] job  46771  ERROR: Connection error.
+  [w115/280] job  46366  ERROR: Connection error.
+  [w54/280] job  46303  ERROR: Connection error.
+  [w232/280] job  46618  ERROR: Connection error.
+  [w221/280] job  46050  ERROR: Connection error.
+  [w184/280] job  48219  ERROR: Connection error.
+  [w97/280] job  46348  ERROR: Connection error.
+  [w160/280] job  46197  ERROR: Connection error.
+  [w47/280] job  46454  ERROR: Connection error.
+  [w42/280] job  46502  ERROR: Connection error.
+  [w61/280] job  46069  ERROR: Connection error.
+  [w123/280] job  46378  ERROR: Connection error.
+  [w233/280] job  46703  ERROR: Connection error.
+  [w147/280] job  46549  ERROR: Connection error.
+  [w2/280] job  46488  ERROR: Connection error.
+  [w234/280] job  46243  ERROR: Connection error.
+  [w88/280] job  46340  ERROR: Connection error.
+  [w46/280] job  46452  ERROR: Connection error.
+  [w172/280] job  45874  ERROR: Connection error.
+  [w121/280] job  46376  ERROR: Connection error.
+  [w263/280] job  46648  ERROR: Connection error.
+  [w92/280] job  46344  ERROR: Connection error.
+  [w238/280] job  46623  ERROR: Connection error.
+  [w244/280] job  46629  ERROR: Connection error.
+  [w152/280] job  46767  ERROR: Connection error.
+  [w272/280] job  46269  ERROR: Connection error.
+  [w39/280] job  46496  ERROR: Connection error.
+  [w191/280] job  46220  ERROR: Connection error.
+  [w8/280] job  46669  ERROR: Connection error.
+  [w269/280] job  46652  ERROR: Connection error.
+  [w27/280] job  46790  ERROR: Connection error.
+  [w140/280] job  46155  ERROR: Connection error.
+  [w109/280] job  46361  ERROR: Connection error.
+  [w270/280] job  46653  ERROR: Connection error.
+  [w100/280] job  46351  ERROR: Connection error.
+  [w220/280] job  46230  ERROR: Connection error.
+  [w127/280] job  46383  ERROR: Connection error.
+  [w248/280] job  46252  ERROR: Connection error.
+  [w73/280] job  46322  ERROR: Connection error.
+  [w219/280] job  46604  ERROR: Connection error.
+  [w29/280] job  46852  ERROR: Connection error.
+  [w203/280] job  46574  ERROR: Connection error.
+  [w207/280] job  45097  ERROR: Connection error.
+  [w267/280] job  46650  ERROR: Connection error.
+  [w57/280] job  46324  ERROR: Connection error.
+  [w268/280] job  46651  ERROR: Connection error.
+  [w52/280] job  46301  ERROR: Connection error.
+  [w246/280] job  46633  ERROR: Connection error.
+  [w103/280] job  46354  ERROR: Connection error.
+  [w53/280] job  46466  ERROR: Connection error.
+  [w17/280] job  46850  ERROR: Connection error.
+  [w260/280] job  46645  ERROR: Connection error.
+  [w31/280] job  46710  ERROR: Connection error.
+  [w227/280] job  46610  ERROR: Connection error.
+  [w262/280] job  46647  ERROR: Connection error.
+  [w243/280] job  46242  ERROR: Connection error.
+  [w271/280] job  46654  ERROR: Connection error.
+  [w171/280] job  46556  ERROR: Connection error.
+  [w58/280] job  46306  ERROR: Connection error.
+  [w82/280] job  46336  ERROR: Connection error.
+  [w30/280] job  45096  ERROR: Connection error.
+  [w18/280] job  46425  ERROR: Connection error.
+  [w181/280] job  46567  ERROR: Connection error.
+  [w229/280] job  46521  ERROR: Connection error.
+  [w101/280] job  47077  ERROR: Connection error.
+  [w136/280] job  46516  ERROR: Connection error.
+  [w266/280] job  46649  ERROR: Connection error.
+  [w192/280] job  46221  ERROR: Connection error.
+  [w38/280] job  46897  ERROR: Connection error.
+  [w26/280] job  44959  ERROR: Connection error.
+  [w217/280] job  46595  ERROR: Connection error.
+  [w135/280] job  46513  ERROR: Connection error.
+  [w216/280] job  47190  ERROR: Connection error.
+  [w231/280] job  46615  ERROR: Connection error.
+  [w70/280] job  46319  ERROR: Connection error.
+  [w87/280] job  46339  ERROR: Connection error.
+  [w51/280] job  47848  ERROR: Connection error.
+  [w241/280] job  46626  ERROR: Connection error.
+  [w113/280] job  46365  ERROR: Connection error.
+  [w19/280] job  46677  ERROR: Connection error.
+  [w3/280] job  46328  ERROR: Connection error.
+  [w153/280] job  46769  ERROR: Connection error.
+  [w158/280] job  50015  ERROR: Connection error.
+  [w167/280] job  46785  ERROR: Connection error.
+  [w129/280] job  46503  ERROR: Connection error.
+  [w259/280] job  46268  ERROR: Connection error.
+  [w114/280] job  46158  ERROR: Connection error.
+  [w68/280] job  46317  ERROR: Connection error.
+  [w95/280] job  46346  ERROR: Connection error.
+  [w156/280] job  46773  ERROR: Connection error.
+  [w137/280] job  46151  ERROR: Connection error.
+  [w209/280] job  46585  ERROR: Connection error.
+  [w28/280] job  46477  ERROR: Connection error.
+  [w143/280] job  46540  ERROR: Connection error.
+  [w199/280] job  46600  ERROR: Connection error.
+  [w36/280] job  46894  ERROR: Connection error.
+  [w242/280] job  46240  ERROR: Connection error.
+  [w83/280] job  46337  ERROR: Connection error.
+  [w236/280] job  46619  ERROR: Connection error.
+  [w258/280] job  46643  ERROR: Connection error.
+  [w261/280] job  46646  ERROR: Connection error.
+  [w254/280] job  46640  ERROR: Connection error.
+  [w204/280] job  46576  ERROR: Connection error.
+  [w253/280] job  46639  ERROR: Connection error.
+  [w10/280] job  46671  ERROR: Connection error.
+  [w67/280] job  46075  ERROR: Connection error.
+  [w16/280] job  46675  ERROR: Connection error.
+  [w274/280] job  46657  ERROR: Connection error.
+  [w14/280] job  46673  ERROR: Connection error.
+  [w62/280] job  46311  ERROR: Connection error.
+  [w187/280] job  46582  ERROR: Connection error.
+  [w183/280] job  46575  ERROR: Connection error.
+  [w161/280] job  46778  ERROR: Connection error.
+  [w223/280] job  46680  ERROR: Connection error.
+  [w32/280] job  47829  ERROR: Connection error.
+  [w50/280] job  46300  ERROR: Connection error.
+  [w37/280] job  46489  ERROR: Connection error.
+  [w24/280] job  46789  ERROR: Connection error.
+  [w112/280] job  46364  ERROR: Connection error.
+  [w164/280] job  47176  ERROR: Connection error.
+  [w23/280] job  46295  ERROR: Connection error.
+  [w265/280] job  46255  ERROR: Connection error.
+  [w25/280] job  44951  ERROR: Connection error.
+  [w141/280] job  46529  ERROR: Connection error.
+  [w230/280] job  46614  ERROR: Connection error.
+  [w197/280] job  46598  ERROR: Connection error.
+  [w110/280] job  46362  ERROR: Connection error.
+  [w151/280] job  46557  ERROR: Connection error.
+  [w12/280] job  46277  ERROR: Connection error.
+  [w235/280] job  45922  ERROR: Connection error.
+  [w245/280] job  46632  ERROR: Connection error.
+  [w34/280] job  46891  ERROR: Connection error.
+  [w22/280] job  46292  ERROR: Connection error.
+  [w214/280] job  46601  ERROR: Connection error.
+  [w102/280] job  46352  ERROR: Connection error.
+  [w145/280] job  46544  ERROR: Connection error.
+  [w21/280] job  46679  ERROR: Connection error.
+  [w221/280] job  46231  ERROR: Connection error.
+  [w184/280] job  46577  ERROR: Connection error.
+  [w89/280] job  46341  ERROR: Connection error.
+  [w9/280] job  46670  ERROR: Connection error.
+  [w160/280] job  46777  ERROR: Connection error.
+  [w7/280] job  46415  ERROR: Connection error.
+  [w47/280] job  46508  ERROR: Connection error.
+  [w13/280] job  46278  ERROR: Connection error.
+  [w61/280] job  46310  ERROR: Connection error.
+  [w90/280] job  46342  ERROR: Connection error.
+  [w49/280] job  46299  ERROR: Connection error.
+  [w191/280] job  46591  ERROR: Connection error.
+  [w172/280] job  46179  ERROR: Connection error.
+  [w20/280] job  46678  ERROR: Connection error.
+  [w176/280] job  46563  ERROR: Connection error.
+  [w104/280] job  46120  ERROR: Connection error.
+  [w15/280] job  46291  ERROR: Connection error.
+  [w272/280] job  46655  ERROR: Connection error.
+  [w39/280] job  46898  ERROR: Connection error.
+  [w248/280] job  46636  ERROR: Connection error.
+  [w277/280] job  46659  ERROR: Connection error.
+  [w233/280] job  46630  ERROR: Connection error.
+  [w234/280] job  46631  ERROR: Connection error.
+  [w2/280] job  46664  ERROR: Connection error.
+  [w46/280] job  46506  ERROR: Connection error.
+  [w220/280] job  46606  ERROR: Connection error.
+  [w193/280] job  46594  ERROR: Connection error.
+  [w140/280] job  46530  ERROR: Connection error.
+  [w53/280] job  46302  ERROR: Connection error.
+  [w243/280] job  46628  ERROR: Connection error.
+  [w18/280] job  46285  ERROR: Connection error.
+  [w229/280] job  46237  ERROR: Connection error.
+  [w3/280] job  46665  ERROR: Connection error.
+  [w192/280] job  46592  ERROR: Connection error.
+  [w28/280] job  44908  ERROR: Connection error.
+  [w259/280] job  46644  ERROR: Connection error.
+  [w114/280] job  47127  ERROR: Connection error.
+  [w242/280] job  46627  ERROR: Connection error.
+  [w67/280] job  47850  ERROR: Connection error.
+  [w137/280] job  46518  ERROR: Connection error.
+  [w32/280] job  45094  ERROR: Connection error.
+  [w37/280] job  46896  ERROR: Connection error.
+  [w235/280] job  46244  ERROR: Connection error.
+  [w23/280] job  46788  ERROR: Connection error.
+  [w265/280] job  45949  ERROR: Connection error.
+  [w13/280] job  46672  ERROR: Connection error.
+  [w22/280] job  45955  ERROR: Connection error.
+  [w12/280] job  46847  ERROR: Connection error.
+  [w7/280] job  46497  ERROR: Connection error.
+  [w172/280] job  46558  ERROR: Connection error.
+  [w221/280] job  47996  ERROR: Connection error.
+  [w15/280] job  46674  ERROR: Connection error.
+  [w104/280] job  46355  ERROR: Connection error.
+  [w18/280] job  46676  ERROR: Connection error.
+  [w229/280] job  46613  ERROR: Connection error.
+  [w235/280] job  46766  ERROR: Connection error.
+  [w7/280] job  46668  ERROR: Connection error.
+[job_skills] Done. 725/2000 parsed  time=2m50s  rate=705.2 rec/min
+[vastai] SSH tunnel closed.
+Vast.ai instance 33158324 destroyed.
+
+=== Results ===
+  Total:        2000
+  OK:           725
+  Failed:       1275
+  Compute time: 2m50s  (705.2 rec/min)
+  Wall time:    7m06s  (281.5 rec/min)
+  Avg latency:  49010ms
+  Output:       /Users/m1dnyt3/GitHub/ProductionAppName/case-study/iterations/08-dc-reliability/benchmark_results.json

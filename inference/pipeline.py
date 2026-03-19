@@ -305,7 +305,7 @@ def _run_job_skills_batch(
     limit: int,
     force: bool,
     static_batches: bool = False,
-) -> list[dict]:
+) -> tuple[list[dict], float]:
     """Extract required/preferred skills from job postings.
 
     Producer/Consumer/Aggregator pattern:
@@ -341,7 +341,7 @@ def _run_job_skills_batch(
     print(f"[job_skills] Processing {total} job(s) ... (workers={n})")
 
     if total == 0:
-        return []
+        return [], 0.0
 
     result_q: queue.Queue = queue.Queue()
     if static_batches and n > 1:
@@ -560,7 +560,7 @@ def _run_jd_reparse_batch(
     limit: int,
     force: bool,
     static_batches: bool = False,
-) -> list[dict]:
+) -> tuple[list[dict], float]:
     """Re-parse job descriptions to fill missing section_* fields via slice-and-scan."""
     if force:
         query = text(
@@ -587,7 +587,7 @@ def _run_jd_reparse_batch(
     print(f"[jd_reparse] Processing {total} job(s) ... (workers={n})")
 
     if total == 0:
-        return []
+        return [], 0.0
 
     result_q: queue.Queue = queue.Queue()
     if static_batches and n > 1:
@@ -804,7 +804,7 @@ def _run_jd_validate_batch(
     limit: int,
     force: bool,
     static_batches: bool = False,
-) -> list[dict]:
+) -> tuple[list[dict], float]:
     """Validate all heuristically-extracted sections with JSON-in/JSON-out LLM call."""
     if force:
         query = text(
@@ -830,7 +830,7 @@ def _run_jd_validate_batch(
     print(f"[jd_validate] Validating {total} heuristic records ... (workers={n})")
 
     if total == 0:
-        return []
+        return [], 0.0
 
     result_q: queue.Queue = queue.Queue()
     if static_batches and n > 1:
@@ -1018,7 +1018,7 @@ def _run_company_enrich_batch(
     limit: int,
     force: bool,
     static_batches: bool = False,
-) -> list[dict]:
+) -> tuple[list[dict], float]:
     """Enrich company records with LLM-generated summary and signals."""
     if force:
         query = text(
@@ -1051,7 +1051,7 @@ def _run_company_enrich_batch(
     print(f"[company_enrich] Processing {total} company/ies ... (workers={n})")
 
     if total == 0:
-        return []
+        return [], 0.0
 
     result_q: queue.Queue = queue.Queue()
     now = datetime.now(UTC)

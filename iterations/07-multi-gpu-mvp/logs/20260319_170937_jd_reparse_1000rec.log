@@ -1,0 +1,1059 @@
+=== Benchmark: jd_reparse | limit=1000 | backend=remote | dispatch=shared-queue ===
+DB:     postgresql://fixture:fixture@localhost:5433/inference_fixture
+Output: /Users/m1dnyt3/GitHub/ProductionAppName/case-study/iterations/07-multi-gpu-mvp/benchmark_results.json
+
+[vastai] Model verified on HuggingFace: unsloth/Qwen3.5-9B-GGUF/Qwen3.5-9B-Q4_K_M.gguf
+[vastai] Offer search — filters: x4 GPUs (fallback path [4, 2, 1]), price $0.00–$0.90/hr, VRAM 16–36GB, tflops≥25.0/GPU, inet_down≥800Mbps, bw_cost≤$0.04, datacenter=False, verified=True, reliability≥0.9
+[vastai] Found 6 matching offers for x4 GPUs.
+[vastai] Selected offer:
+  GPU:         RTX 3090 x4
+  VRAM:        24 GB/card  (96 GB total)
+  TFLOPS:      35/GPU  (141 total)
+  Price:       $0.591/hr base + $0.016 BW est = $0.607/hr
+  inet_down:   809 Mbps  (cost $0.0026/GB)
+  Reliability: 0.973  datacenter=False
+  Offer ID:    33020169
+[vastai] Parallel slot formula:
+  (24GB VRAM - 6GB model) / 0.5GB per KV slot = 36 slots/GPU × 4 GPU(s) = 144 total workers
+  available_vram=18GB
+[vastai] Instance TTL: 37min (queue=1000, n_parallel=144)
+[vastai] llama-server config per GPU:
+  image:        ghcr.io/ggml-org/llama.cpp:server-cuda
+  model:        unsloth/Qwen3.5-9B-GGUF/Qwen3.5-9B-Q4_K_M.gguf
+  GPUs started: 4 (CUDA_VISIBLE_DEVICES 0..3)
+  ports:        8000, 8001, 8002, 8003
+  --parallel:   36
+  --ctx-size:   147456  (4096 tokens/slot × 36 slots)
+  --reasoning-budget: 0  (thinking disabled)
+  disk:         40GB
+[vastai] Using image: ghcr.io/ggml-org/llama.cpp:server-cuda
+Vast.ai instance created: id=33148493 (offer=33020169)
+Waiting for Vast.ai instance to reach 'running' (timeout 3600s) ...
+  status=None
+  status=loading
+  status=loading
+  status=running
+Waiting for SSH (timeout 60s) ...
+[vastai] SSH tunnel opened: localhost:58795 → container:8000 (GPU0), localhost:58796 → container:8001 (GPU1), localhost:58797 → container:8002 (GPU2), localhost:58798 → container:8003 (GPU3)
+SSH tunnel open. llama-server endpoints: ('http://localhost:58795/v1', 'http://localhost:58796/v1', 'http://localhost:58797/v1', 'http://localhost:58798/v1')
+Waiting for llama-server(s) to load model (timeout 300s) ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+All llama-servers ready.
+[jd_reparse] Processing 1000 job(s) ... (workers=144)
+  [gpu1] [w69/144] job  44960  10848ms  in=115 out=23  slices=1/1  skills=y  [ok]
+  [gpu2] [w54/144] job  46762  13648ms  in=472 out=64  slices=1/1  skills=n  [ok]
+  [gpu3] [w119/144] job  47352  14958ms  in=554 out=64  slices=1/1  skills=n  [ok]
+  [gpu2] [w82/144] job  44952  15468ms  in=155 out=69  slices=1/1  skills=y  [ok]
+  [gpu4] [w9/144] job  45351  15942ms  in=185 out=77  slices=1/1  skills=n  [ok]
+  [gpu3] [w111/144] job  47161  18289ms  in=240 out=90  slices=1/1  skills=y  [ok]
+  [gpu3] [w75/144] job  44950  20377ms  in=1016 out=95  slices=2/2  skills=y  [ok]
+  [gpu3] [w99/144] job  46926  20700ms  in=206 out=102  slices=0/1  skills=n  [ok]
+  [gpu3] [w59/144] job  46620  21870ms  in=253 out=111  slices=1/1  skills=y  [ok]
+  [gpu3] [w55/144] job  46572  23115ms  in=393 out=117  slices=1/1  skills=y  [ok]
+  [gpu4] [w21/144] job  45515  27038ms  in=605 out=153  slices=1/1  skills=y  [ok]
+  [gpu1] [w129/144] job  47532  27207ms  in=275 out=117  slices=1/1  skills=y  [ok]
+  [gpu4] [w44/144] job  46293  28193ms  in=270 out=163  slices=1/1  skills=y  [ok]
+  [gpu3] [w119/144] job  48256  13238ms  in=381 out=79  slices=1/1  skills=y  [ok]
+  [gpu2] [w78/144] job  44874  29002ms  in=451 out=159  slices=1/1  skills=y  [ok]
+  [gpu3] [w39/144] job  46067  32135ms  in=300 out=166  slices=1/1  skills=y  [ok]
+  [gpu2] [w142/144] job  47719  33317ms  in=503 out=198  slices=1/1  skills=y  [ok]
+  [gpu3] [w79/144] job  44878  35399ms  in=649 out=190  slices=1/2  skills=y  [ok]
+  [gpu1] [w85/144] job  46754  36053ms  in=3850 out=152  slices=4/5  skills=n  [ok]
+  [gpu4] [w56/144] job  46580  36541ms  in=318 out=213  slices=1/1  skills=y  [ok]
+  [gpu2] [w50/144] job  46550  39720ms  in=913 out=235  slices=2/2  skills=y  [ok]
+  [gpu2] [w38/144] job  46447  40071ms  in=790 out=233  slices=2/2  skills=y  [ok]
+  [gpu2] [w58/144] job  46617  41612ms  in=845 out=242  slices=2/3  skills=y  [ok]
+  [gpu2] [w138/144] job  47735  41970ms  in=923 out=251  slices=2/2  skills=y  [ok]
+  [gpu2] [w11/144] job  45178  42448ms  in=391 out=267  slices=1/1  skills=y  [ok]
+  [gpu1] [w25/144] job  45813  42410ms  in=881 out=218  slices=2/2  skills=y  [ok]
+  [gpu1] [w93/144] job  44990  42383ms  in=348 out=223  slices=1/1  skills=y  [ok]
+  [gpu1] [w101/144] job  47053  42421ms  in=807 out=221  slices=2/2  skills=y  [ok]
+  [gpu3] [w63/144] job  46761  43266ms  in=388 out=244  slices=1/1  skills=n  [ok]
+  [gpu4] [w140/144] job  47791  43243ms  in=688 out=262  slices=1/1  skills=y  [ok]
+  [gpu4] [w128/144] job  48842  43733ms  in=1165 out=258  slices=2/2  skills=y  [ok]
+  [gpu3] [w111/144] job  48328  27814ms  in=1074 out=161  slices=2/2  skills=y  [ok]
+  [gpu1] [w25/144] job  48514   3874ms  in=113 out=22  slices=1/1  skills=n  [ok]
+  [gpu4] [w96/144] job  47748  46494ms  in=1141 out=274  slices=2/4  skills=y  [ok]
+  [gpu4] [w64/144] job  47745  47355ms  in=1141 out=275  slices=2/4  skills=y  [ok]
+  [gpu1] [w73/144] job  46914  47745ms  in=735 out=248  slices=2/2  skills=y  [ok]
+  [gpu2] [w106/144] job  47099  48374ms  in=640 out=285  slices=1/1  skills=y  [ok]
+  [gpu4] [w72/144] job  47746  50639ms  in=1141 out=291  slices=2/4  skills=y  [ok]
+  [gpu4] [w84/144] job  47747  50682ms  in=1141 out=292  slices=2/4  skills=y  [ok]
+  [gpu3] [w107/144] job  47749  52160ms  in=1141 out=275  slices=2/4  skills=y  [ok]
+  [gpu4] [w144/144] job  47833  52364ms  in=1481 out=290  slices=3/3  skills=y  [ok]
+  [gpu3] [w83/144] job  44954  53957ms  in=794 out=286  slices=2/2  skills=y  [ok]
+  [gpu1] [w61/144] job  46895  55637ms  in=899 out=283  slices=2/2  skills=n  [ok]
+  [gpu2] [w4/144] job  45184  57532ms  in=972 out=343  slices=2/2  skills=y  [ok]
+  [gpu2] [w34/144] job  46065  58988ms  in=866 out=348  slices=2/2  skills=y  [ok]
+  [gpu2] [w138/144] job  48150  18963ms  in=489 out=99  slices=1/1  skills=y  [ok]
+  [gpu1] [w57/144] job  46616  61913ms  in=507 out=335  slices=1/1  skills=y  [ok]
+  [gpu3] [w75/144] job  48307  42106ms  in=326 out=236  slices=1/2  skills=y  [ok]
+  [gpu1] [w129/144] job  47055  35654ms  in=3415 out=202  slices=1/4  skills=y  [ok]
+  [gpu4] [w12/144] job  45182  63383ms  in=1387 out=338  slices=2/2  skills=y  [ok]
+  [gpu2] [w46/144] job  46353  63465ms  in=1469 out=361  slices=3/3  skills=y  [ok]
+  [gpu3] [w39/144] job  47118  31788ms  in=259 out=180  slices=1/1  skills=y  [ok]
+  [gpu2] [w42/144] job  45942  64836ms  in=768 out=379  slices=2/2  skills=y  [ok]
+  [gpu1] [w33/144] job  46401  65519ms  in=873 out=351  slices=2/2  skills=y  [ok]
+  [gpu1] [w16/144] job  45285  65965ms  in=797 out=362  slices=2/2  skills=y  [ok]
+  [gpu4] [w76/144] job  44966  67484ms  in=786 out=357  slices=2/2  skills=y  [ok]
+  [gpu3] [w2/144] job  45181  67707ms  in=620 out=379  slices=1/1  skills=y  [ok]
+  [gpu3] [w5/144] job  45185  69346ms  in=610 out=389  slices=1/2  skills=y  [ok]
+  [gpu4] [w88/144] job  45975  69021ms  in=1075 out=372  slices=2/3  skills=y  [ok]
+  [gpu3] [w17/144] job  46062  69661ms  in=1175 out=385  slices=2/2  skills=y  [ok]
+  [gpu4] [w7/144] job  45501  70486ms  in=824 out=382  slices=2/2  skills=y  [ok]
+  [gpu2] [w86/144] job  45028  71156ms  in=1003 out=423  slices=2/2  skills=y  [ok]
+  [gpu1] [w3/144] job  45183  72305ms  in=903 out=406  slices=1/2  skills=y  [ok]
+  [gpu1] [w77/144] job  45042  74682ms  in=1099 out=411  slices=2/2  skills=y  [ok]
+  [gpu4] [w13/144] job  45568  74970ms  in=743 out=406  slices=2/2  skills=y  [ok]
+  [gpu3] [w127/144] job  48330  75640ms  in=1573 out=401  slices=3/3  skills=y  [ok]
+  [gpu4] [w28/144] job  46397  77185ms  in=1063 out=406  slices=2/2  skills=y  [ok]
+  [gpu1] [w141/144] job  47793  77720ms  in=835 out=424  slices=2/2  skills=y  [ok]
+  [gpu1] [w1/144] job  45177  78152ms  in=528 out=434  slices=1/1  skills=n  [ok]
+  [gpu1] [w6/144] job  45580  78157ms  in=1045 out=424  slices=3/3  skills=y  [ok]
+  [gpu2] [w8/144] job  45287  78970ms  in=861 out=459  slices=2/2  skills=y  [ok]
+  [gpu1] [w81/144] job  44947  79491ms  in=1739 out=426  slices=3/3  skills=y  [ok]
+  [gpu2] [w82/144] job  48285  63901ms  in=1071 out=377  slices=2/2  skills=y  [ok]
+  [gpu3] [w47/144] job  46368  79944ms  in=931 out=439  slices=2/2  skills=y  [ok]
+  [gpu2] [w19/144] job  45415  80929ms  in=1405 out=464  slices=3/3  skills=y  [ok]
+  [gpu3] [w55/144] job  48703  62024ms  in=1183 out=346  slices=2/2  skills=y  [ok]
+  [gpu1] [w69/144] job  48359  74968ms  in=4741 out=395  slices=2/6  skills=y  [ok]
+  [gpu4] [w116/144] job  47306  86452ms  in=950 out=455  slices=2/2  skills=y  [ok]
+  [gpu3] [w79/144] job  48036  52158ms  in=2530 out=268  slices=3/4  skills=y  [ok]
+  [gpu3] [w123/144] job  47423  88303ms  in=1629 out=477  slices=3/3  skills=y  [ok]
+  [gpu2] [w50/144] job  47992  50048ms  in=1165 out=275  slices=2/2  skills=y  [ok]
+  [gpu2] [w62/144] job  46791  91739ms  in=1491 out=525  slices=2/3  skills=y  [ok]
+  [gpu4] [w56/144] job  48054  55729ms  in=2703 out=249  slices=4/4  skills=y  [ok]
+  [gpu4] [w80/144] job  44905  92663ms  in=965 out=482  slices=2/2  skills=y  [ok]
+  [gpu4] [w48/144] job  46545  92702ms  in=1005 out=483  slices=2/2  skills=y  [ok]
+  [gpu1] [w73/144] job  48364  45843ms  in=2944 out=230  slices=1/4  skills=y  [ok]
+  [gpu4] [w32/144] job  45923  94846ms  in=1273 out=482  slices=3/3  skills=y  [ok]
+  [gpu1] [w113/144] job  47056  95690ms  in=1601 out=506  slices=3/3  skills=y  [ok]
+  [gpu3] [w31/144] job  46384  98848ms  in=1156 out=523  slices=2/2  skills=y  [ok]
+  [gpu4] [w21/144] job  48879  72231ms  in=2923 out=355  slices=2/5  skills=y  [ok]
+  [gpu3] [w135/144] job  47645  99014ms  in=1609 out=521  slices=3/3  skills=y  [ok]
+  [gpu1] [w49/144] job  46546  100535ms  in=1187 out=528  slices=3/3  skills=y  [ok]
+  [gpu3] [w23/144] job  45734  101327ms  in=1923 out=528  slices=4/4  skills=n  [ok]
+  [gpu2] [w78/144] job  47117  72932ms  in=1095 out=415  slices=2/2  skills=n  [ok]
+  [gpu2] [w70/144] job  46888  102409ms  in=1294 out=584  slices=2/2  skills=y  [ok]
+  [gpu2] [w122/144] job  47422  102456ms  in=1142 out=587  slices=1/2  skills=y  [ok]
+  [gpu3] [w63/144] job  48311  60656ms  in=2345 out=289  slices=1/3  skills=y  [ok]
+  [gpu2] [w54/144] job  49647  90431ms  in=4014 out=503  slices=4/6  skills=y  [ok]
+  [gpu2] [w102/144] job  46986  104207ms  in=1561 out=593  slices=3/3  skills=y  [ok]
+  [gpu2] [w110/144] job  47019  104321ms  in=1404 out=589  slices=3/3  skills=y  [ok]
+  [gpu4] [w92/144] job  45073  106583ms  in=1149 out=553  slices=2/2  skills=y  [ok]
+  [gpu4] [w68/144] job  46800  107107ms  in=1565 out=555  slices=3/3  skills=y  [ok]
+  [gpu2] [w46/144] job  47780  43501ms  in=922 out=226  slices=2/2  skills=y  [ok]
+  [gpu1] [w89/144] job  46001  107768ms  in=1032 out=576  slices=2/2  skills=y  [ok]
+  [gpu1] [w105/144] job  47076  108280ms  in=1137 out=586  slices=2/2  skills=y  [ok]
+  [gpu4] [w76/144] job  46696  41948ms  in=573 out=207  slices=1/1  skills=y  [ok]
+  [gpu3] [w20/144] job  45406  109939ms  in=924 out=565  slices=2/2  skills=y  [ok]
+  [gpu2] [w10/144] job  45612  110617ms  in=1190 out=618  slices=3/3  skills=y  [ok]
+  [gpu3] [w71/144] job  46889  110886ms  in=1342 out=563  slices=2/2  skills=y  [ok]
+  [gpu2] [w138/144] job  52080  49772ms  in=4009 out=227  slices=2/6  skills=y  [ok]
+  [gpu2] [w118/144] job  47261  112990ms  in=1688 out=609  slices=3/3  skills=y  [ok]
+  [gpu3] [w111/144] job  48541  67394ms  in=2951 out=304  slices=3/6  skills=y  [ok]
+  [gpu4] [w140/144] job  48379  71055ms  in=4156 out=310  slices=2/5  skills=n  [ok]
+  [gpu1] [w97/144] job  47144  114824ms  in=1550 out=607  slices=3/3  skills=y  [ok]
+  [gpu1] [w129/144] job  47989  53658ms  in=404 out=278  slices=1/1  skills=y  [ok]
+  [gpu4] [w9/144] job  52560  102099ms  in=4002 out=499  slices=3/9  skills=y  [ok]
+  [gpu2] [w74/144] job  45953  118065ms  in=1300 out=658  slices=3/3  skills=y  [ok]
+  [gpu1] [w37/144] job  47744  119559ms  in=1489 out=635  slices=2/3  skills=y  [ok]
+  [gpu1] [w22/144] job  45556  120853ms  in=1904 out=638  slices=4/4  skills=y  [ok]
+  [gpu4] [w96/144] job  51808  76164ms  in=2446 out=337  slices=2/4  skills=y  [ok]
+  [gpu1] [w29/144] job  46541  124137ms  in=1171 out=654  slices=2/2  skills=y  [ok]
+  [gpu2] [w114/144] job  47057  124730ms  in=1601 out=688  slices=3/3  skills=y  [ok]
+  [gpu3] [w5/144] job  51846  55868ms  in=2124 out=252  slices=3/3  skills=y  [ok]
+  [gpu2] [w38/144] job  48011  84897ms  in=1084 out=453  slices=2/2  skills=y  [ok]
+  [gpu3] [w95/144] job  47515  126838ms  in=1563 out=663  slices=3/3  skills=y  [ok]
+  [gpu4] [w7/144] job  49980  56855ms  in=1539 out=268  slices=2/5  skills=y  [ok]
+  [gpu4] [w24/144] job  45776  127399ms  in=1460 out=655  slices=3/3  skills=y  [ok]
+  [gpu4] [w84/144] job  48785  77153ms  in=2773 out=349  slices=2/7  skills=y  [ok]
+  [gpu3] [w15/144] job  45597  129751ms  in=971 out=694  slices=1/2  skills=y  [ok]
+  [gpu1] [w117/144] job  47340  131365ms  in=1142 out=684  slices=2/2  skills=y  [ok]
+  [gpu2] [w8/144] job  48069  53681ms  in=2598 out=261  slices=3/5  skills=y  [ok]
+  [gpu3] [w87/144] job  45098  135154ms  in=1678 out=704  slices=3/3  skills=y  [ok]
+  [gpu4] [w112/144] job  47054  135667ms  in=1601 out=682  slices=3/3  skills=y  [ok]
+  [gpu4] [w104/144] job  46996  136005ms  in=1597 out=684  slices=3/3  skills=y  [ok]
+  [gpu3] [w143/144] job  48360  135978ms  in=5624 out=667  slices=5/8  skills=y  [ok]
+  [gpu3] [w115/144] job  47093  136390ms  in=1349 out=702  slices=3/3  skills=y  [ok]
+  [gpu1] [w57/144] job  47121  79178ms  in=1335 out=395  slices=3/3  skills=y  [ok]
+  [gpu1] [w81/144] job  49448  63898ms  in=2937 out=296  slices=3/5  skills=y  [ok]
+  [gpu2] [w42/144] job  48562  80209ms  in=3102 out=392  slices=2/4  skills=n  [ok]
+  [gpu4] [w72/144] job  51809  95215ms  in=2350 out=429  slices=3/4  skills=y  [ok]
+  [gpu2] [w30/144] job  46041  145942ms  in=1627 out=787  slices=4/4  skills=y  [ok]
+  [gpu1] [w65/144] job  46795  148951ms  in=1658 out=764  slices=4/4  skills=y  [ok]
+  [gpu1] [w101/144] job  48902  106768ms  in=1665 out=542  slices=3/4  skills=y  [ok]
+  [gpu3] [w103/144] job  46995  152879ms  in=1597 out=789  slices=3/3  skills=y  [ok]
+  [gpu3] [w43/144] job  46283  156065ms  in=2113 out=802  slices=4/4  skills=y  [ok]
+  [gpu4] [w64/144] job  46032  108727ms  in=1490 out=504  slices=3/3  skills=y  [ok]
+  [gpu3] [w2/144] job  52787  90090ms  in=4231 out=416  slices=4/6  skills=y  [ok]
+  [gpu2] [w98/144] job  47018  157958ms  in=2290 out=833  slices=4/4  skills=y  [ok]
+  [gpu3] [w59/144] job  48838  136967ms  in=2071 out=696  slices=4/4  skills=y  [ok]
+  [gpu3] [w99/144] job  48389  138232ms  in=1383 out=703  slices=3/3  skills=y  [ok]
+  [gpu3] [w27/144] job  45911  163962ms  in=2300 out=817  slices=4/4  skills=y  [ok]
+  [gpu2] [w14/144] job  45588  164723ms  in=1184 out=886  slices=3/3  skills=y  [ok]
+  [gpu4] [w100/144] job  46955  165000ms  in=1760 out=833  slices=4/4  skills=y  [ok]
+  [gpu4] [w40/144] job  45939  165102ms  in=2123 out=837  slices=4/4  skills=y  [ok]
+  [gpu3] [w83/144] job  48876  111506ms  in=3750 out=524  slices=2/5  skills=y  [ok]
+  [gpu3] [w139/144] job  47760  165833ms  in=1062 out=839  slices=1/2  skills=n  [ok]
+  [gpu2] [w130/144] job  47589  165794ms  in=2364 out=874  slices=4/5  skills=y  [ok]
+  [gpu2] [w11/144] job  48268  126258ms  in=1143 out=641  slices=2/2  skills=y  [ok]
+  [gpu1] [w25/144] job  48569  123717ms  in=4089 out=621  slices=4/7  skills=y  [ok]
+  [gpu4] [w24/144] job  49683  43285ms  in=4154 out=182  slices=2/5  skills=y  [ok]
+  [gpu3] [w20/144] job  49125  63535ms  in=2617 out=282  slices=3/4  skills=y  [ok]
+  [gpu3] [w39/144] job  48932  109292ms  in=4567 out=481  slices=3/6  skills=y  [ok]
+  [gpu3] [w35/144] job  46439  173516ms  in=1664 out=858  slices=3/3  skills=y  [ok]
+  [gpu2] [w58/144] job  47983  136101ms  in=4158 out=668  slices=2/5  skills=y  [ok]
+  [gpu2] [w62/144] job  49572  86346ms  in=3112 out=385  slices=3/6  skills=y  [ok]
+  [gpu4] [w52/144] job  46573  179460ms  in=1597 out=911  slices=3/3  skills=y  [ok]
+  [gpu2] [w94/144] job  44877  179396ms  in=2078 out=939  slices=3/3  skills=y  [ok]
+  [gpu3] [w119/144] job  47446  151253ms  in=4118 out=705  slices=4/5  skills=y  [ok]
+  [gpu2] [w106/144] job  48466  132246ms  in=4802 out=632  slices=3/6  skills=y  [ok]
+  [gpu4] [w48/144] job  50536  88121ms  in=2975 out=415  slices=2/7  skills=y  [ok]
+  [gpu3] [w123/144] job  49239  94121ms  in=3120 out=391  slices=3/5  skills=y  [ok]
+  [gpu3] [w15/144] job  49115  53078ms  in=2129 out=189  slices=2/3  skills=y  [ok]
+  [gpu1] [w125/144] job  47425  182839ms  in=2022 out=959  slices=3/4  skills=y  [ok]
+  [gpu4] [w124/144] job  47424  183178ms  in=1632 out=919  slices=3/3  skills=y  [ok]
+  [gpu1] [w93/144] job  48900  142385ms  in=1108 out=751  slices=2/2  skills=y  [ok]
+  [gpu4] [w80/144] job  49048  92374ms  in=3937 out=426  slices=4/6  skills=y  [ok]
+  [gpu4] [w144/144] job  48873  134531ms  in=3379 out=617  slices=3/5  skills=y  [ok]
+  [gpu1] [w113/144] job  48208  91615ms  in=1645 out=454  slices=3/3  skills=y  [ok]
+  [gpu3] [w51/144] job  46571  187693ms  in=1597 out=909  slices=3/3  skills=y  [ok]
+  [gpu2] [w134/144] job  47635  188522ms  in=2078 out=974  slices=4/4  skills=y  [ok]
+  [gpu4] [w32/144] job  48106  94679ms  in=3939 out=422  slices=3/6  skills=y  [ok]
+  [gpu3] [w107/144] job  48857  137826ms  in=4490 out=613  slices=4/6  skills=y  [ok]
+  [gpu4] [w28/144] job  47494  114318ms  in=3678 out=522  slices=3/5  skills=n  [ok]
+  [gpu4] [w104/144] job  49708  56683ms  in=4383 out=241  slices=2/6  skills=y  [ok]
+  [gpu2] [w78/144] job  50239  92094ms  in=3394 out=399  slices=4/6  skills=y  [ok]
+  [gpu4] [w128/144] job  48392  150602ms  in=3794 out=676  slices=4/6  skills=y  [ok]
+  [gpu4] [w68/144] job  48960  87399ms  in=2511 out=393  slices=2/5  skills=y  [ok]
+  [gpu1] [w6/144] job  50481  117969ms  in=4347 out=569  slices=4/6  skills=y  [ok]
+  [gpu1] [w89/144] job  49089  88564ms  in=3894 out=422  slices=3/5  skills=y  [ok]
+  [gpu3] [w17/144] job  50398  127769ms  in=4349 out=552  slices=4/6  skills=y  [ok]
+  [gpu4] [w108/144] job  47172  197634ms  in=1683 out=965  slices=4/4  skills=y  [ok]
+  [gpu3] [w91/144] job  46708  198651ms  in=1324 out=969  slices=3/3  skills=y  [ok]
+  [w80/144] job  51882  ERROR: Connection error.
+  [w116/144] job  49093  ERROR: Connection error.
+  [w102/144] job  50211  ERROR: Connection error.
+  [w63/144] job  50516  ERROR: Connection error.
+  [w10/144] job  49127  ERROR: Connection error.
+  [w72/144] job  51723  ERROR: Connection error.
+  [w31/144] job  50823  ERROR: Connection error.
+  [w52/144] job  51223  ERROR: Connection error.
+  [w18/144] job  45503  ERROR: Connection error.
+  [w76/144] job  49119  ERROR: Connection error.
+  [w90/144] job  47278  ERROR: Connection error.
+  [w144/144] job  52115  ERROR: Connection error.
+  [w29/144] job  49622  ERROR: Connection error.
+  [w138/144] job  48961  ERROR: Connection error.
+  [w108/144] job  52077  ERROR: Connection error.
+  [w131/144] job  48824  ERROR: Connection error.
+  [w49/144] job  50734  ERROR: Connection error.
+  [w28/144] job  51858  ERROR: Connection error.
+  [w95/144] job  48955  ERROR: Connection error.
+  [w99/144] job  52084  ERROR: Connection error.
+  [w85/144] job  47926  ERROR: Connection error.
+  [w33/144] job  49159  ERROR: Connection error.
+  [w12/144] job  48251  ERROR: Connection error.
+  [w57/144] job  51300  ERROR: Connection error.
+  [w120/144] job  47348  ERROR: Connection error.
+  [w36/144] job  46440  ERROR: Connection error.
+  [w94/144] job  51317  ERROR: Connection error.
+  [w9/144] job  48079  ERROR: Connection error.
+  [w38/144] job  49725  ERROR: Connection error.
+  [w106/144] job  51877  ERROR: Connection error.
+  [w119/144] job  51177  ERROR: Connection error.
+  [w130/144] job  52888  ERROR: Connection error.
+  [w2/144] job  51957  ERROR: Connection error.
+  [w125/144] job  51212  ERROR: Connection error.
+  [w42/144] job  50985  ERROR: Connection error.
+  [w114/144] job  49636  ERROR: Connection error.
+  [w11/144] job  52291  ERROR: Connection error.
+  [w88/144] job  49713  ERROR: Connection error.
+  [w117/144] job  48956  ERROR: Connection error.
+  [w113/144] job  52116  ERROR: Connection error.
+  [w98/144] job  51052  ERROR: Connection error.
+  [w19/144] job  48970  ERROR: Connection error.
+  [w91/144] job  52111  ERROR: Connection error.
+  [w141/144] job  50077  ERROR: Connection error.
+  [w23/144] job  50030  ERROR: Connection error.
+  [w83/144] job  51163  ERROR: Connection error.
+  [w46/144] job  49050  ERROR: Connection error.
+  [w65/144] job  52618  ERROR: Connection error.
+  [w118/144] job  49141  ERROR: Connection error.
+  [w61/144] job  48926  ERROR: Connection error.
+  [w143/144] job  50357  ERROR: Connection error.
+  [w68/144] job  52327  ERROR: Connection error.
+  [w97/144] job  49231  ERROR: Connection error.
+  [w30/144] job  51725  ERROR: Connection error.
+  [w41/144] job  47685  ERROR: Connection error.
+  [w51/144] job  50954  ERROR: Connection error.
+  [w3/144] job  49444  ERROR: Connection error.
+  [w71/144] job  49130  ERROR: Connection error.
+  [w60/144] job  46622  ERROR: Connection error.
+  [w40/144] job  51738  ERROR: Connection error.
+  [w73/144] job  50436  ERROR: Connection error.
+  [w128/144] job  51991  ERROR: Connection error.
+  [w32/144] job  53468  ERROR: Connection error.
+  [w78/144] job  51952  ERROR: Connection error.
+  [w129/144] job  50751  ERROR: Connection error.
+  [w47/144] job  50136  ERROR: Connection error.
+  [w27/144] job  51705  ERROR: Connection error.
+  [w62/144] job  51417  ERROR: Connection error.
+  [w104/144] job  53091  ERROR: Connection error.
+  [w66/144] job  46797  ERROR: Connection error.
+  [w109/144] job  48068  ERROR: Connection error.
+  [w84/144] job  49619  ERROR: Connection error.
+  [w59/144] job  51374  ERROR: Connection error.
+  [w136/144] job  48826  ERROR: Connection error.
+  [w20/144] job  51961  ERROR: Connection error.
+  [w53/144] job  47188  ERROR: Connection error.
+  [w100/144] job  51782  ERROR: Connection error.
+  [w21/144] job  50559  ERROR: Connection error.
+  [w122/144] job  48977  ERROR: Connection error.
+  [w82/144] job  49689  ERROR: Connection error.
+  [w13/144] job  49500  ERROR: Connection error.
+  [w56/144] job  49774  ERROR: Connection error.
+  [w115/144] job  51810  ERROR: Connection error.
+  [w70/144] job  49831  ERROR: Connection error.
+  [w16/144] job  46695  ERROR: Connection error.
+  [w35/144] job  51303  ERROR: Connection error.
+  [w139/144] job  52407  ERROR: Connection error.
+  [w58/144] job  51306  ERROR: Connection error.
+  [w15/144] job  51938  ERROR: Connection error.
+  [w135/144] job  49662  ERROR: Connection error.
+  [w133/144] job  47634  ERROR: Connection error.
+  [w107/144] job  51629  ERROR: Connection error.
+  [w110/144] job  48944  ERROR: Connection error.
+  [w25/144] job  52545  ERROR: Connection error.
+  [w134/144] job  51436  ERROR: Connection error.
+  [w103/144] job  51832  ERROR: Connection error.
+  [w67/144] job  46798  ERROR: Connection error.
+  [w96/144] job  49964  ERROR: Connection error.
+  [w137/144] job  47940  ERROR: Connection error.
+  [w14/144] job  51331  ERROR: Connection error.
+  [w55/144] job  48964  ERROR: Connection error.
+  [w1/144] job  49311  ERROR: Connection error.
+  [w54/144] job  48076  ERROR: Connection error.
+  [w8/144] job  49040  ERROR: Connection error.
+  [w89/144] job  52065  ERROR: Connection error.
+  [w6/144] job  52094  ERROR: Connection error.
+  [w50/144] job  49276  ERROR: Connection error.
+  [w86/144] job  49661  ERROR: Connection error.
+  [w124/144] job  51426  ERROR: Connection error.
+  [w4/144] job  48935  ERROR: Connection error.
+  [w75/144] job  48233  ERROR: Connection error.
+  [w93/144] job  51445  ERROR: Connection error.
+  [w17/144] job  52076  ERROR: Connection error.
+  [w69/144] job  49193  ERROR: Connection error.
+  [w26/144] job  45893  ERROR: Connection error.
+  [w87/144] job  50123  ERROR: Connection error.
+  [w37/144] job  52641  ERROR: Connection error.
+  [w81/144] job  51696  ERROR: Connection error.
+  [w92/144] job  48946  ERROR: Connection error.
+  [w132/144] job  47633  ERROR: Connection error.
+  [w34/144] job  52078  ERROR: Connection error.
+  [w112/144] job  49102  ERROR: Connection error.
+  [w22/144] job  50654  ERROR: Connection error.
+  [w105/144] job  49105  ERROR: Connection error.
+  [w39/144] job  51026  ERROR: Connection error.
+  [w5/144] job  50449  ERROR: Connection error.
+  [w44/144] job  49660  ERROR: Connection error.
+  [w127/144] job  47444  ERROR: Connection error.
+  [w121/144] job  47349  ERROR: Connection error.
+  [w79/144] job  49977  ERROR: Connection error.
+  [w64/144] job  51835  ERROR: Connection error.
+  [w45/144] job  46332  ERROR: Connection error.
+  [w111/144] job  49146  ERROR: Connection error.
+  [w123/144] job  51937  ERROR: Connection error.
+  [w48/144] job  51857  ERROR: Connection error.
+  [w24/144] job  51850  ERROR: Connection error.
+  [w7/144] job  50324  ERROR: Connection error.
+  [w77/144] job  50179  ERROR: Connection error.
+  [w101/144] job  51020  ERROR: Connection error.
+  [w142/144] job  47921  ERROR: Connection error.
+  [w43/144] job  51834  ERROR: Connection error.
+  [w74/144] job  49589  ERROR: Connection error.
+  [w140/144] job  48042  ERROR: Connection error.
+  [w126/144] job  47336  ERROR: Connection error.
+  [w63/144] job  51963  ERROR: Connection error.
+  [w102/144] job  51962  ERROR: Connection error.
+  [w116/144] job  52171  ERROR: Connection error.
+  [w141/144] job  46736  ERROR: Connection error.
+  [w23/144] job  46737  ERROR: Connection error.
+  [w38/144] job  51301  ERROR: Connection error.
+  [w138/144] job  52041  ERROR: Connection error.
+  [w9/144] job  49940  ERROR: Connection error.
+  [w130/144] job  51641  ERROR: Connection error.
+  [w42/144] job  52300  ERROR: Connection error.
+  [w28/144] job  52105  ERROR: Connection error.
+  [w29/144] job  52091  ERROR: Connection error.
+  [w19/144] job  46734  ERROR: Connection error.
+  [w57/144] job  51576  ERROR: Connection error.
+  [w120/144] job  52135  ERROR: Connection error.
+  [w106/144] job  52396  ERROR: Connection error.
+  [w31/144] job  51965  ERROR: Connection error.
+  [w10/144] job  48444  ERROR: Connection error.
+  [w11/144] job  51964  ERROR: Connection error.
+  [w49/144] job  52059  ERROR: Connection error.
+  [w91/144] job  51944  ERROR: Connection error.
+  [w33/144] job  52393  ERROR: Connection error.
+  [w119/144] job  51616  ERROR: Connection error.
+  [w98/144] job  52878  ERROR: Connection error.
+  [w114/144] job  52026  ERROR: Connection error.
+  [w76/144] job  52020  ERROR: Connection error.
+  [w80/144] job  51440  ERROR: Connection error.
+  [w88/144] job  52158  ERROR: Connection error.
+  [w95/144] job  52121  ERROR: Connection error.
+  [w117/144] job  51676  ERROR: Connection error.
+  [w144/144] job  52090  ERROR: Connection error.
+  [w85/144] job  52122  ERROR: Connection error.
+  [w99/144] job  52109  ERROR: Connection error.
+  [w18/144] job  52575  ERROR: Connection error.
+  [w94/144] job  51614  ERROR: Connection error.
+  [w52/144] job  51210  ERROR: Connection error.
+  [w90/144] job  52022  ERROR: Connection error.
+  [w12/144] job  52453  ERROR: Connection error.
+  [w108/144] job  52726  ERROR: Connection error.
+  [w2/144] job  51722  ERROR: Connection error.
+  [w131/144] job  52058  ERROR: Connection error.
+  [w83/144] job  45088  ERROR: Connection error.
+  [w113/144] job  51678  ERROR: Connection error.
+  [w125/144] job  52275  ERROR: Connection error.
+  [w36/144] job  51744  ERROR: Connection error.
+  [w72/144] job  52351  ERROR: Connection error.
+  [w87/144] job  44891  ERROR: Connection error.
+  [w4/144] job  44888  ERROR: Connection error.
+  [w62/144] job  53355  ERROR: Connection error.
+  [w129/144] job  53323  ERROR: Connection error.
+  [w77/144] job  45195  ERROR: Connection error.
+  [w41/144] job  46755  ERROR: Connection error.
+  [w73/144] job  53208  ERROR: Connection error.
+  [w25/144] job  53777  ERROR: Connection error.
+  [w140/144] job  44892  ERROR: Connection error.
+  [w35/144] job  53663  ERROR: Connection error.
+  [w60/144] job  46728  ERROR: Connection error.
+  [w17/144] job  44879  ERROR: Connection error.
+  [w15/144] job  53749  ERROR: Connection error.
+  [w137/144] job  53580  ERROR: Connection error.
+  [w26/144] job  45199  ERROR: Connection error.
+  [w32/144] job  53295  ERROR: Connection error.
+  [w109/144] job  53098  ERROR: Connection error.
+  [w3/144] job  53016  ERROR: Connection error.
+  [w67/144] job  53794  ERROR: Connection error.
+  [w20/144] job  53413  ERROR: Connection error.
+  [w124/144] job  44893  ERROR: Connection error.
+  [w136/144] job  53146  ERROR: Connection error.
+  [w110/144] job  53768  ERROR: Connection error.
+  [w111/144] job  45126  ERROR: Connection error.
+  [w14/144] job  54012  ERROR: Connection error.
+  [w43/144] job  45211  ERROR: Connection error.
+  [w51/144] job  52994  ERROR: Connection error.
+  [w96/144] job  53796  ERROR: Connection error.
+  [w126/144] job  45198  ERROR: Connection error.
+  [w134/144] job  53779  ERROR: Connection error.
+  [w92/144] job  44880  ERROR: Connection error.
+  [w143/144] job  53242  ERROR: Connection error.
+  [w123/144] job  45127  ERROR: Connection error.
+  [w30/144] job  53297  ERROR: Connection error.
+  [w81/144] job  45104  ERROR: Connection error.
+  [w93/144] job  44875  ERROR: Connection error.
+  [w21/144] job  53220  ERROR: Connection error.
+  [w132/144] job  44881  ERROR: Connection error.
+  [w135/144] job  53738  ERROR: Connection error.
+  [w48/144] job  45152  ERROR: Connection error.
+  [w100/144] job  53145  ERROR: Connection error.
+  [w82/144] job  53616  ERROR: Connection error.
+  [w78/144] job  53309  ERROR: Connection error.
+  [w68/144] job  53799  ERROR: Connection error.
+  [w1/144] job  47081  ERROR: Connection error.
+  [w50/144] job  44886  ERROR: Connection error.
+  [w45/144] job  45114  ERROR: Connection error.
+  [w103/144] job  53791  ERROR: Connection error.
+  [w133/144] job  53751  ERROR: Connection error.
+  [w79/144] job  45193  ERROR: Connection error.
+  [w53/144] job  52978  ERROR: Connection error.
+  [w58/144] job  53710  ERROR: Connection error.
+  [w75/144] job  44889  ERROR: Connection error.
+  [w37/144] job  44894  ERROR: Connection error.
+  [w121/144] job  45108  ERROR: Connection error.
+  [w122/144] job  53610  ERROR: Connection error.
+  [w127/144] job  45107  ERROR: Connection error.
+  [w86/144] job  44887  ERROR: Connection error.
+  [w97/144] job  53403  ERROR: Connection error.
+  [w71/144] job  53038  ERROR: Connection error.
+  [w107/144] job  53767  ERROR: Connection error.
+  [w118/144] job  53294  ERROR: Connection error.
+  [w56/144] job  53603  ERROR: Connection error.
+  [w55/144] job  47080  ERROR: Connection error.
+  [w44/144] job  45106  ERROR: Connection error.
+  [w139/144] job  53661  ERROR: Connection error.
+  [w61/144] job  53092  ERROR: Connection error.
+  [w13/144] job  53611  ERROR: Connection error.
+  [w69/144] job  44890  ERROR: Connection error.
+  [w27/144] job  53344  ERROR: Connection error.
+  [w112/144] job  45289  ERROR: Connection error.
+  [w105/144] job  44882  ERROR: Connection error.
+  [w74/144] job  45272  ERROR: Connection error.
+  [w84/144] job  45737  ERROR: Connection error.
+  [w89/144] job  44884  ERROR: Connection error.
+  [w47/144] job  53328  ERROR: Connection error.
+  [w40/144] job  53090  ERROR: Connection error.
+  [w7/144] job  45154  ERROR: Connection error.
+  [w128/144] job  46757  ERROR: Connection error.
+  [w115/144] job  53618  ERROR: Connection error.
+  [w8/144] job  54126  ERROR: Connection error.
+  [w34/144] job  44895  ERROR: Connection error.
+  [w16/144] job  53634  ERROR: Connection error.
+  [w66/144] job  53434  ERROR: Connection error.
+  [w46/144] job  52190  ERROR: Connection error.
+  [w64/144] job  45109  ERROR: Connection error.
+  [w5/144] job  45105  ERROR: Connection error.
+  [w70/144] job  53639  ERROR: Connection error.
+  [w101/144] job  46294  ERROR: Connection error.
+  [w6/144] job  44885  ERROR: Connection error.
+  [w59/144] job  53120  ERROR: Connection error.
+  [w65/144] job  52563  ERROR: Connection error.
+  [w22/144] job  45853  ERROR: Connection error.
+  [w39/144] job  44883  ERROR: Connection error.
+  [w54/144] job  54087  ERROR: Connection error.
+  [w24/144] job  45153  ERROR: Connection error.
+  [w142/144] job  45174  ERROR: Connection error.
+  [w104/144] job  53077  ERROR: Connection error.
+  [w102/144] job  45122  ERROR: Connection error.
+  [w63/144] job  45121  ERROR: Connection error.
+  [w116/144] job  45139  ERROR: Connection error.
+  [w38/144] job  45149  ERROR: Connection error.
+  [w141/144] job  45146  ERROR: Connection error.
+  [w120/144] job  45116  ERROR: Connection error.
+  [w57/144] job  44897  ERROR: Connection error.
+  [w130/144] job  45172  ERROR: Connection error.
+  [w138/144] job  45150  ERROR: Connection error.
+  [w91/144] job  45132  ERROR: Connection error.
+  [w23/144] job  45147  ERROR: Connection error.
+  [w9/144] job  45171  ERROR: Connection error.
+  [w19/144] job  44896  ERROR: Connection error.
+  [w106/144] job  45117  ERROR: Connection error.
+  [w42/144] job  45173  ERROR: Connection error.
+  [w29/144] job  45176  ERROR: Connection error.
+  [w114/144] job  45158  ERROR: Connection error.
+  [w85/144] job  44900  ERROR: Connection error.
+  [w144/144] job  44898  ERROR: Connection error.
+  [w2/144] job  45061  ERROR: Connection error.
+  [w95/144] job  45345  ERROR: Connection error.
+  [w119/144] job  45156  ERROR: Connection error.
+  [w28/144] job  45175  ERROR: Connection error.
+  [w80/144] job  45215  ERROR: Connection error.
+  [w117/144] job  45346  ERROR: Connection error.
+  [w33/144] job  45155  ERROR: Connection error.
+  [w31/144] job  45118  ERROR: Connection error.
+  [w52/144] job  44901  ERROR: Connection error.
+  [w83/144] job  46693  ERROR: Connection error.
+  [w76/144] job  45214  ERROR: Connection error.
+  [w12/144] job  45110  ERROR: Connection error.
+  [w36/144] job  45112  ERROR: Connection error.
+  [w49/144] job  45426  ERROR: Connection error.
+  [w11/144] job  45120  ERROR: Connection error.
+  [w10/144] job  45119  ERROR: Connection error.
+  [w99/144] job  44902  ERROR: Connection error.
+  [w94/144] job  44907  ERROR: Connection error.
+  [w18/144] job  44904  ERROR: Connection error.
+  [w90/144] job  45103  ERROR: Connection error.
+  [w131/144] job  45111  ERROR: Connection error.
+  [w98/144] job  45157  ERROR: Connection error.
+  [w125/144] job  44969  ERROR: Connection error.
+  [w88/144] job  45344  ERROR: Connection error.
+  [w108/144] job  45113  ERROR: Connection error.
+  [w72/144] job  45115  ERROR: Connection error.
+  [w113/144] job  46184  ERROR: Connection error.
+  [w87/144] job  45213  ERROR: Connection error.
+  [w140/144] job  45201  ERROR: Connection error.
+  [w124/144] job  45196  ERROR: Connection error.
+  [w129/144] job  45124  ERROR: Connection error.
+  [w4/144] job  44971  ERROR: Connection error.
+  [w15/144] job  45222  ERROR: Connection error.
+  [w41/144] job  45125  ERROR: Connection error.
+  [w111/144] job  45946  ERROR: Connection error.
+  [w3/144] job  44983  ERROR: Connection error.
+  [w73/144] job  45133  ERROR: Connection error.
+  [w17/144] job  45019  ERROR: Connection error.
+  [w67/144] job  45194  ERROR: Connection error.
+  [w51/144] job  45703  ERROR: Connection error.
+  [w110/144] job  45038  ERROR: Connection error.
+  [w25/144] job  45200  ERROR: Connection error.
+  [w14/144] job  45226  ERROR: Connection error.
+  [w30/144] job  45143  ERROR: Connection error.
+  [w62/144] job  45123  ERROR: Connection error.
+  [w81/144] job  45163  ERROR: Connection error.
+  [w109/144] job  44997  ERROR: Connection error.
+  [w132/144] job  45202  ERROR: Connection error.
+  [w77/144] job  46187  ERROR: Connection error.
+  [w134/144] job  45229  ERROR: Connection error.
+  [w32/144] job  45005  ERROR: Connection error.
+  [w60/144] job  45000  ERROR: Connection error.
+  [w26/144] job  45224  ERROR: Connection error.
+  [w21/144] job  45166  ERROR: Connection error.
+  [w43/144] job  45197  ERROR: Connection error.
+  [w135/144] job  45216  ERROR: Connection error.
+  [w35/144] job  45221  ERROR: Connection error.
+  [w96/144] job  45227  ERROR: Connection error.
+  [w137/144] job  45223  ERROR: Connection error.
+  [w100/144] job  45134  ERROR: Connection error.
+  [w136/144] job  45225  ERROR: Connection error.
+  [w92/144] job  45128  ERROR: Connection error.
+  [w45/144] job  45137  ERROR: Connection error.
+  [w143/144] job  45636  ERROR: Connection error.
+  [w123/144] job  45135  ERROR: Connection error.
+  [w126/144] job  45228  ERROR: Connection error.
+  [w79/144] job  45140  ERROR: Connection error.
+  [w48/144] job  45129  ERROR: Connection error.
+  [w50/144] job  45873  ERROR: Connection error.
+  [w1/144] job  45136  ERROR: Connection error.
+  [w82/144] job  45494  ERROR: Connection error.
+  [w68/144] job  45131  ERROR: Connection error.
+  [w5/144] job  45190  ERROR: Connection error.
+  [w20/144] job  45206  ERROR: Connection error.
+  [w78/144] job  45130  ERROR: Connection error.
+  [w16/144] job  46692  ERROR: Connection error.
+  [w24/144] job  45575  ERROR: Connection error.
+  [w103/144] job  45230  ERROR: Connection error.
+  [w127/144] job  45079  ERROR: Connection error.
+  [w84/144] job  46192  ERROR: Connection error.
+  [w101/144] job  45217  ERROR: Connection error.
+  [w122/144] job  45141  ERROR: Connection error.
+  [w44/144] job  45189  ERROR: Connection error.
+  [w59/144] job  45219  ERROR: Connection error.
+  [w63/144] job  45654  ERROR: Connection error.
+  [w128/144] job  45093  ERROR: Connection error.
+  [w53/144] job  45207  ERROR: Connection error.
+  [w66/144] job  45186  ERROR: Connection error.
+  [w39/144] job  45571  ERROR: Connection error.
+  [w97/144] job  45084  ERROR: Connection error.
+  [w102/144] job  45650  ERROR: Connection error.
+  [w47/144] job  45210  ERROR: Connection error.
+  [w55/144] job  45159  ERROR: Connection error.
+  [w115/144] job  45179  ERROR: Connection error.
+  [w104/144] job  45591  ERROR: Connection error.
+  [w71/144] job  45983  ERROR: Connection error.
+  [w58/144] job  45208  ERROR: Connection error.
+  [w65/144] job  45220  ERROR: Connection error.
+  [w69/144] job  45232  ERROR: Connection error.
+  [w46/144] job  45187  ERROR: Connection error.
+  [w105/144] job  45151  ERROR: Connection error.
+  [w139/144] job  45203  ERROR: Connection error.
+  [w34/144] job  45212  ERROR: Connection error.
+  [w118/144] job  45144  ERROR: Connection error.
+  [w89/144] job  44980  ERROR: Connection error.
+  [w86/144] job  45142  ERROR: Connection error.
+  [w13/144] job  45205  ERROR: Connection error.
+  [w142/144] job  45583  ERROR: Connection error.
+  [w121/144] job  45231  ERROR: Connection error.
+  [w61/144] job  45204  ERROR: Connection error.
+  [w116/144] job  45237  ERROR: Connection error.
+  [w64/144] job  45188  ERROR: Connection error.
+  [w6/144] job  45218  ERROR: Connection error.
+  [w133/144] job  45138  ERROR: Connection error.
+  [w54/144] job  45304  ERROR: Connection error.
+  [w37/144] job  46189  ERROR: Connection error.
+  [w38/144] job  45238  ERROR: Connection error.
+  [w74/144] job  45209  ERROR: Connection error.
+  [w141/144] job  45239  ERROR: Connection error.
+  [w40/144] job  45235  ERROR: Connection error.
+  [w112/144] job  45234  ERROR: Connection error.
+  [w107/144] job  45602  ERROR: Connection error.
+  [w7/144] job  45236  ERROR: Connection error.
+  [w93/144] job  46195  ERROR: Connection error.
+  [w75/144] job  45876  ERROR: Connection error.
+  [w130/144] job  45242  ERROR: Connection error.
+  [w56/144] job  45145  ERROR: Connection error.
+  [w8/144] job  45180  ERROR: Connection error.
+  [w22/144] job  45565  ERROR: Connection error.
+  [w27/144] job  45233  ERROR: Connection error.
+  [w70/144] job  45192  ERROR: Connection error.
+  [w120/144] job  45240  ERROR: Connection error.
+  [w57/144] job  45241  ERROR: Connection error.
+  [w76/144] job  45600  ERROR: Connection error.
+  [w9/144] job  45247  ERROR: Connection error.
+  [w91/144] job  45244  ERROR: Connection error.
+  [w138/144] job  45243  ERROR: Connection error.
+  [w114/144] job  45251  ERROR: Connection error.
+  [w106/144] job  45305  ERROR: Connection error.
+  [w33/144] job  45582  ERROR: Connection error.
+  [w29/144] job  45250  ERROR: Connection error.
+  [w131/144] job  45279  ERROR: Connection error.
+  [w95/144] job  45253  ERROR: Connection error.
+  [w49/144] job  45609  ERROR: Connection error.
+  [w31/144] job  45587  ERROR: Connection error.
+  [w144/144] job  46058  ERROR: Connection error.
+  [w2/144] job  45607  ERROR: Connection error.
+  [w12/144] job  45603  ERROR: Connection error.
+  [w23/144] job  45246  ERROR: Connection error.
+  [w117/144] job  45578  ERROR: Connection error.
+  [w85/144] job  45252  ERROR: Connection error.
+  [w83/144] job  45596  ERROR: Connection error.
+  [w119/144] job  45254  ERROR: Connection error.
+  [w90/144] job  45632  ERROR: Connection error.
+  [w19/144] job  45248  ERROR: Connection error.
+  [w11/144] job  45613  ERROR: Connection error.
+  [w42/144] job  45249  ERROR: Connection error.
+  [w52/144] job  45592  ERROR: Connection error.
+  [w28/144] job  45245  ERROR: Connection error.
+  [w94/144] job  45625  ERROR: Connection error.
+  [w98/144] job  45280  ERROR: Connection error.
+  [w80/144] job  45573  ERROR: Connection error.
+  [w36/144] job  45267  ERROR: Connection error.
+  [w140/144] job  45261  ERROR: Connection error.
+  [w108/144] job  45257  ERROR: Connection error.
+  [w72/144] job  45258  ERROR: Connection error.
+  [w125/144] job  45255  ERROR: Connection error.
+  [w87/144] job  45260  ERROR: Connection error.
+  [w88/144] job  45256  ERROR: Connection error.
+  [w124/144] job  45262  ERROR: Connection error.
+  [w129/144] job  45263  ERROR: Connection error.
+  [w10/144] job  45616  ERROR: Connection error.
+  [w99/144] job  45621  ERROR: Connection error.
+  [w18/144] job  45628  ERROR: Connection error.
+  [w15/144] job  45265  ERROR: Connection error.
+  [w113/144] job  45259  ERROR: Connection error.
+  [w51/144] job  45271  ERROR: Connection error.
+  [w41/144] job  45266  ERROR: Connection error.
+  [w4/144] job  45264  ERROR: Connection error.
+  [w109/144] job  45274  ERROR: Connection error.
+  [w111/144] job  45281  ERROR: Connection error.
+  [w81/144] job  45273  ERROR: Connection error.
+  [w3/144] job  45282  ERROR: Connection error.
+  [w73/144] job  45268  ERROR: Connection error.
+  [w67/144] job  45270  ERROR: Connection error.
+  [w132/144] job  45275  ERROR: Connection error.
+  [w14/144] job  45284  ERROR: Connection error.
+  [w17/144] job  45269  ERROR: Connection error.
+  [w62/144] job  45288  ERROR: Connection error.
+  [w21/144] job  46112  ERROR: Connection error.
+  [w30/144] job  45286  ERROR: Connection error.
+  [w110/144] job  45745  ERROR: Connection error.
+  [w60/144] job  46116  ERROR: Connection error.
+  [w100/144] job  45290  ERROR: Connection error.
+  [w79/144] job  45297  ERROR: Connection error.
+  [w136/144] job  45291  ERROR: Connection error.
+  [w25/144] job  45283  ERROR: Connection error.
+  [w48/144] job  45879  ERROR: Connection error.
+  [w96/144] job  46119  ERROR: Connection error.
+  [w135/144] job  45358  ERROR: Connection error.
+  [w35/144] job  46118  ERROR: Connection error.
+  [w43/144] job  46114  ERROR: Connection error.
+  [w45/144] job  45292  ERROR: Connection error.
+  [w63/144] job  45313  ERROR: Connection error.
+  [w126/144] job  45296  ERROR: Connection error.
+  [w97/144] job  45318  ERROR: Connection error.
+  [w143/144] job  45293  ERROR: Connection error.
+  [w137/144] job  46121  ERROR: Connection error.
+  [w134/144] job  45277  ERROR: Connection error.
+  [w77/144] job  45276  ERROR: Connection error.
+  [w82/144] job  45300  ERROR: Connection error.
+  [w26/144] job  46108  ERROR: Connection error.
+  [w32/144] job  45278  ERROR: Connection error.
+  [w68/144] job  45301  ERROR: Connection error.
+  [w24/144] job  45307  ERROR: Connection error.
+  [w127/144] job  45309  ERROR: Connection error.
+  [w1/144] job  45299  ERROR: Connection error.
+  [w92/144] job  45614  ERROR: Connection error.
+  [w5/144] job  45302  ERROR: Connection error.
+  [w101/144] job  45883  ERROR: Connection error.
+  [w103/144] job  45308  ERROR: Connection error.
+  [w64/144] job  45326  ERROR: Connection error.
+  [w39/144] job  45317  ERROR: Connection error.
+  [w118/144] job  45333  ERROR: Connection error.
+  [w59/144] job  45312  ERROR: Connection error.
+  [w128/144] job  45314  ERROR: Connection error.
+  [w123/144] job  45295  ERROR: Connection error.
+  [w66/144] job  45316  ERROR: Connection error.
+  [w121/144] job  45323  ERROR: Connection error.
+  [w44/144] job  45311  ERROR: Connection error.
+  [w55/144] job  45320  ERROR: Connection error.
+  [w53/144] job  45315  ERROR: Connection error.
+  [w105/144] job  45331  ERROR: Connection error.
+  [w102/144] job  45886  ERROR: Connection error.
+  [w142/144] job  45722  ERROR: Connection error.
+  [w107/144] job  45379  ERROR: Connection error.
+  [w78/144] job  47229  ERROR: Connection error.
+  [w7/144] job  45934  ERROR: Connection error.
+  [w112/144] job  45377  ERROR: Connection error.
+  [w122/144] job  45310  ERROR: Connection error.
+  [w34/144] job  45332  ERROR: Connection error.
+  [w58/144] job  46387  ERROR: Connection error.
+  [w65/144] job  45328  ERROR: Connection error.
+  [w115/144] job  45321  ERROR: Connection error.
+  [w71/144] job  46386  ERROR: Connection error.
+  [w70/144] job  45740  ERROR: Connection error.
+  [w20/144] job  45303  ERROR: Connection error.
+  [w16/144] job  45306  ERROR: Connection error.
+  [w46/144] job  45330  ERROR: Connection error.
+  [w50/144] job  45298  ERROR: Connection error.
+  [w89/144] job  45334  ERROR: Connection error.
+  [w57/144] job  45338  ERROR: Connection error.
+  [w84/144] job  45336  ERROR: Connection error.
+  [w75/144] job  45692  ERROR: Connection error.
+  [w133/144] job  45352  ERROR: Connection error.
+  [w37/144] job  45360  ERROR: Connection error.
+  [w22/144] job  45480  ERROR: Connection error.
+  [w93/144] job  45381  ERROR: Connection error.
+  [w38/144] job  45363  ERROR: Connection error.
+  [w114/144] job  45342  ERROR: Connection error.
+  [w27/144] job  45717  ERROR: Connection error.
+  [w139/144] job  45485  ERROR: Connection error.
+  [w8/144] job  45711  ERROR: Connection error.
+  [w47/144] job  45319  ERROR: Connection error.
+  [w116/144] job  45325  ERROR: Connection error.
+  [w104/144] job  45327  ERROR: Connection error.
+  [w74/144] job  45368  ERROR: Connection error.
+  [w6/144] job  45348  ERROR: Connection error.
+  [w61/144] job  45324  ERROR: Connection error.
+  [w130/144] job  45700  ERROR: Connection error.
+  [w120/144] job  45337  ERROR: Connection error.
+  [w40/144] job  45374  ERROR: Connection error.
+  [w54/144] job  45355  ERROR: Connection error.
+  [w56/144] job  45706  ERROR: Connection error.
+  [w141/144] job  45371  ERROR: Connection error.
+  [w13/144] job  45322  ERROR: Connection error.
+  [w12/144] job  45347  ERROR: Connection error.
+  [w29/144] job  46057  ERROR: Connection error.
+  [w69/144] job  45329  ERROR: Connection error.
+  [w49/144] job  46061  ERROR: Connection error.
+  [w91/144] job  45340  ERROR: Connection error.
+  [w9/144] job  45495  ERROR: Connection error.
+  [w86/144] job  45335  ERROR: Connection error.
+  [w138/144] job  45341  ERROR: Connection error.
+  [w76/144] job  45339  ERROR: Connection error.
+  [w23/144] job  45349  ERROR: Connection error.
+  [w33/144] job  46056  ERROR: Connection error.
+  [w31/144] job  46063  ERROR: Connection error.
+  [w42/144] job  45504  ERROR: Connection error.
+  [w131/144] job  46059  ERROR: Connection error.
+  [w144/144] job  46064  ERROR: Connection error.
+  [w2/144] job  46198  ERROR: Connection error.
+  [w106/144] job  45343  ERROR: Connection error.
+  [w90/144] job  45354  ERROR: Connection error.
+  [w11/144] job  45366  ERROR: Connection error.
+  [w95/144] job  46060  ERROR: Connection error.
+  [w117/144] job  45353  ERROR: Connection error.
+  [w98/144] job  45378  ERROR: Connection error.
+  [w125/144] job  45497  ERROR: Connection error.
+  [w83/144] job  45499  ERROR: Connection error.
+  [w87/144] job  45500  ERROR: Connection error.
+  [w80/144] job  45493  ERROR: Connection error.
+  [w85/144] job  45356  ERROR: Connection error.
+  [w52/144] job  45369  ERROR: Connection error.
+  [w94/144] job  45376  ERROR: Connection error.
+  [w36/144] job  45382  ERROR: Connection error.
+  [w88/144] job  45390  ERROR: Connection error.
+  [w10/144] job  45396  ERROR: Connection error.
+  [w19/144] job  45359  ERROR: Connection error.
+  [w108/144] job  45386  ERROR: Connection error.
+  [w119/144] job  45387  ERROR: Connection error.
+  [w140/144] job  45384  ERROR: Connection error.
+  [w28/144] job  45373  ERROR: Connection error.
+  [w72/144] job  45388  ERROR: Connection error.
+  [w4/144] job  45409  ERROR: Connection error.
+  [w113/144] job  45367  ERROR: Connection error.
+  [w129/144] job  45394  ERROR: Connection error.
+  [w41/144] job  45372  ERROR: Connection error.
+  [w15/144] job  45364  ERROR: Connection error.
+  [w18/144] job  45361  ERROR: Connection error.
+  [w109/144] job  45375  ERROR: Connection error.
+  [w51/144] job  45370  ERROR: Connection error.
+  [w99/144] job  47082  ERROR: Connection error.
+  [w124/144] job  45392  ERROR: Connection error.
+  [w111/144] job  45380  ERROR: Connection error.
+  [w81/144] job  45383  ERROR: Connection error.
+  [w14/144] job  45391  ERROR: Connection error.
+  [w30/144] job  47096  ERROR: Connection error.
+  [w67/144] job  45411  ERROR: Connection error.
+  [w110/144] job  45399  ERROR: Connection error.
+  [w132/144] job  45413  ERROR: Connection error.
+  [w100/144] job  45403  ERROR: Connection error.
+  [w21/144] job  45397  ERROR: Connection error.
+  [w62/144] job  45395  ERROR: Connection error.
+  [w3/144] job  45385  ERROR: Connection error.
+  [w17/144] job  45393  ERROR: Connection error.
+  [w73/144] job  45389  ERROR: Connection error.
+  [w136/144] job  45407  ERROR: Connection error.
+  [w135/144] job  45423  ERROR: Connection error.
+  [w25/144] job  45417  ERROR: Connection error.
+  [w143/144] job  45402  ERROR: Connection error.
+  [w79/144] job  45405  ERROR: Connection error.
+  [w48/144] job  45419  ERROR: Connection error.
+  [w126/144] job  45431  ERROR: Connection error.
+  [w60/144] job  45401  ERROR: Connection error.
+  [w26/144] job  45422  ERROR: Connection error.
+  [w63/144] job  45429  ERROR: Connection error.
+  [w137/144] job  45404  ERROR: Connection error.
+  [w96/144] job  45421  ERROR: Connection error.
+  [w35/144] job  45594  ERROR: Connection error.
+  [w134/144] job  45408  ERROR: Connection error.
+  [w123/144] job  45432  ERROR: Connection error.
+  [w32/144] job  45433  ERROR: Connection error.
+  [w39/144] job  45420  ERROR: Connection error.
+  [w59/144] job  45428  ERROR: Connection error.
+  [w5/144] job  45436  ERROR: Connection error.
+  [w45/144] job  45427  ERROR: Connection error.
+  [w92/144] job  47199  ERROR: Connection error.
+  [w53/144] job  45441  ERROR: Connection error.
+  [w78/144] job  45451  ERROR: Connection error.
+  [w44/144] job  45437  ERROR: Connection error.
+  [w1/144] job  45424  ERROR: Connection error.
+  [w24/144] job  45416  ERROR: Connection error.
+  [w43/144] job  45425  ERROR: Connection error.
+  [w55/144] job  45439  ERROR: Connection error.
+  [w142/144] job  45447  ERROR: Connection error.
+  [w97/144] job  45400  ERROR: Connection error.
+  [w77/144] job  45410  ERROR: Connection error.
+  [w7/144] job  45453  ERROR: Connection error.
+  [w107/144] job  45449  ERROR: Connection error.
+  [w112/144] job  45455  ERROR: Connection error.
+  [w64/144] job  45442  ERROR: Connection error.
+  [w66/144] job  45434  ERROR: Connection error.
+  [w82/144] job  45412  ERROR: Connection error.
+  [w128/144] job  45430  ERROR: Connection error.
+  [w103/144] job  45440  ERROR: Connection error.
+  [w102/144] job  45445  ERROR: Connection error.
+  [w127/144] job  45418  ERROR: Connection error.
+  [w105/144] job  45443  ERROR: Connection error.
+  [w68/144] job  45414  ERROR: Connection error.
+  [w101/144] job  45438  ERROR: Connection error.
+  [w118/144] job  45872  ERROR: Connection error.
+  [w70/144] job  45456  ERROR: Connection error.
+  [w121/144] job  45435  ERROR: Connection error.
+  [w58/144] job  45448  ERROR: Connection error.
+  [w34/144] job  45446  ERROR: Connection error.
+  [w65/144] job  45450  ERROR: Connection error.
+  [w20/144] job  45458  ERROR: Connection error.
+  [w29/144] job  45484  ERROR: Connection error.
+  [w84/144] job  45467  ERROR: Connection error.
+  [w71/144] job  45454  ERROR: Connection error.
+  [w27/144] job  45457  ERROR: Connection error.
+  [w115/144] job  45452  ERROR: Connection error.
+  [w61/144] job  45472  ERROR: Connection error.
+  [w12/144] job  45483  ERROR: Connection error.
+  [w104/144] job  45468  ERROR: Connection error.
+  [w37/144] job  45471  ERROR: Connection error.
+  [w47/144] job  45464  ERROR: Connection error.
+  [w89/144] job  45463  ERROR: Connection error.
+  [w54/144] job  45481  ERROR: Connection error.
+  [w114/144] job  45538  ERROR: Connection error.
+  [w133/144] job  45469  ERROR: Connection error.
+  [w120/144] job  45476  ERROR: Connection error.
+  [w22/144] job  45473  ERROR: Connection error.
+  [w122/144] job  45444  ERROR: Connection error.
+  [w46/144] job  45460  ERROR: Connection error.
+  [w31/144] job  45529  ERROR: Connection error.
+  [w141/144] job  45479  ERROR: Connection error.
+  [w57/144] job  45465  ERROR: Connection error.
+  [w13/144] job  45482  ERROR: Connection error.
+  [w16/144] job  47201  ERROR: Connection error.
+  [w130/144] job  45474  ERROR: Connection error.
+  [w9/144] job  45492  ERROR: Connection error.
+  [w50/144] job  45462  ERROR: Connection error.
+  [w138/144] job  45510  ERROR: Connection error.
+  [w40/144] job  45478  ERROR: Connection error.
+  [w6/144] job  45470  ERROR: Connection error.
+  [w75/144] job  45517  ERROR: Connection error.
+  [w38/144] job  45477  ERROR: Connection error.
+  [w106/144] job  45540  ERROR: Connection error.
+  [w56/144] job  45541  ERROR: Connection error.
+  [w131/144] job  47203  ERROR: Connection error.
+  [w83/144] job  45524  ERROR: Connection error.
+  [w49/144] job  45487  ERROR: Connection error.
+  [w8/144] job  45461  ERROR: Connection error.
+  [w93/144] job  45475  ERROR: Connection error.
+  [w74/144] job  47619  ERROR: Connection error.
+  [w33/144] job  45526  ERROR: Connection error.
+  [w2/144] job  45537  ERROR: Connection error.
+  [w139/144] job  45459  ERROR: Connection error.
+  [w90/144] job  45543  ERROR: Connection error.
+  [w76/144] job  45513  ERROR: Connection error.
+  [w117/144] job  45508  ERROR: Connection error.
+  [w116/144] job  45466  ERROR: Connection error.
+  [w95/144] job  45490  ERROR: Connection error.
+  [w91/144] job  45489  ERROR: Connection error.
+  [w144/144] job  45533  ERROR: Connection error.
+  [w69/144] job  45486  ERROR: Connection error.
+  [w80/144] job  45875  ERROR: Connection error.
+  [w42/144] job  45598  ERROR: Connection error.
+  [w98/144] job  45514  ERROR: Connection error.
+  [w52/144] job  45880  ERROR: Connection error.
+  [w108/144] job  45505  ERROR: Connection error.
+  [w87/144] job  45870  ERROR: Connection error.
+  [w28/144] job  45525  ERROR: Connection error.
+  [w11/144] job  45488  ERROR: Connection error.
+  [w86/144] job  45544  ERROR: Connection error.
+  [w23/144] job  45520  ERROR: Connection error.
+  [w125/144] job  45519  ERROR: Connection error.
+  [w10/144] job  45498  ERROR: Connection error.
+  [w88/144] job  45496  ERROR: Connection error.
+  [w36/144] job  45918  ERROR: Connection error.
+  [w19/144] job  45502  ERROR: Connection error.
+  [w4/144] job  45531  ERROR: Connection error.
+  [w140/144] job  45522  ERROR: Connection error.
+  [w15/144] job  45506  ERROR: Connection error.
+  [w119/144] job  45507  ERROR: Connection error.
+  [w129/144] job  45536  ERROR: Connection error.
+  [w85/144] job  45877  ERROR: Connection error.
+  [w72/144] job  45528  ERROR: Connection error.
+  [w124/144] job  45542  ERROR: Connection error.
+  [w94/144] job  45882  ERROR: Connection error.
+  [w14/144] job  45527  ERROR: Connection error.
+  [w18/144] job  45512  ERROR: Connection error.
+  [w51/144] job  45523  ERROR: Connection error.
+  [w111/144] job  45545  ERROR: Connection error.
+  [w81/144] job  45546  ERROR: Connection error.
+  [w113/144] job  45534  ERROR: Connection error.
+  [w41/144] job  45539  ERROR: Connection error.
+  [w100/144] job  45550  ERROR: Connection error.
+  [w67/144] job  45532  ERROR: Connection error.
+  [w109/144] job  45516  ERROR: Connection error.
+  [w110/144] job  45535  ERROR: Connection error.
+  [w99/144] job  47205  ERROR: Connection error.
+  [w132/144] job  45548  ERROR: Connection error.
+  [w62/144] job  45559  ERROR: Connection error.
+  [w135/144] job  45547  ERROR: Connection error.
+  [w25/144] job  45551  ERROR: Connection error.
+  [w30/144] job  45530  ERROR: Connection error.
+  [w126/144] job  45560  ERROR: Connection error.
+  [w48/144] job  45557  ERROR: Connection error.
+  [w21/144] job  45553  ERROR: Connection error.
+  [w136/144] job  45567  ERROR: Connection error.
+  [w60/144] job  45564  ERROR: Connection error.
+  [w143/144] job  45554  ERROR: Connection error.
+  [w137/144] job  45584  ERROR: Connection error.
+  [w73/144] job  45563  ERROR: Connection error.
+  [w3/144] job  45562  ERROR: Connection error.
+  [w79/144] job  47209  ERROR: Connection error.
+  [w5/144] job  45630  ERROR: Connection error.
+  [w17/144] job  47207  ERROR: Connection error.
+  [w26/144] job  45569  ERROR: Connection error.
+  [w134/144] job  45599  ERROR: Connection error.
+  [w96/144] job  45589  ERROR: Connection error.
+  [w63/144] job  45576  ERROR: Connection error.
+  [w45/144] job  45634  ERROR: Connection error.
+  [w123/144] job  45604  ERROR: Connection error.
+  [w35/144] job  45595  ERROR: Connection error.
+  [w32/144] job  45610  ERROR: Connection error.
+  [w39/144] job  45619  ERROR: Connection error.
+  [w59/144] job  45626  ERROR: Connection error.
+[jd_reparse] Done. 192/1000 processed  skills_found=177  time=3m31s  rate=284.1 rec/min
+[vastai] SSH tunnel closed.
+Vast.ai instance 33148493 destroyed.
+
+=== Results ===
+  Total:        1000
+  OK:           192
+  Failed:       808
+  Compute time: 3m31s  (284.1 rec/min)
+  Wall time:    5m15s  (190.4 rec/min)
+  Avg latency:  85772ms
+  Output:       /Users/m1dnyt3/GitHub/ProductionAppName/case-study/iterations/07-multi-gpu-mvp/benchmark_results.json

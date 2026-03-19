@@ -31,10 +31,10 @@ tasks will actually process — nothing else.
 
 ```bash
 # 1. Export schema (all schemas needed for FK constraints)
-pg_dump --schema-only -Fp jobslicer > fixture/schema.sql
+pg_dump --schema-only -Fp productionappname > fixture/schema.sql
 
 # 2. Export filtered data
-psql jobslicer <<'SQL'
+psql productionappname <<'SQL'
 \COPY (SELECT * FROM market.jobs_raw WHERE description IS NOT NULL) TO 'jobs_raw.tsv'
 \COPY (
   SELECT d.* FROM market.jobs_derived d
