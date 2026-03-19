@@ -2,7 +2,7 @@
 # harness/bench.sh — Parameterized benchmark runner with structured log capture.
 #
 # Usage:
-#   bash harness/bench.sh ITER TASK LIMIT [N_PARALLEL] [BACKEND_URL] [MODEL] [BACKEND] [STATIC_BATCHES]
+#   bash harness/bench.sh ITER TASK LIMIT [N_PARALLEL] [BACKEND_URL] [MODEL] [BACKEND] [STATIC_BATCHES] [ENV_FILE]
 #
 # Arguments:
 #   ITER           Iteration directory name under iterations/ (e.g. 00-baseline)
@@ -15,6 +15,9 @@
 #                                | remote (Vast.ai). Default: local.
 #   STATIC_BATCHES Pass "static" to use interleaved pre-split dispatch (historical 02-bugs-fixed design).
 #                  Omit or pass "" for the default shared-queue dispatch.
+#   ENV_FILE       Optional explicit path to a config .env file. Overrides the default
+#                  auto-detected iterations/{ITER}/config.env. Use for sub-run variants
+#                  within the same iteration (e.g. different parallel counts).
 #
 # Output:
 #   iterations/{ITER}/logs/{YYYYMMDD_HHMMSS}_{TASK}_{LIMIT}rec.log  — full console log
@@ -36,6 +39,10 @@
 #
 #   # CPU Docker container (always-on, localhost:8085)
 #   bash harness/bench.sh 00-baseline job_skills 50 1 http://localhost:8085/v1 Qwen3.5-9B-Q4_K_M cpu
+#
+#   # Sub-run with explicit env file (e.g. 04 PRO 6000 72-slot variant)
+#   bash harness/bench.sh 04-single-gpu-scaling job_skills 1000 0 "" "" remote static \
+#     iterations/04-single-gpu-scaling/config-pro6000-72slots.env
 
 set -euo pipefail
 
@@ -49,6 +56,7 @@ BACKEND_URL="${5:-http://localhost:8085/v1}"
 MODEL="${6:-Qwen3.5-9B-Q4_K_M}"
 BACKEND="${7:-local}"
 STATIC_BATCHES="${8:-}"
+CUSTOM_ENV_FILE="${9:-}"
 
 FIXTURE_URL="postgresql://fixture:fixture@localhost:5433/inference_fixture"
 
@@ -95,6 +103,7 @@ echo "Workers:    $N_PARALLEL (0=auto)"
 echo "Dispatch:   ${STATIC_BATCHES:-shared-queue}"
 echo "Backend:    $BACKEND  ($BACKEND_URL)"
 echo "Model:      $MODEL"
+echo "Env file:   ${CUSTOM_ENV_FILE:-iterations/$ITER/config.env (auto)}"
 echo "Log:        $LOG_FILE"
 echo "Output:     $OUTPUT_JSON"
 echo ""
@@ -104,8 +113,12 @@ echo ""
     STATIC_FLAG=""
     [[ "$STATIC_BATCHES" == "static" ]] && STATIC_FLAG="--static-batches"
     ENV_FILE_FLAG=""
-    ITER_CONFIG="$ITER_DIR/config.env"
-    [[ -f "$ITER_CONFIG" ]] && ENV_FILE_FLAG="--env-file $ITER_CONFIG"
+    if [[ -n "$CUSTOM_ENV_FILE" ]]; then
+        ENV_FILE_FLAG="--env-file $CUSTOM_ENV_FILE"
+    else
+        ITER_CONFIG="$ITER_DIR/config.env"
+        [[ -f "$ITER_CONFIG" ]] && ENV_FILE_FLAG="--env-file $ITER_CONFIG"
+    fi
     python3 harness/workload_driver.py \
         --task "$TASK" \
         --limit "$LIMIT" \
