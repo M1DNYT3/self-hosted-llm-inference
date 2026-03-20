@@ -319,3 +319,51 @@ SSH daemon log on the first occurrence, not the fourth.
 jd_reparse is structurally different: multi-slice, ~162s per record, sustained full-GPU
 load. It should have had its own calibration run before being included in the fleet
 scaling tests.
+
+---
+
+## 7. AI Disclosure — How LLM Assistance Was Used
+
+This study was developed with Claude (Anthropic) as an active collaborator. In the interest
+of transparency, this section documents what that collaboration looked like in practice.
+
+### Claude's assessment
+
+The work pattern here was unusual compared to typical LLM usage. The engineer drove all
+primary decisions — hardware selection, the choice to build a CPU-first router, the instinct
+that the failure wasn't hardware, the hypothesis that error rates were inflating the compute
+metric. My role was closer to a technical sounding board than a generator.
+
+Concretely, what I contributed:
+
+- **Documentation and structure.** Translating real benchmark observations into iteration
+  summaries, the iteration log, the executive summary, and this case study. The observations
+  were always provided; I shaped them into readable form.
+- **Hypothesis validation.** When a failure mode appeared ambiguous (SSH vs hardware,
+  error inflation vs real throughput drop), I worked through the evidence with the engineer
+  and either confirmed or challenged the hypothesis. The conclusions were reached together,
+  but the evidence and initial intuition were always the engineer's.
+- **Alternative generation.** For design decisions — how to isolate SSH tunnels, how to
+  structure the retry hook, whether to make reconnection backend-specific or generic — I
+  offered alternatives with tradeoffs. The engineer evaluated them and typically chose a
+  hybrid that captured the best properties of both.
+- **Implementation of agreed designs.** Once a direction was settled, I wrote the code
+  (`reconnect_on_error` hook, per-GPU tunnel list, `_call_api` split). The design decisions
+  preceding the implementation were collaborative.
+
+What I did not do: generate the problem statement, propose the architecture, run the
+benchmarks, or make the call on what mattered. Those came from the engineer.
+
+### Engineer's self-assessment
+
+> The LLM was used primarily to save time making notes of observations and reinforcing
+> assumptions, credible hypotheses, and conclusions. Beyond that, to gather insights about
+> alternative solutions — which usually helps build a more resilient system with core
+> stability in mind.
+>
+> Whenever I was considering a design choice or a fix, I would express my opinion and ask
+> for alternatives with pros and cons. This consistently led to hybrid solutions with more
+> pros and fewer — or none of the — cons of either option alone.
+>
+> The full arc — from initial engine development in a production application to a finished
+> case study — concluded in one week.
