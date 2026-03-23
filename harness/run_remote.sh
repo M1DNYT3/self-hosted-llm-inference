@@ -40,6 +40,13 @@ if [[ -f .env ]]; then
     set -a; source .env; set +a
 fi
 
+if [[ -z "${LLM_PROVIDER_KEY:-}" || "$LLM_PROVIDER_KEY" == "your_vastai_api_key_here" ]]; then
+    echo "ERROR: LLM_PROVIDER_KEY is not set."
+    echo "  cp harness/.env.example .env"
+    echo "  # then set LLM_PROVIDER_KEY to your Vast.ai API key (console.vast.ai → Account → API Key)"
+    exit 1
+fi
+
 mkdir -p "iterations/$ITERATION"
 
 python harness/workload_driver.py \
