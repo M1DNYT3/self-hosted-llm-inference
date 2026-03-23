@@ -37,35 +37,34 @@ batch size (2000 records) across all three task types and two fleet configuratio
 | company_enrich | 144 | 2000 / 2000 | 440.7 rec/min | 328.3 rec/min | $0.642 | ~$0.033 |
 | jd_reparse | 144 | 1878 / 2000 | 77.5 rec/min | 62.7 rec/min | $0.562 | ~$0.149 |
 
-## 4x vs 8x Scaling Analysis
+## Fleet Scaling Analysis (job_skills, wall rate)
 
-| Fleet | job_skills compute | Wall rate | Cost/hr | Cost/1k (job_skills) |
-|---|---|---|---|---|
-| 4x RTX 3090 | 208.8 rec/min | 156.9 rec/min | $0.642 | ~$0.068 |
-| 8x RTX 2080 Ti | 255.9 rec/min | 175.6 rec/min | $0.598 | ~$0.057 |
+| Fleet | Workers | BW/card | Wall rate | Cost/hr | Cost/1k | 10k wall time | 10k cost |
+|---|---|---|---|---|---|---|---|
+| 1x RTX 3090 | 36 | ~800 GB/s | 73 rec/min | $0.30 | ~$0.041 | ~92 min | ~$0.46 |
+| 4x RTX 3090 | 144 | ~800 GB/s | 156.9 rec/min | $0.642 | ~$0.068 | ~64 min | ~$0.68 |
+| 8x RTX 2080 Ti | 256 | ~501 GB/s | 175.6 rec/min | $0.598 | ~$0.057 | ~57 min | ~$0.57 |
+| 4x RTX 4070S Ti | 76 | ~587 GB/s | 204.0 rec/min | $0.703 | ~$0.057 | ~49 min | ~$0.58 |
 
-8x is 22% faster and 16% cheaper per record at nearly identical hourly cost.
-Scaling is sublinear because RTX 2080 Ti has lower memory bandwidth (501 GB/s) than
-RTX 3090 (936 GB/s): more workers are added but each slot is slower, partially cancelling
-the count advantage.
+The 4x 4070S Ti is the fastest and cheapest (tied with 8x 2080 Ti on cost/record) at
+10k records. The 8x 2080 Ti has 3.4× more workers than the 4070S Ti but is 14% slower —
+the 501 GB/s bandwidth per card is the constraint. The 4070S Ti has fewer workers but
+each completes faster (~18.5s avg vs ~25s+ for 2080 Ti) due to higher per-card bandwidth.
 
-**For the user story (10k records, job_skills):**
-| Fleet | Wall time | Estimated cost |
-|---|---|---|
-| 1x RTX 3090 (iter 02 baseline) | ~92 min | ~$0.46 |
-| 4x RTX 3090 | ~64 min | ~$0.68 |
-| 8x RTX 2080 Ti | ~57 min | ~$0.57 |
-
-The 1x baseline is cheapest per run but slowest. 8x is fastest and cheapest of the
-multi-GPU configs. At 10k records/day, self-hosted cost is $0.46–0.68/run vs $10–50 via API.
+Comparing 8x 2080 Ti vs 4x 3090 on wall rates: 8x is 12% faster (175.6 vs 156.9)
+and 16% cheaper per run ($0.57 vs $0.68). Sub-linear scaling from the bandwidth gap
+(~501 vs ~800 GB/s) — more workers, slower slots, partial cancellation.
 
 ## jd_reparse Edge Case — 4x RTX 3090
 
 The 4x run had 122 failures (6.1%) on jd_reparse. jd_reparse holds connections open
 ~162s per record. With 144 workers all maintaining 162s connections through 4 SSH processes
 (36 channels each), sustained channel pressure accumulates. The `reconnect_on_error` hook
-fires and restores the tunnel — most records retry successfully — but records in the
-~3s reconnect window fail.
+fires and restores the tunnel — but the initial implementation returned control to the worker
+immediately after restarting the tunnel process, without confirming the SSH handshake had
+completed. Records retried into a tunnel that was alive at the process level but not yet
+forwarding connections. The hook has since been corrected to probe the health endpoint
+before returning.
 
 The 8x run had 0 failures at 32 channels/process. The lower per-process channel count
 (32 vs 36), plus a different host SSH daemon configuration, appears sufficient to avoid
@@ -93,12 +92,62 @@ with 99.6% success = actual throughput). The 460 figure was never real throughpu
 
 ## Hypothesis Result
 
-The SSH tunnel was the sole remaining failure mode. With per-GPU isolated processes:
-- job_skills: stable at 2000 records (both fleets)
-- company_enrich: stable at 2000 records (both fleets)
-- jd_reparse: stable at 8x; residual failures at 4x due to sustained long-duration channel pressure
+Per-GPU isolated tunnel processes resolved the channel exhaustion failure mode. With per-GPU
+isolated processes, the channel count per SSH session is bounded to `slots_per_GPU`
+regardless of total worker count.
+
+Results:
+- job_skills: stable at 2000 records (all three fleets)
+- company_enrich: stable at 2000 records (all three fleets)
+- jd_reparse: stable at 8x and 4x 4070S Ti (1000 records); residual failures at 4x 3090
+  (6.1% at 2000 records due to sustained long-duration channel pressure at 36 channels/process)
+
+**Residual failure class — startup tunnel timing:**
+The 4x 4070S Ti jd_reparse run (and the iter 07 4x company_enrich run) both logged a
+transient `SSH tunnel exited immediately... retrying` on startup before connecting
+successfully. This is a different failure class from channel exhaustion: the tunnel process
+starts before the SSH daemon is ready to accept connections. `reconnect_on_error` handles
+it, but it is a separate issue from the channel limit fix. Both failure classes are now
+handled by the two-layer protection (structural isolation + runtime reconnect hook).
+
+## 4x RTX 4070S Ti — Supplemental (config-4x4070sti.env)
+
+Runs on 2026-03-21 to confirm the previously-undocumented production result.
+Hardware: 4x RTX 4070S Ti, 16 GB/card, 587 GB/s/card, $0.703/hr, 76 workers (19/GPU).
+Offer IDs: 32268807 (job_skills, jd_reparse), 32268812 (company_enrich).
+
+| Task | Workers | OK / Total | Compute rate | Wall rate | Cost/hr | Cost/1k rec |
+|---|---|---|---|---|---|---|
+| job_skills | 76 | 1993 / 2000 | 237.5 rec/min | 204.0 rec/min | $0.703 | ~$0.057 |
+| company_enrich | 76 | 2000 / 2000 | 473.1 rec/min | 408.2 rec/min | $0.703 | ~$0.029 |
+| jd_reparse | 76 | 1000 / 1000 | 80.0 rec/min | 73.5 rec/min | $0.703 | ~$0.160† |
+
+> † jd_reparse run at 1000 records; a prior 2000-record attempt hit SSH instability during
+> tunnel open (transient `Connection refused` on startup, recovered via reconnect_on_error).
+> The 1000-record run completed cleanly (0/1000 failures). At 2000 records the per-process
+> channel exposure is the same (19 channels/process) but run duration doubles, extending the
+> window for transient tunnel failures. Cost/1k at 2000 records would be lower but is unconfirmed.
+
+### Notes on confirmed results
+
+**job_skills 237.5 rec/min vs prior "369 rec/min" production claim:**
+The 369 figure appeared in earlier docs as a pre-case-study production run result. That run
+predated the SSH fix and the per-GPU tunnel rewrite. It is no longer reproducible and was
+almost certainly error-inflated: near-instant failures in reconnect loops register as processed
+records in wall time, inflating compute rate. The confirmed case study result is 237.5 rec/min.
+
+**company_enrich 473.1 rec/min:**
+Near-identical to the 8x RTX 2080 Ti result (475.1 rec/min). The 4x 4070S Ti achieves
+equivalent company_enrich throughput at half the GPU count, attributable to the 4070S Ti's
+shorter avg_latency per record (~9.5s vs ~12–14s on 3090) at this task's prompt length.
+
+**Per-slot efficiency:**
+76 workers at 587 GB/s/card vs 144 workers at ~800 GB/s/card (RTX 3090).
+The 4070S Ti has lower aggregate bandwidth but fewer workers, producing similar overall
+throughput at a comparable price point and lower channel pressure per tunnel process.
 
 ## Artifacts
 
 - `config.env` — non-DC, per-GPU tunnel, KEEP_ON_FAILURE=false
-- `logs/` — 6 runs: 3 tasks × (8x 2080 Ti + 4x 3090)
+- `config-4x4070sti.env` — 4070S Ti supplemental run config
+- `logs/` — 9 runs: 3 tasks × (8x 2080 Ti + 4x 3090 + 4x 4070S Ti)

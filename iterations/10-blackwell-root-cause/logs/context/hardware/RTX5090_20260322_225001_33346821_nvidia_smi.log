@@ -1,0 +1,2 @@
+index, name, memory.total [MiB], clocks.current.graphics [MHz], clocks.current.memory [MHz], temperature.gpu, power.draw [W]
+0, NVIDIA GeForce RTX 5090, 32607 MiB, 195 MHz, 405 MHz, 22, 21.02 W

@@ -85,7 +85,7 @@ LLM_VAST_IMAGE: str = os.getenv(
     "LLM_VAST_IMAGE", "ghcr.io/ggml-org/llama.cpp:server-cuda"
 )
 LLM_VAST_HF_REPO: str = os.getenv(
-    "LLM_VAST_HF_REPO", "bartowski/Qwen2.5-7B-Instruct-GGUF"
+    "LLM_VAST_HF_REPO", "unsloth/Qwen3.5-9B-GGUF"
 )
 LLM_VAST_HF_FILE: str = os.getenv("LLM_VAST_HF_FILE", "Qwen3.5-9B-Q4_K_M.gguf")
 LLM_VAST_DISK_GB: int = int(os.getenv("LLM_VAST_DISK_GB", "20"))

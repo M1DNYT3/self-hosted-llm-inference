@@ -1,0 +1,160 @@
+20:21:04 === LLM Run: job_skills | limit=100 | backend=gpu-remote ===
+20:21:06 [vastai] Model verified on HuggingFace: unsloth/Qwen3.5-9B-GGUF/Qwen3.5-9B-Q4_K_M.gguf
+20:21:06 [vastai] Offer search — filters: x2 GPUs (fallback path [2, 1]), price $0.00–$0.50/hr, VRAM 15–17GB, tflops≥30.0/GPU, inet_down≥2000Mbps, bw_cost≤$0.04, datacenter=False, verified=True, reliability≥0.9, mem_bw≥550GB/s, gpu_name⊇'4070S Ti'
+20:21:07 [vastai] Found 3 matching offers for x2 GPUs.
+20:21:07 [vastai] Selected offer:
+20:21:07   GPU:         RTX 4070S Ti x2
+20:21:07   VRAM:        16 GB/card  (32 GB total)
+20:21:07   TFLOPS:      42/GPU  (84 total)
+20:21:07   Mem BW:      586 GB/s/card
+20:21:07   Price:       $0.344/hr base + $0.008 BW est = $0.351/hr
+20:21:07   inet_down:   7060 Mbps  (cost $0.0013/GB)
+20:21:07   Reliability: 0.999  datacenter=False
+20:21:07   Offer ID:    32459553
+20:21:07 [vastai] SINGLE_GPU_MODE: rented bundle has 2x GPUs but only CUDA_VISIBLE_DEVICES=0 will be started. Remaining cards idle (still billed as part of the bundle).
+20:21:07 [vastai] Parallel slot formula:
+20:21:07   (16GB VRAM - 6GB model) / 0.5GB per KV slot = 19 slots/GPU × 1 GPU(s) = 19 total workers
+20:21:07   available_vram=10GB
+20:21:07 [vastai] Instance TTL: 33min (queue=100, n_parallel=19)
+20:21:07 [vastai] llama-server config per GPU:
+20:21:07   image:        ghcr.io/ggml-org/llama.cpp:server-cuda
+20:21:07   model:        unsloth/Qwen3.5-9B-GGUF/Qwen3.5-9B-Q4_K_M.gguf
+20:21:07   GPUs started: 1 (CUDA_VISIBLE_DEVICES 0..0)
+20:21:07   ports:        8000
+20:21:07   --parallel:   19
+20:21:07   --ctx-size:   77824  (4096 tokens/slot × 19 slots)
+20:21:07   --reasoning-budget: 0  (thinking disabled)
+20:21:07   disk:         40GB
+20:21:07 [vastai] Using image: ghcr.io/ggml-org/llama.cpp:server-cuda
+20:21:07 Vast.ai instance created: id=33399377 (offer=32459553)
+20:21:07 Waiting for Vast.ai instance to reach 'running' status (timeout 3600s) …
+20:21:08   status=None
+20:21:19   status=loading
+20:21:29   status=loading
+20:21:40   status=loading
+20:21:51   status=loading
+20:22:02   status=loading
+20:22:13   status=running
+20:22:13 Waiting for SSH to become available (timeout 60s) …
+20:22:18 [vastai] SSH tunnels opened (1× isolated): localhost:57530 → container:8000 (GPU0)
+20:22:18 SSH tunnel open. llama-server endpoints: ('http://localhost:57530/v1',)
+20:22:20 [diag] GPU snapshot → /Users/m1dnyt3/GitHub/JobSlicer/logs/llm/remote/20260323_202218_33399377_nvidia_smi.log
+20:22:20 [diag] SM%/CPU% stream started → /Users/m1dnyt3/GitHub/JobSlicer/logs/llm/remote/20260323_202218_33399377_dmon.log
+20:22:20 Waiting for llama-server(s) to load model (timeout 300s) …
+20:22:20   llama-servers not ready yet …
+20:22:30   llama-servers not ready yet …
+20:22:41 All llama-servers ready.
+20:22:41 [job_skills] Processing 100 job(s) … (workers=19)
+20:22:47   [gpu1] [w13/19] job  45314   5479ms  in=519 out=12  [ok]
+20:22:47   [gpu1] [w7/19] job  45312   5492ms  in=519 out=12  [ok]
+20:22:47   [gpu1] [w5/19] job  45309   5576ms  in=523 out=12  [ok]
+20:22:47   [gpu1] [w4/19] job  45308   5580ms  in=560 out=12  [ok]
+20:22:47   [gpu1] [w8/19] job  45313   5580ms  in=519 out=12  [ok]
+20:22:47   [gpu1] [w12/19] job  45311   5585ms  in=519 out=12  [ok]
+20:22:47   [gpu1] [w1/19] job  45303   5592ms  in=448 out=12  [ok]
+20:22:47   [gpu1] [w6/19] job  45310   5693ms  in=523 out=12  [ok]  [gpu1] [w11/19] job  45307   5691ms  in=560 out=12  [ok]
+20:22:47 
+20:22:50   [gpu1] [w9/19] job  48413   8622ms  in=785 out=29  [ok]
+20:22:50   [gpu1] [w4/19] job  45329   3159ms  in=504 out=12  [ok]
+20:22:50   [gpu1] [w12/19] job  45331   3155ms  in=504 out=12  [ok]
+20:22:50   [gpu1] [w1/19] job  45332   3371ms  in=529 out=15  [ok]
+20:22:51   [gpu1] [w6/19] job  45333   3969ms  in=529 out=15  [ok]
+20:22:53   [gpu1] [w15/19] job  45316  11596ms  in=585 out=59  [ok]
+20:22:53   [gpu1] [w14/19] job  45315  11599ms  in=585 out=59  [ok]
+20:22:53   [gpu1] [w8/19] job  45330   6108ms  in=504 out=39  [ok]
+20:22:53   [gpu1] [w6/19] job  45324   2018ms  in=842 out=20  [ok]
+20:22:54   [gpu1] [w11/19] job  45334   6898ms  in=494 out=45  [ok]
+20:22:55   [gpu1] [w18/19] job  45319  13875ms  in=611 out=70  [ok]
+20:22:55   [gpu1] [w17/19] job  45318  13985ms  in=603 out=71  [ok]
+20:22:55   [gpu1] [w19/19] job  45320  14110ms  in=611 out=73  [ok]
+20:22:55   [gpu1] [w7/19] job  45327   8717ms  in=730 out=55  [ok]
+20:22:55   [gpu1] [w5/19] job  45328   8664ms  in=729 out=55  [ok]
+20:22:57   [gpu1] [w4/19] job  45336   7017ms  in=484 out=42  [ok]
+20:22:57   [gpu1] [w15/19] job  45325   4364ms  in=666 out=14  [ok]
+20:22:57   [gpu1] [w14/19] job  45326   4446ms  in=666 out=14  [ok]
+20:22:57   [gpu1] [w1/19] job  45323   7111ms  in=522 out=46  [ok]
+20:22:58   [gpu1] [w9/19] job  45335   8378ms  in=494 out=50  [ok]
+20:22:58   [gpu1] [w5/19] job  45374   3087ms  in=529 out=12  [ok]
+20:22:58   [gpu1] [w13/19] job  45321  11931ms  in=611 out=70  [ok]
+20:22:59   [gpu1] [w4/19] job  45377   2447ms  in=529 out=12  [ok]
+20:22:59   [gpu1] [w2/19] job  45305  18282ms  in=643 out=95  [ok]
+20:22:59   [gpu1] [w14/19] job  45381   2271ms  in=529 out=12  [ok]
+20:22:59   [gpu1] [w8/19] job  45348   6633ms  in=698 out=31  [ok]
+20:22:59   [gpu1] [w15/19] job  45379   2386ms  in=529 out=12  [ok]
+20:22:59   [gpu1] [w10/19] job  45304  18415ms  in=614 out=103  [ok]
+20:23:02   [gpu1] [w16/19] job  45317  21000ms  in=603 out=123  [ok]
+20:23:02   [gpu1] [w1/19] job  45337   5059ms  in=484 out=42  [ok]
+20:23:03   [gpu1] [w6/19] job  45352  10629ms  in=608 out=70  [ok]  [gpu1] [w5/19] job  45339   4982ms  in=494 out=45  [ok]
+20:23:03 
+20:23:04   [gpu1] [w11/19] job  45355   9845ms  in=608 out=70  [ok]
+20:23:04   [gpu1] [w9/19] job  45338   5420ms  in=494 out=50  [ok]
+20:23:04   [gpu1] [w2/19] job  45342   4272ms  in=476 out=39  [ok]
+20:23:04   [gpu1] [w14/19] job  45343   4181ms  in=476 out=39  [ok]
+20:23:04   [gpu1] [w12/19] job  45322  13932ms  in=905 out=107  [ok]
+20:23:06   [gpu1] [w17/19] job  45363  10697ms  in=608 out=70  [ok]
+20:23:06   [gpu1] [w19/19] job  45368  10583ms  in=608 out=70  [ok]
+20:23:06   [gpu1] [w7/19] job  45371  10586ms  in=608 out=70  [ok]
+20:23:06   [gpu1] [w3/19] job  45306  25052ms  in=728 out=148  [ok]
+20:23:06   [gpu1] [w1/19] job  45139   4094ms  in=323 out=19  [ok]
+20:23:08   [gpu1] [w5/19] job  49168   4264ms  in=937 out=12  [ok]
+20:23:08   [gpu1] [w12/19] job  49311   3926ms  in=1011 out=12  [ok]
+20:23:08   [gpu1] [w18/19] job  45360  12857ms  in=608 out=83  [ok]
+20:23:09   [gpu1] [w2/19] job  45351   5608ms  in=321 out=25  [ok]
+20:23:09   [gpu1] [w19/19] job  44897   3674ms  in=468 out=24  [ok]
+20:23:10   [gpu1] [w4/19] job  45341  10263ms  in=683 out=73  [ok]
+20:23:11   [gpu1] [w5/19] job  45387   2913ms  in=783 out=12  [ok]
+20:23:12   [gpu1] [w6/19] job  46059   8668ms  in=693 out=55  [ok]
+20:23:12   [gpu1] [w5/19] job  46198   1447ms  in=553 out=12  [ok]
+20:23:12   [gpu1] [w16/19] job  44893  10283ms  in=431 out=79  [ok]
+20:23:12   [gpu1] [w14/19] job  45353   8772ms  in=419 out=65  [ok]
+20:23:14   [gpu1] [w3/19] job  45356   7529ms  in=340 out=63  [ok]
+20:23:14   [gpu1] [w11/19] job  45347  10316ms  in=438 out=72  [ok]
+20:23:15   [gpu1] [w8/19] job  46056  15266ms  in=483 out=120  [ok]
+20:23:15   [gpu1] [w13/19] job  45340  16308ms  in=683 out=130  [ok]
+20:23:16   [gpu1] [w17/19] job  44895  10213ms  in=789 out=84  [ok]
+20:23:16   [gpu1] [w4/19] job  46064   6406ms  in=356 out=56  [ok]
+20:23:16   [gpu1] [w12/19] job  46060   8539ms  in=401 out=72  [ok]
+20:23:17   [gpu1] [w19/19] job  46063   7436ms  in=339 out=64  [ok]
+20:23:18   [gpu1] [w6/19] job  45361   6113ms  in=439 out=46  [ok]  [gpu1] [w19/19] job  45391   1317ms  in=783 out=12  [ok]
+20:23:18 
+20:23:19   [gpu1] [w18/19] job  46061  10787ms  in=562 out=98  [ok]
+20:23:19   [gpu1] [w7/19] job  45116  13577ms  in=393 out=119  [ok]
+20:23:19   [gpu1] [w15/19] job  46057  20016ms  in=649 out=167  [ok]
+20:23:21   [gpu1] [w19/19] job  45393   2589ms  in=783 out=12  [ok]
+20:23:22   [gpu1] [w2/19] job  46062  12360ms  in=757 out=107  [ok]
+20:23:22   [gpu1] [w18/19] job  45395   3411ms  in=614 out=21  [ok]
+20:23:22   [gpu1] [w5/19] job  45364  10137ms  in=386 out=80  [ok]
+20:23:24   [gpu1] [w19/19] job  45401   2872ms  in=754 out=16  [ok]
+20:23:24   [gpu1] [w2/19] job  45403   2487ms  in=754 out=16  [ok]
+20:23:25   [gpu1] [w4/19] job  45485   9072ms  in=382 out=75  [ok]
+20:23:26   [gpu1] [w2/19] job  45411   1670ms  in=582 out=19  [ok]
+20:23:26   [gpu1] [w19/19] job  45409   2058ms  in=582 out=19  [ok]
+20:23:27   [gpu1] [w7/19] job  45397   7169ms  in=727 out=68  [ok]
+20:23:28   [gpu1] [w18/19] job  45405   5461ms  in=685 out=59  [ok]
+20:23:28   [gpu1] [w5/19] job  45407   5330ms  in=685 out=59  [ok]
+20:23:29   [gpu1] [w3/19] job  45388  15442ms  in=648 out=152  [ok]
+20:23:29   [gpu1] [w9/19] job  45349  25559ms  in=530 out=228  [ok]
+20:23:29   [gpu1] [w10/19] job  46058  29793ms  in=733 out=271  [ok]
+20:23:30   [gpu1] [w15/19] job  45399  10023ms  in=727 out=102  [ok]
+20:23:30   [gpu1] [w14/19] job  45386  17135ms  in=648 out=165  [ok]
+20:23:30   [gpu1] [w12/19] job  45370  13397ms  in=388 out=138  [ok]
+20:23:30   [gpu1] [w13/19] job  45394  14956ms  in=648 out=152  [ok]
+20:23:31   [gpu1] [w11/19] job  45390  16727ms  in=648 out=177  [ok]
+20:23:31   [gpu1] [w8/19] job  45392  16339ms  in=648 out=177  [ok]
+20:23:32   [gpu1] [w17/19] job  45396  15747ms  in=648 out=177  [ok]
+20:23:32   [gpu1] [w16/19] job  45367  19781ms  in=455 out=221  [ok]
+20:23:32   [gpu1] [w1/19] job  45358  25777ms  in=444 out=282  [ok]
+20:23:34   [gpu1] [w6/19] job  44902  15360ms  in=706 out=289  [ok]
+20:23:34 [job_skills] Done. 100/100 parsed  time=52s  rate=113.6 rec/min
+20:23:34 [diag] SM% stream stopped.
+20:23:35 [diag] server log tail → /Users/m1dnyt3/GitHub/JobSlicer/logs/llm/remote/20260323_202218_33399377_timings.log
+20:23:35 [vastai] SSH tunnels closed.
+20:23:36 Vast.ai instance 33399377 destroyed.
+20:23:36 
+20:23:36 === Results ===
+20:23:36   Total:       100
+20:23:36   OK:          100
+20:23:36   Failed:      0
+20:23:36   Wall time:   2m 32s  (39.5 rec/min)
+20:23:36   Avg latency: 9143ms
+20:23:36   Log:         /Users/m1dnyt3/GitHub/JobSlicer/logs/llm/20260323_202104_job_skills_100rec.log

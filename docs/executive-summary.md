@@ -45,11 +45,13 @@ isolated SSH port-forward processes, one per GPU.
 
 | Metric | Baseline | Final |
 |---|---|---|
-| Throughput (job_skills, best) | 1 rec/min (sequential bug) | **369 rec/min** (4x RTX 4070S Ti, 76 workers) |
-| Throughput (job_skills, validated 8x) | — | **256 rec/min** (8x RTX 2080 Ti, 256 workers) |
-| Cost per 1k records (best) | ~$0.046 (1x card, $0.30/hr) | **~$0.023** (4x cards, $0.50/hr) |
-| 10k records — wall time | ~92 min (1x GPU) | **~44–57 min** (4x–8x fleet) |
-| 10k records — cost | ~$0.46 (1x GPU) | **~$0.37–0.57** (4x–8x fleet) |
+| Throughput (job_skills, 8x confirmed) | 1 rec/min (sequential bug) | **256 rec/min** (8x RTX 2080 Ti, 256 workers) |
+| Throughput (job_skills, 4x confirmed — 3090) | — | **242.9 rec/min** (4x RTX 3090, iter 07) |
+| Throughput (job_skills, 4x confirmed — 4070S Ti) | — | **237.5 rec/min** (4x RTX 4070S Ti, 76 workers) |
+| Cost per 1k records (4x RTX 3090) | ~$0.046 (1x card, $0.30/hr) | **~$0.050** (4x RTX 3090, $0.61/hr) |
+| Cost per 1k records (4x RTX 4070S Ti) | — | **~$0.057** (4x RTX 4070S Ti, $0.703/hr) |
+| 10k records — wall time | ~92 min (1x GPU) | **~41–57 min** (4x–8x fleet) |
+| 10k records — cost | ~$0.46 (1x GPU) | **~$0.51–0.57** (4x–8x fleet) |
 | API cost alternative | $10–50 per 10k records | — |
 | Self-hosted monthly cost | — | **~$15/month worst case** |
 | Cold-start overhead | — | 2–4 min non-processing time |
@@ -67,9 +69,11 @@ bandwidth per dollar.
 
 **2. GPU count is the throughput multiplier, not GPU tier.**
 Per-record latency is nearly flat within a GPU family once slots are correctly sized to VRAM
-headroom. Going from 1 card (36 slots) to 4 cards opened the path to 3.4× throughput at half
-the cost per record. At 8x, scaling becomes sublinear because additional cards carry lower
-bandwidth (RTX 2080 Ti: 501 GB/s vs RTX 3090: 936 GB/s) — more workers, slower slots.
+headroom. Going from 1 card (36 slots) to 4 cards produced 2.2× throughput (109 → 243 rec/min)
+at 2× the cost — confirmed on both RTX 3090 and RTX 4070S Ti. Scaling is sub-linear: 4× GPU
+count delivers ~2.2× throughput. At 8x, the gap widens further because the RTX 2080 Ti has
+lower bandwidth per slot (501 GB/s) than the RTX 3090 (~800 GB/s) — more workers, but each
+slot is slower.
 
 **3. The SSH tunnel was an unexpected infrastructure bottleneck.**
 At 256+ concurrent workers, all HTTP connections multiplexed through a single SSH process
@@ -84,6 +88,21 @@ The always-on VPS runs llama.cpp at all times. On days where the estimated batch
 the configured threshold, inference runs on CPU with no GPU rental. GPU is rented only
 when the batch exceeds the threshold — the cost model switches from fixed to on-demand
 exactly at the inflection point where GPU becomes faster than waiting.
+
+**5. The Blackwell underperformance had a one-line fix.**
+RTX 50xx cards (sm_120a) showed throughput at or below the RTX 3090 through iterations
+04–09 — unexpected given a 2.2× memory bandwidth advantage. Root cause confirmed in
+iteration 10: the official `ghcr.io/ggml-org/llama.cpp:server-cuda` image is built with
+CUDA 12.4, which never triggers the sm_120a compilation gate in CMakeLists.txt. At runtime,
+Blackwell falls back to PTX JIT — a conservative codegen that misses sm_120a's native
+execution paths. Fix: bump `ARG CUDA_VERSION` to 12.9.1 in `.devops/cuda.Dockerfile`.
+Validated across four GPU architectures: **+242% on RTX 5090**, zero regression on
+sm_75/sm_86/sm_89. RTX 50xx is now the highest-throughput option per slot in the fleet.
+PR candidate submitted to ggml-org/llama.cpp, addressing issues #17822 and #18865.
+
+---
+
+Total GPU spend from initial production design through all case study iterations — including failed runs, timeout experiments, and hardware comparisons across five GPU types: **$7.37**.
 
 ---
 

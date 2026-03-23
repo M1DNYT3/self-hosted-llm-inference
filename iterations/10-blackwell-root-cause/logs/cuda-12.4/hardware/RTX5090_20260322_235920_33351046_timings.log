@@ -1,0 +1,121 @@
+
+--
+slot print_timing: id 12 | task 75 | 
+prompt eval time =     548.66 ms /   733 tokens (    0.75 ms per token,  1335.98 tokens per second)
+       eval time =   19051.23 ms /   116 tokens (  164.23 ms per token,     6.09 tokens per second)
+      total time =   19599.89 ms /   849 tokens
+--
+slot print_timing: id 37 | task 176 | 
+prompt eval time =    1660.35 ms /   685 tokens (    2.42 ms per token,   412.56 tokens per second)
+       eval time =    6400.67 ms /    59 tokens (  108.49 ms per token,     9.22 tokens per second)
+      total time =    8061.02 ms /   744 tokens
+--
+slot print_timing: id 43 | task 177 | 
+prompt eval time =    1872.74 ms /   616 tokens (    3.04 ms per token,   328.93 tokens per second)
+       eval time =    6283.73 ms /    59 tokens (  106.50 ms per token,     9.39 tokens per second)
+      total time =    8156.47 ms /   675 tokens
+--
+slot print_timing: id 26 | task 122 | 
+prompt eval time =     451.58 ms /   356 tokens (    1.27 ms per token,   788.34 tokens per second)
+       eval time =   14724.29 ms /    99 tokens (  148.73 ms per token,     6.72 tokens per second)
+      total time =   15175.87 ms /   455 tokens
+--
+slot print_timing: id 44 | task 146 | 
+prompt eval time =     487.53 ms /   381 tokens (    1.28 ms per token,   781.48 tokens per second)
+       eval time =   11517.22 ms /    89 tokens (  129.41 ms per token,     7.73 tokens per second)
+      total time =   12004.75 ms /   470 tokens
+--
+slot print_timing: id  5 | task 134 | 
+prompt eval time =     315.58 ms /   236 tokens (    1.34 ms per token,   747.82 tokens per second)
+       eval time =   13673.78 ms /    95 tokens (  143.93 ms per token,     6.95 tokens per second)
+      total time =   13989.36 ms /   331 tokens
+--
+slot print_timing: id 24 | task 117 | 
+prompt eval time =     863.83 ms /   549 tokens (    1.57 ms per token,   635.54 tokens per second)
+       eval time =   15532.24 ms /   106 tokens (  146.53 ms per token,     6.82 tokens per second)
+      total time =   16396.07 ms /   655 tokens
+--
+slot print_timing: id 15 | task 121 | 
+prompt eval time =     955.99 ms /   683 tokens (    1.40 ms per token,   714.44 tokens per second)
+       eval time =   15042.72 ms /   107 tokens (  140.59 ms per token,     7.11 tokens per second)
+      total time =   15998.72 ms /   790 tokens
+--
+slot print_timing: id 39 | task 12 | 
+prompt eval time =    2327.59 ms /   728 tokens (    3.20 ms per token,   312.77 tokens per second)
+       eval time =   30497.58 ms /   148 tokens (  206.06 ms per token,     4.85 tokens per second)
+      total time =   32825.17 ms /   876 tokens
+--
+slot print_timing: id 38 | task 13 | 
+prompt eval time =    1777.87 ms /   643 tokens (    2.76 ms per token,   361.67 tokens per second)
+       eval time =   31205.85 ms /   151 tokens (  206.66 ms per token,     4.84 tokens per second)
+      total time =   32983.72 ms /   794 tokens
+--
+slot print_timing: id 30 | task 87 | 
+prompt eval time =     426.40 ms /   322 tokens (    1.32 ms per token,   755.16 tokens per second)
+       eval time =   20337.45 ms /   142 tokens (  143.22 ms per token,     6.98 tokens per second)
+      total time =   20763.85 ms /   464 tokens
+--
+slot print_timing: id 11 | task 72 | 
+prompt eval time =     644.91 ms /   649 tokens (    0.99 ms per token,  1006.34 tokens per second)
+       eval time =   22574.00 ms /   154 tokens (  146.58 ms per token,     6.82 tokens per second)
+      total time =   23218.91 ms /   803 tokens
+--
+slot print_timing: id 17 | task 173 | 
+prompt eval time =    1684.36 ms /   560 tokens (    3.01 ms per token,   332.47 tokens per second)
+       eval time =    9142.73 ms /    92 tokens (   99.38 ms per token,    10.06 tokens per second)
+      total time =   10827.08 ms /   652 tokens
+--
+slot print_timing: id  9 | task 172 | 
+prompt eval time =    1336.94 ms /   714 tokens (    1.87 ms per token,   534.05 tokens per second)
+       eval time =    9883.97 ms /    99 tokens (   99.84 ms per token,    10.02 tokens per second)
+      total time =   11220.92 ms /   813 tokens
+--
+slot print_timing: id 10 | task 140 | 
+prompt eval time =    1331.36 ms /   635 tokens (    2.10 ms per token,   476.96 tokens per second)
+       eval time =   16176.27 ms /   152 tokens (  106.42 ms per token,     9.40 tokens per second)
+      total time =   17507.63 ms /   787 tokens
+--
+slot print_timing: id  2 | task 71 | 
+prompt eval time =     506.67 ms /   470 tokens (    1.08 ms per token,   927.63 tokens per second)
+       eval time =   25883.83 ms /   203 tokens (  127.51 ms per token,     7.84 tokens per second)
+      total time =   26390.50 ms /   673 tokens
+--
+slot print_timing: id 16 | task 142 | 
+prompt eval time =    1569.05 ms /   648 tokens (    2.42 ms per token,   412.99 tokens per second)
+       eval time =   16744.32 ms /   165 tokens (  101.48 ms per token,     9.85 tokens per second)
+      total time =   18313.37 ms /   813 tokens
+--
+slot print_timing: id  8 | task 139 | 
+prompt eval time =     960.70 ms /   466 tokens (    2.06 ms per token,   485.06 tokens per second)
+       eval time =   17620.80 ms /   172 tokens (  102.45 ms per token,     9.76 tokens per second)
+      total time =   18581.50 ms /   638 tokens
+--
+slot print_timing: id 14 | task 141 | 
+prompt eval time =    1322.69 ms /   648 tokens (    2.04 ms per token,   489.91 tokens per second)
+       eval time =   17274.27 ms /   172 tokens (  100.43 ms per token,     9.96 tokens per second)
+      total time =   18596.96 ms /   820 tokens
+--
+slot print_timing: id 22 | task 145 | 
+prompt eval time =     596.66 ms /   642 tokens (    0.93 ms per token,  1075.98 tokens per second)
+       eval time =   16979.63 ms /   172 tokens (   98.72 ms per token,    10.13 tokens per second)
+      total time =   17576.29 ms /   814 tokens
+--
+slot print_timing: id  0 | task 138 | 
+prompt eval time =    1352.73 ms /   635 tokens (    2.13 ms per token,   469.42 tokens per second)
+       eval time =   17433.63 ms /   177 tokens (   98.50 ms per token,    10.15 tokens per second)
+      total time =   18786.36 ms /   812 tokens
+--
+slot print_timing: id 33 | task 136 | 
+prompt eval time =     812.47 ms /   452 tokens (    1.80 ms per token,   556.33 tokens per second)
+       eval time =   19515.90 ms /   229 tokens (   85.22 ms per token,    11.73 tokens per second)
+      total time =   20328.37 ms /   681 tokens
+--
+slot print_timing: id 49 | task 101 | 
+prompt eval time =     343.44 ms /   441 tokens (    0.78 ms per token,  1284.06 tokens per second)
+       eval time =   24455.63 ms /   283 tokens (   86.42 ms per token,    11.57 tokens per second)
+      total time =   24799.08 ms /   724 tokens
+--
+slot print_timing: id 41 | task 161 | 
+prompt eval time =     392.64 ms /   703 tokens (    0.56 ms per token,  1790.44 tokens per second)
+       eval time =   17464.36 ms /   289 tokens (   60.43 ms per token,    16.55 tokens per second)
+      total time =   17857.00 ms /   992 tokens

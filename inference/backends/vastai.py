@@ -677,6 +677,19 @@ class VastaiLLMBackend(BaseLLMBackend):
         import os as _os
         import time as _time
 
+        def _probe_until_ready(url: str, retries: int = 3) -> bool:
+            for attempt in range(retries):
+                try:
+                    resp = requests.get(url, timeout=5)
+                    if resp.ok:
+                        return True
+                except requests.RequestException:
+                    pass
+                wait_time = 2 ** attempt
+                print(f"[vastai] Probe {url} failed, retrying in {wait_time}s...")
+                _time.sleep(wait_time)
+            return False
+
         if self._instance_id is None or not self._ssh_host:
             return False
 
@@ -707,12 +720,15 @@ class VastaiLLMBackend(BaseLLMBackend):
                     cmd, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE
                 )
 
-            _time.sleep(3)
-            still_dead = [i for i in dead if self._tunnel_procs[i].poll() is not None]
+            still_dead = []
+            for i in dead:
+                url = f"http://localhost:{self._local_ports[i]}/v1/health"
+                # exponential backoff probe: attempt, wait 1s, 2s, 4s, ...
+                if not _probe_until_ready(url, retries=3):
+                    still_dead.append(i)
             if still_dead:
                 print(f"[vastai] SSH reconnect failed for GPU(s): {still_dead}")
                 return False
-
             print(f"[vastai] SSH tunnel(s) reconnected for GPU(s): {dead}")
             return True
 

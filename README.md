@@ -6,7 +6,16 @@ built to replace per-volume API pricing with predictable, self-hosted compute.
 > **Note on naming:** The production application this inference layer was built for is
 > referred to throughout this repository as `ProductionAppName`. The real project name
 > has been replaced with this placeholder because the application is not yet public.
-> All benchmark data, code, and architecture decisions are real and unmodified.
+> All benchmark data, code, and architecture decisions are real and unmodified — with the
+> sole exception of the application name itself, which has been redacted for privacy. This
+> includes file paths in logs that would otherwise reveal the name. That redaction is the
+> only modification ever made to any artifact in this repository.
+
+> **Note on "production":** Where this study uses the word "production", it refers to the
+> full inference engine from the production application running in an isolated test
+> environment — not benchmarks collected from live traffic. No experiments were run
+> against the live application. The fixture database, workload harness, and iteration
+> runs are all test-environment artifacts.
 
 ---
 

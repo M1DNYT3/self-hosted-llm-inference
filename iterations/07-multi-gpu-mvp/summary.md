@@ -1,6 +1,6 @@
 # 07 — Multi-GPU MVP (4x and 8x fleet, dynamic onstart)
 
-> Status: PARTIALLY PROVEN — 4x results confirmed; 8x startup failed (CUDA arch incompatibility); jd_reparse excluded (non-DC thermal instability surfaced).
+> Status: PARTIALLY PROVEN — 4x results confirmed; 8x ran partially (SSH channel exhaustion at 4m20s); jd_reparse excluded (non-DC thermal instability surfaced).
 
 ## Change
 
@@ -46,25 +46,45 @@ the 3090 passes ≥25 TFLOPS/GPU and was the cheapest available 4x offer at run 
 | RTX 5070 Ti | ~340 total | ~760 GB/s | ~$0.60–0.80/hr | preferred if available at 8x |
 | RTX 2080 Ti | ~107 total | ~500 GB/s | lower | admitted: 13.4 TFLOPS/GPU passes the 13/GPU floor |
 
-**Actual hardware — 8x run:** RTX 2080 Ti ×8 at $0.590/hr — only 1 matching 8x offer.
-Instance booted and SSH'd successfully, but all 8 llama-servers timed out at 300s.
-Root cause: Turing architecture (SM75) is not supported by the
-`ghcr.io/ggml-org/llama.cpp:server-cuda` image (targets SM80+ / Ampere and newer).
-The TFLOPS floor passed the offer; the CUDA image rejected it silently at runtime.
+**Actual hardware — 8x run:** RTX 2080 Ti ×8 at $0.590/hr (22 GB/card) — only 1 matching 8x offer.
+
+Two runs attempted:
+
+- **First run**: default `TIMEOUT_LOAD=300s`. All 8 llama-servers timed out before model
+  finished loading. 8 simultaneous llama-server startups take longer than the single-GPU
+  default allows. No inference reached.
+
+- **Second run**: `TIMEOUT_LOAD=600s`. All 8 servers loaded successfully. Ran for 4m20s,
+  processing 747/2000 records, before mass "Connection error." at all workers — the same
+  SSH channel exhaustion failure later diagnosed in iter 08. 460.4 rec/min compute rate
+  is error-inflated (37% success rate; near-instant failures dominated compute time).
+
+Root cause of second run failure: SSH channel exhaustion, not hardware. The 22 GB RTX 2080 Ti
+is compatible with the `ghcr.io/ggml-org/llama.cpp:server-cuda` image (confirmed by
+successful model load and inference in both this run and the final iter 09 validation).
+The CUDA arch hypothesis was incorrect. See iter 08 for full SSH diagnosis and fix.
 
 ## Metrics — job_skills
 
 | Config | Workers | Hardware | Compute rate | Wall rate | Failures | Cost/hr | Cost/1k rec |
 |---|---|---|---|---|---|---|---|
 | 4x / 1000 rec | 144 | RTX 3090 ×4 | 242.9 rec/min | 125.3 rec/min | 1 | $0.61 | ~$0.05 |
-| 8x / 2000 rec | — | RTX 2080 Ti ×8 | startup failure | — | — | $0.60 | — |
+| 8x / 2000 rec (run 1) | — | RTX 2080 Ti ×8 | timeout (300s) | — | — | $0.60 | — |
+| 8x / 2000 rec (run 2) | 256 | RTX 2080 Ti ×8 | 460.4 rec/min† | — | 1253/2000 | $0.60 | — |
+
+> † Error-inflated: 37% success rate. Near-instant failures compressed compute time. Real throughput confirmed in iter 09 at 255.9 rec/min after SSH fix.
 
 ## Metrics — company_enrich
 
 | Config | Workers | Hardware | Compute rate | Wall rate | Failures | Cost/hr |
 |---|---|---|---|---|---|---|
-| 4x / 1000 rec | 144 | RTX 3090 ×4 | 506.7 rec/min | 283.2 rec/min | 0 | $0.61 |
+| 4x / 1000 rec | 144 | RTX 3090 ×4 | 506.7 rec/min† | 283.2 rec/min | 0 | $0.61 |
 | 8x / 2000 rec | — | — | not attempted | — | — | — |
+
+> † 1000-record sample (records 1–1000 by id). Rate reflects average latency for that
+> specific sample. Post-fix 2000-record runs on comparable hardware measured 440–473 rec/min —
+> different records, different data distribution, longer sustained load. Not a performance
+> regression; different inputs at different scale.
 
 ## Metrics — jd_reparse
 
@@ -73,29 +93,31 @@ The TFLOPS floor passed the offer; the CUDA image rejected it silently at runtim
 | 4x / 1000 rec | 144 | RTX 3090 ×4 | excluded — server crash | 5m15s | 192 / 1000 |
 | 8x | — | — | not attempted | — | — |
 
-**jd_reparse excluded — non-DC thermal instability under sustained load:**
+**jd_reparse excluded — connection failure at ~5 min:**
 
 192/1000 records completed before all 144 workers failed simultaneously with
-"Connection error." The SSH tunnel dropped entirely (GPU label disappears from
-error lines), indicating the llama-server process crashed rather than timed out.
-Errors began at ~3m18s compute time / 5m15s wall time. TTL was set to 37 min —
-not the cause.
+"Connection error." Errors began at ~3m18s compute time / 5m15s wall time.
+TTL was set to 37 min — not the cause.
 
-Same failure mode as iter 04 (single RTX PRO 6000 WS, crash at ~11 min). Pattern:
-non-DC host under sustained full-TDP multi-GPU load reaches a power or thermal limit
-and the host collapses:
+**Initial hypothesis (iter 07): non-DC thermal instability.**
+The failure pattern — correlated with fleet TDP and run duration — looked consistent
+with thermal collapse on a non-DC host:
 
 | Iter | Hardware | Fleet TDP | Slots | Time to crash |
 |---|---|---|---|---|
 | 04 | RTX PRO 6000 WS ×1 | ~600W | 99 | ~11 min |
 | 07 4x | RTX 3090 ×4 | ~1400W | 144 | ~5 min |
 
-Higher total fleet TDP → faster collapse. jd_reparse exposes this because
-multi-slice records (~162s/record avg) keep GPUs at 100% for longer continuous
-stretches than job_skills (~20s) or company_enrich (~50s) — the latter two
-complete their runs before the host fails.
+**Correction (iter 08/09): hypothesis falsified.**
+Iter 08 ran the same workload on DC hardware (RTX A5000 ×8, $1.51/hr) and failed
+identically. Datacenter enforcement was not the fix. Iter 09 ran the same
+non-DC hardware with per-GPU isolated SSH tunnels and succeeded at 2000/2000.
+The real cause was SSH channel exhaustion — identical to the iter 07 8x job_skills
+failure. See iter 08 for full diagnosis. The thermal/TDP correlation was coincidental:
+jd_reparse's ~162s/record connection hold-time is what saturates channels, not GPU power.
 
-Fix: `REQUIRE_DATACENTER=true`. See `config-jd-dc.env` and iter 08.
+`config-jd-dc.env` was created under the thermal hypothesis and is retained as an
+artifact. `REQUIRE_DATACENTER=true` is not required.
 
 ## Findings
 
@@ -103,18 +125,16 @@ Fix: `REQUIRE_DATACENTER=true`. See `config-jd-dc.env` and iter 08.
 compute rate of 1x RTX 3090 from iter 04 (242.9 vs 109 rec/min) at ~2× the cost
 ($0.61 vs $0.30/hr) — matching the cost-efficiency trend from iter 05.
 
-**Non-DC fragility is task-dependent and load-dependent:** Short-latency tasks
-(job_skills, company_enrich) complete before non-DC hosts destabilize. Long-latency
-tasks (jd_reparse) expose the failure. This is a hardware procurement constraint,
-not a code bug — and it is invisible to the TFLOPS/VRAM/price filters.
+**Non-DC thermal hypothesis — not confirmed:** The iter 07 hypothesis (non-DC hosts
+collapse under sustained multi-GPU load) was later falsified by iter 08 (DC hardware
+failed identically) and iter 09 (non-DC hardware succeeded with SSH fix). The real
+failure was SSH channel exhaustion. See iter 08.
 
-**TFLOPS filter cannot substitute for CUDA architecture awareness:** The 8x filter
-admitted RTX 2080 Ti (SM75 / Turing) by TFLOPS, but the CUDA image does not support
-it. A bandwidth filter (`MIN_MEM_BW_PER_GPU=480`) would exclude SM75 cards by proxy
-(RTX 2080 Ti: ~616 GB/s — this one passes; the actual gap is smaller cards in the
-Turing range). The correct fix is either a higher TFLOPS floor (≥20/GPU excludes
-SM75 cards in practice) or a multi-arch CUDA image. Config-8x.env now sets
-`TIMEOUT_LOAD=600` to surface the failure faster on retry.
+**Model load timeout must scale with GPU count:** 8 simultaneous llama-server startups
+require more time than the default `TIMEOUT_LOAD=300s` allows. The 22 GB RTX 2080 Ti
+variant is compatible with `ghcr.io/ggml-org/llama.cpp:server-cuda`; the initial
+misdiagnosis (CUDA arch incompatibility) was incorrect. The correct fix: set
+`TIMEOUT_LOAD=600` for 8x fleet configs. `config-8x.env` now reflects this.
 
 ## Run commands
 
@@ -123,9 +143,8 @@ SM75 cards in practice) or a multi-arch CUDA image. Config-8x.env now sets
 bash harness/bench.sh 07-multi-gpu-mvp job_skills     1000 0 "" "" remote "" iterations/07-multi-gpu-mvp/config-4x.env
 bash harness/bench.sh 07-multi-gpu-mvp company_enrich 1000 0 "" "" remote "" iterations/07-multi-gpu-mvp/config-4x.env
 
-# 8x config — retry pending (TIMEOUT_LOAD updated to 600)
+# 8x config — two runs captured (timeout failure + SSH failure); SSH fix in iter 08/09
 bash harness/bench.sh 07-multi-gpu-mvp job_skills     2000 0 "" "" remote "" iterations/07-multi-gpu-mvp/config-8x.env
-bash harness/bench.sh 07-multi-gpu-mvp company_enrich 2000 0 "" "" remote "" iterations/07-multi-gpu-mvp/config-8x.env
 
 # jd_reparse — DC config, moved to iter 08
 bash harness/bench.sh 07-multi-gpu-mvp jd_reparse     1000 0 "" "" remote "" iterations/07-multi-gpu-mvp/config-jd-dc.env
@@ -134,6 +153,6 @@ bash harness/bench.sh 07-multi-gpu-mvp jd_reparse     1000 0 "" "" remote "" ite
 ## Artifacts
 
 - `config-4x.env` — 4x bundle offer filters
-- `config-8x.env` — 8x bundle offer filters (TIMEOUT_LOAD=600 after CUDA arch failure)
+- `config-8x.env` — 8x bundle offer filters (TIMEOUT_LOAD=600 after model-load timeout on run 1)
 - `config-jd-dc.env` — DC-only config for jd_reparse (4x→2x fallback, ≤$0.80/hr)
 - `logs/` — keeper logs for completed runs

@@ -117,7 +117,8 @@ class BaseLLMBackend(ABC):
         OpenAI-compatible server.
 
         On failure, calls reconnect_on_error(exc). If it returns True (backend
-        recovered), the request is retried once before propagating the error.
+        recovered), the request is retried once after reconnect_on_error
+        confirms the tunnel is ready.
         """
         import time
 
