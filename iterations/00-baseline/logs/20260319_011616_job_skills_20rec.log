@@ -1,0 +1,36 @@
+=== Benchmark: job_skills | limit=20 | backend=local ===
+DB:     postgresql://fixture:fixture@localhost:5433/inference_fixture
+Output: /Users/m1dnyt3/GitHub/ProductionAppName/case-study/iterations/00-baseline/benchmark_results.json
+
+LLM server online at http://192.168.1.148:26845/v1
+[job_skills] Processing 20 job(s) ... (workers=1)
+  job  45177  15972ms  in=519 out=246  [ok]
+  job  45178  10594ms  in=382 out=165  [ok]
+  job  45181  15377ms  in=611 out=228  [ok]
+  job  45182  21945ms  in=731 out=323  [ok]
+  job  45183  14467ms  in=762 out=210  [ok]
+  job  45184  14641ms  in=766 out=214  [ok]
+  job  45185  21408ms  in=762 out=323  [ok]
+  job  45568  18143ms  in=578 out=265  [ok]
+  job  45580  18545ms  in=585 out=273  [ok]
+  job  45588  16610ms  in=589 out=244  [ok]
+  job  45597  14098ms  in=623 out=205  [ok]
+  job  45501  14464ms  in=598 out=211  [ok]
+  job  45285  13921ms  in=682 out=204  [ok]
+  job  45287  16350ms  in=612 out=239  [ok]
+  job  46062  14903ms  in=564 out=219  [ok]
+  job  45351   6832ms  in=176 out=106  [ok]
+  job  45503  15310ms  in=1296 out=214  [ok]
+  job  45415  16343ms  in=1047 out=230  [ok]
+  job  45406  16059ms  in=594 out=236  [ok]
+  job  45515  14023ms  in=621 out=193  [ok]
+[job_skills] Done. 20/20 parsed  time=5m10s  rate=3.9 rec/min
+
+=== Results ===
+  Total:        20
+  OK:           20
+  Failed:       0
+  Wall time:    5m10s
+  Rate:         3.9 rec/min
+  Avg latency:  15500ms
+  Output:       /Users/m1dnyt3/GitHub/ProductionAppName/case-study/iterations/00-baseline/benchmark_results.json

@@ -1,0 +1,266 @@
+=== Benchmark: company_enrich | limit=200 | backend=remote | dispatch=static-batches ===
+DB:     postgresql://fixture:fixture@localhost:5433/inference_fixture
+Output: /Users/m1dnyt3/GitHub/ProductionAppName/case-study/iterations/03-first-remote-run/benchmark_results.json
+
+[vastai] Model verified on HuggingFace: unsloth/Qwen3.5-9B-GGUF/Qwen3.5-9B-Q4_K_M.gguf
+[vastai] Offer search — filters: x2 GPUs (fallback path [2, 1]), price≤$0.30/hr, VRAM 20–28GB, tflops≥20.0/GPU, inet_down≥0Mbps, bw_cost≤$0.50, datacenter=False, verified=True, reliability≥0.9, gpu_name⊇'3090'
+[vastai] Found 13 matching offers for x2 GPUs.
+[vastai] Selected offer:
+  GPU:         RTX 3090 x2
+  VRAM:        24 GB/card  (48 GB total)
+  TFLOPS:      36/GPU  (72 total)
+  Price:       $0.229/hr base + $0.008 BW est = $0.237/hr
+  inet_down:   798 Mbps  (cost $0.0013/GB)
+  Reliability: 0.967  datacenter=False
+  Offer ID:    20306462
+[vastai] SINGLE_GPU_MODE: rented bundle has 2x GPUs but only CUDA_VISIBLE_DEVICES=0 will be started. Remaining cards idle (still billed as part of the bundle).
+[vastai] Parallel slot formula:
+  (24GB VRAM - 6GB model) / 0.5GB per KV slot = 36 slots/GPU × 1 GPU(s) = 36 total workers
+  available_vram=18GB
+[vastai] Instance TTL: 37min (queue=200, n_parallel=36)
+[vastai] llama-server config per GPU:
+  image:        ghcr.io/ggml-org/llama.cpp:server-cuda
+  model:        unsloth/Qwen3.5-9B-GGUF/Qwen3.5-9B-Q4_K_M.gguf
+  GPUs started: 1 (CUDA_VISIBLE_DEVICES 0..0)
+  ports:        8000
+  --parallel:   36
+  --ctx-size:   147456  (4096 tokens/slot × 36 slots)
+  --reasoning-budget: 0  (thinking disabled)
+  disk:         40GB
+[vastai] Using image: ghcr.io/ggml-org/llama.cpp:server-cuda
+Vast.ai instance created: id=33113432 (offer=20306462)
+Waiting for Vast.ai instance to reach 'running' (timeout 3600s) ...
+  status=None
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=loading
+  status=running
+Waiting for SSH (timeout 60s) ...
+[vastai] SSH tunnel opened: localhost:57873 → container:8000 (GPU0)
+SSH tunnel open. llama-server endpoints: ('http://localhost:57873/v1',)
+Waiting for llama-server(s) to load model (timeout 300s) ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+All llama-servers ready.
+[company_enrich] Processing 200 company/ies ... (workers=36)
+  [gpu1] [w31/36] DOUGS                            7970ms  in=119 out=58  [ok]
+  [gpu1] [w29/36] ELOGIE-SIEMP                     9386ms  in=122 out=75  [ok]
+  [gpu1] [w23/36] APRR                             9423ms  in=118 out=75  [ok]
+  [gpu1] [w32/36] Groupe Talents Handicap          9479ms  in=120 out=76  [ok]
+  [gpu1] [w22/36] Barclays                         9522ms  in=119 out=76  [ok]
+  [gpu1] [w7/36] ING                              9570ms  in=115 out=79  [ok]
+  [gpu1] [w27/36] Lieferando                      10217ms  in=118 out=81  [ok]
+  [gpu1] [w26/36] Bosch                           10337ms  in=117 out=82  [ok]
+  [gpu1] [w2/36] Microsoft                       10381ms  in=120 out=83  [ok]
+  [gpu1] [w16/36] ENERGIE RECRUTE                 10387ms  in=119 out=83  [ok]
+  [gpu1] [w36/36] Known                           10444ms  in=117 out=83  [ok]
+  [gpu1] [w12/36] Zoom Communications             10503ms  in=118 out=84  [ok]
+  [gpu1] [w10/36] Grundfos Pumps                  10515ms  in=121 out=84  [ok]
+  [gpu1] [w18/36] RecordLinker                    10541ms  in=119 out=84  [ok]
+  [gpu1] [w30/36] Adopt Parfums                   10733ms  in=119 out=85  [ok]
+  [gpu1] [w1/36] Weidmüller Germany              10937ms  in=119 out=87  [ok]
+  [gpu1] [w28/36] Odido                           11517ms  in=118 out=91  [ok]
+  [gpu1] [w6/36] Accenture                       11594ms  in=115 out=92  [ok]
+  [gpu1] [w21/36] Greenly                         11945ms  in=118 out=95  [ok]
+  [gpu1] [w4/36] AEROCONTACT                     12521ms  in=117 out=100  [ok]
+  [gpu1] [w24/36] Nestlé                          12864ms  in=118 out=102  [ok]
+  [gpu1] [w15/36] Apple                           13019ms  in=117 out=103  [ok]
+  [gpu1] [w25/36] Framatome                       13099ms  in=120 out=103  [ok]
+  [gpu1] [w3/36] Amazon.com                      13145ms  in=120 out=104  [ok]
+  [gpu1] [w14/36] Amsterdam UMC                   13447ms  in=120 out=105  [ok]
+  [gpu1] [w5/36] The HEINEKEN Company            13505ms  in=121 out=107  [ok]
+  [gpu1] [w35/36] AstraZeneca                     13543ms  in=119 out=106  [ok]
+  [gpu1] [w11/36] Nokia                           13596ms  in=119 out=106  [ok]
+  [gpu1] [w17/36] Vodafone                        13718ms  in=118 out=109  [ok]
+  [gpu1] [w9/36] 3BrainAI Solutions s.r.o.       13809ms  in=125 out=109  [ok]
+  [gpu1] [w8/36] Molex                           14105ms  in=119 out=113  [ok]
+  [gpu1] [w19/36] Proterial                       14163ms  in=120 out=113  [ok]
+  [gpu1] [w20/36] Hitachi Energy                  14181ms  in=117 out=114  [ok]
+  [gpu1] [w31/36] Vuono Group                      6330ms  in=117 out=52  [ok]
+  [gpu1] [w34/36] Lubrizol                        17680ms  in=120 out=129  [ok]
+  [gpu1] [w13/36] Infineon Technologies           17925ms  in=119 out=132  [ok]
+  [gpu1] [w33/36] Amazon Web Services             18659ms  in=120 out=134  [ok]
+  [gpu1] [w23/36] New York Life Insurance Company  13523ms  in=119 out=90  [ok]
+  [gpu1] [w36/36] aklamio GmbH                    13572ms  in=122 out=58  [ok]
+  [gpu1] [w29/36] Heartbeat Medical               14980ms  in=121 out=81  [ok]
+  [gpu1] [w21/36] Mindrift                        13352ms  in=116 out=68  [ok]
+  [gpu1] [w24/36] Rubrik                          13061ms  in=112 out=74  [ok]
+  [gpu1] [w9/36] Dartificial                     12826ms  in=118 out=70  [ok]
+  [gpu1] [w27/36] Crossing Hurdles                16612ms  in=118 out=87  [ok]
+  [gpu1] [w4/36] Evernote                        14393ms  in=116 out=82  [ok]
+  [gpu1] [w1/36] DeNovo Solutions                16065ms  in=121 out=85  [ok]
+  [gpu1] [w19/36] Neko Health                     13213ms  in=117 out=76  [ok]
+  [gpu1] [w17/36] TEKsystems                      13940ms  in=112 out=78  [ok]
+  [gpu1] [w30/36] TOPdesk                         17000ms  in=118 out=91  [ok]
+  [gpu1] [w23/36] SALT AND PEPPER Group            5620ms  in=119 out=45  [ok]
+  [gpu1] [w5/36] Giesecke+Devrient               15406ms  in=120 out=87  [ok]
+  [gpu1] [w25/36] Rabobank                        16278ms  in=117 out=91  [ok]
+  [gpu1] [w26/36] Robert Half                     19781ms  in=116 out=108  [ok]
+  [gpu1] [w16/36] Entasis Partners                19910ms  in=116 out=106  [ok]
+  [gpu1] [w34/36] Net2Source (N2S)                12564ms  in=122 out=93  [ok]
+  [gpu1] [w18/36] Ahold Delhaize USA              19912ms  in=115 out=107  [ok]
+  [gpu1] [w10/36] Wärtsilä                        20193ms  in=118 out=108  [ok]
+  [gpu1] [w28/36] Berkshire Hathaway Homestate Companies - Workers Compensation Division  19285ms  in=124 out=109  [ok]
+  [gpu1] [w20/36] JPMorganChase                   16796ms  in=119 out=97  [ok]
+  [gpu1] [w22/36] Służba Więzienna                21791ms  in=122 out=115  [ok]
+  [gpu1] [w13/36] NTT DATA                        13431ms  in=118 out=99  [ok]
+  [gpu1] [w35/36] Oracle                          17910ms  in=115 out=101  [ok]
+  [gpu1] [w15/36] GE Vernova                      18621ms  in=119 out=108  [ok]
+  [gpu1] [w6/36] Flexera Software, Inc.          20191ms  in=123 out=115  [ok]
+  [gpu1] [w11/36] VodafoneThree                   18164ms  in=118 out=103  [ok]
+  [gpu1] [w7/36] MBDA                            22824ms  in=116 out=120  [ok]
+  [gpu1] [w31/36] Inspira Financial Trust, LLC    18228ms  in=122 out=105  [ok]
+  [gpu1] [w12/36] Google                          22300ms  in=116 out=119  [ok]
+  [gpu1] [w32/36] NetApp                          23839ms  in=116 out=125  [ok]
+  [gpu1] [w2/36] Opendoor                        23105ms  in=119 out=124  [ok]
+  [gpu1] [w3/36] Matematicko-fyzikální fakulta UK  20559ms  in=126 out=115  [ok]
+  [gpu1] [w8/36] McCormick & Company             20737ms  in=118 out=122  [ok]
+  [gpu1] [w33/36] Uvik Software                   16377ms  in=115 out=91  [ok]
+  [gpu1] [w14/36] Amazon Web Services (AWS)       24061ms  in=120 out=137  [ok]
+  [gpu1] [w36/36] Fleetway Inc.                   14698ms  in=118 out=93  [ok]
+  [gpu1] [w19/36] Cleverbase                      12458ms  in=119 out=49  [ok]
+  [gpu1] [w1/36] RemoteHunter                    12930ms  in=116 out=50  [ok]
+  [gpu1] [w25/36] Trust International B.V.        11338ms  in=118 out=47  [ok]
+  [gpu1] [w21/36] Vesterling AG                   16909ms  in=118 out=89  [ok]
+  [gpu1] [w30/36] EPAM Systems                    14545ms  in=115 out=72  [ok]
+  [gpu1] [w23/36] Vimo Inc                        14438ms  in=119 out=77  [ok]
+  [gpu1] [w32/36] netgo                            9686ms  in=116 out=47  [ok]
+  [gpu1] [w24/36] Ichor Systems, Inc.             17350ms  in=120 out=96  [ok]
+  [gpu1] [w5/36] Citi                            14395ms  in=119 out=79  [ok]
+  [gpu1] [w27/36] Lensa                           16433ms  in=116 out=87  [ok]
+  [gpu1] [w29/36] The Hershey Company             19102ms  in=119 out=107  [ok]
+  [gpu1] [w9/36] Affirm                          17238ms  in=115 out=96  [ok]
+  [gpu1] [w18/36] Jobs via Dice                   14145ms  in=113 out=67  [ok]
+  [gpu1] [w12/36] Pam                             12331ms  in=115 out=64  [ok]
+  [gpu1] [w16/36] SEED (Electronic Arts)          15943ms  in=120 out=87  [ok]
+  [gpu1] [w15/36] PHOTOROOM                       15095ms  in=119 out=77  [ok]
+  [gpu1] [w35/36] Piper Companies                 15356ms  in=116 out=78  [ok]
+  [gpu1] [w13/36] Jack & Jill                     17467ms  in=117 out=88  [ok]
+  [gpu1] [w8/36] Culver Company                  15145ms  in=115 out=82  [ok]
+  [gpu1] [w7/36] Graphcore                       17866ms  in=116 out=94  [ok]
+  [gpu1] [w22/36] SimonsVoss Technologies         19108ms  in=121 out=98  [ok]
+  [gpu1] [w4/36] Cambridge Mobile Telematics     23807ms  in=119 out=128  [ok]
+  [gpu1] [w26/36] Luxoft Poland                   20648ms  in=117 out=117  [ok]
+  [gpu1] [w11/36] CVS Health                      20145ms  in=118 out=107  [ok]
+  [gpu1] [w31/36] Contact Government Services, LLC  19635ms  in=121 out=107  [ok]
+  [gpu1] [w6/36] Octopus Energy                  20686ms  in=117 out=108  [ok]
+  [gpu1] [w14/36] CACI                            14995ms  in=116 out=88  [ok]
+  [gpu1] [w2/36] Booz Allen Hamilton             19519ms  in=118 out=109  [ok]
+  [gpu1] [w33/36] Deploja AB                      17988ms  in=120 out=104  [ok]
+  [gpu1] [w36/36] Secmation                       14417ms  in=117 out=92  [ok]
+  [gpu1] [w20/36] Amentum                         22245ms  in=117 out=118  [ok]
+  [gpu1] [w34/36] BESTSELLER                      23038ms  in=119 out=122  [ok]
+  [gpu1] [w27/36] Reboot Monkey                   11028ms  in=117 out=37  [ok]
+  [gpu1] [w21/36] BMMC - BerlinMed Medical Consulting GmbH  12220ms  in=122 out=57  [ok]
+  [gpu1] [w17/36] Boston Consulting Group (BCG)   27331ms  in=121 out=158  [ok]
+  [gpu1] [w28/36] General Dynamics Ordnance and Tactical Systems  24265ms  in=121 out=133  [ok]
+  [gpu1] [w3/36] Conduent State Healthcare, LLC  22791ms  in=123 out=125  [ok]
+  [gpu1] [w10/36] Docker, Inc                     26335ms  in=117 out=145  [ok]
+  [gpu1] [w19/36] DISCO                           19236ms  in=116 out=101  [ok]
+  [gpu1] [w24/36] apexanalytix                    16446ms  in=118 out=69  [ok]
+  [gpu1] [w30/36] First Legal Network LLC         18284ms  in=120 out=90  [ok]
+  [gpu1] [w35/36] Autodiscovery                   13829ms  in=117 out=58  [ok]
+  [gpu1] [w12/36] HII                             15650ms  in=118 out=75  [ok]
+  [gpu1] [w25/36] Capgemini                       20536ms  in=117 out=102  [ok]
+  [gpu1] [w26/36] Keyrock                         10578ms  in=111 out=37  [ok]
+  [gpu1] [w14/36] Cedar                            9523ms  in=115 out=31  [ok]
+  [gpu1] [w1/36] Collins Aerospace               22269ms  in=120 out=117  [ok]
+  [gpu1] [w15/36] AuditBoard                      15464ms  in=116 out=80  [ok]
+  [gpu1] [w9/36] Changeis                        19617ms  in=118 out=97  [ok]
+  [gpu1] [w29/36] MSCI Inc.                       20489ms  in=118 out=101  [ok]
+  [gpu1] [w23/36] Rubix                           21811ms  in=118 out=110  [ok]
+  [gpu1] [w5/36] CHU de Poitiers                 21576ms  in=121 out=106  [ok]
+  [gpu1] [w32/36] Taco Bell                       22358ms  in=115 out=113  [ok]
+  [gpu1] [w16/36] Endava                          19943ms  in=116 out=108  [ok]
+  [gpu1] [w7/36] Quantifind                      16707ms  in=117 out=79  [ok]
+  [gpu1] [w8/36] Lyric                           16976ms  in=118 out=94  [ok]
+  [gpu1] [w18/36] Air Canada                      22522ms  in=116 out=115  [ok]
+  [gpu1] [w33/36] Alan                            15055ms  in=115 out=64  [ok]
+  [gpu1] [w4/36] M1 Technology LLC               17548ms  in=118 out=78  [ok]
+  [gpu1] [w13/36] myGwork - LGBTQ+ Business Community  19705ms  in=122 out=105  [ok]
+  [gpu1] [w6/36] GitHub                          16486ms  in=113 out=73  [ok]
+  [gpu1] [w11/36] Mercor                          17737ms  in=116 out=86  [ok]
+  [gpu1] [w10/36] Mercury                         12724ms  in=115 out=61  [ok]
+  [gpu1] [w24/36] NEXEL                           10202ms  in=113 out=46  [ok]
+  [gpu1] [w34/36] Intellibee Inc                  17197ms  in=119 out=77  [ok]
+  [gpu1] [w28/36] Epsilon                         15931ms  in=116 out=73  [ok]
+  [gpu1] [w27/36] Ingram Micro                    16767ms  in=118 out=82  [ok]
+  [gpu1] [w21/36] Binance                         17001ms  in=113 out=85  [ok]
+  [gpu1] [w36/36] CrowdStrike                     18653ms  in=112 out=91  [ok]
+  [gpu1] [w2/36] WSP in Canada                   18994ms  in=118 out=95  [ok]
+  [gpu1] [w31/36] Exakis Nelite                   20475ms  in=118 out=110  [ok]
+  [gpu1] [w3/36] BBA Consultants                 16421ms  in=117 out=86  [ok]
+  [gpu1] [w17/36] Edwards Lifesciences            18090ms  in=118 out=92  [ok]
+  [gpu1] [w22/36] Leidos                          23136ms  in=116 out=120  [ok]
+  [gpu1] [w15/36] Attune                          12035ms  in=115 out=49  [ok]
+  [gpu1] [w1/36] Canonical                       12354ms  in=115 out=56  [ok]
+  [gpu1] [w29/36] Stadtwerke Wolfsburg AG         12349ms  in=119 out=63  [ok]
+  [gpu1] [w19/36] Cloudflare                      17786ms  in=116 out=99  [ok]
+  [gpu1] [w20/36] Jobs via eFinancialCareers      23664ms  in=120 out=125  [ok]
+  [gpu1] [w32/36] BWI GmbH                        12057ms  in=117 out=60  [ok]
+  [gpu1] [w26/36] NOVA Engineering and Environmental, LLC  16451ms  in=121 out=82  [ok]
+  [gpu1] [w25/36] Jobgether                       16884ms  in=116 out=86  [ok]
+  [gpu1] [w5/36] Ashby                           13347ms  in=116 out=72  [ok]
+  [gpu1] [w30/36] a.s.r. Verzekeringen            17774ms  in=123 out=98  [ok]
+  [gpu1] [w14/36] Apex Fintech Solutions UK       16317ms  in=119 out=87  [ok]
+  [gpu1] [w9/36] Flutter Entertainment           15126ms  in=116 out=84  [ok]
+  [gpu1] [w7/36] MKS Inc.                        12702ms  in=118 out=72  [ok]
+  [gpu1] [w35/36] Resurs Bank                     19143ms  in=122 out=104  [ok]
+  [gpu1] [w12/36] Versar Global Solutions         19484ms  in=118 out=102  [ok]
+  [gpu1] [w17/36] Hot ITem Conclusion              8219ms  in=118 out=45  [ok]
+  [gpu1] [w16/36] Wpromote                        16027ms  in=117 out=92  [ok]
+  [gpu1] [w18/36] Skild AI                        15370ms  in=115 out=85  [ok]
+  [gpu1] [w3/36] Correlation One Expert Network   9675ms  in=122 out=58  [ok]
+  [gpu1] [w8/36] SpaceX                          15860ms  in=114 out=94  [ok]
+  [gpu1] [w33/36] Ebury                           14703ms  in=112 out=78  [ok]
+  [gpu1] [w28/36] AgileEngine                     14380ms  in=116 out=83  [ok]
+  [gpu1] [w4/36] Humana                          17789ms  in=121 out=107  [ok]
+  [gpu1] [w1/36] BPCE Solutions informatiques    11645ms  in=117 out=80  [ok]
+  [gpu1] [w11/36] Scotiabank                      16730ms  in=117 out=102  [ok]
+  [gpu1] [w20/36] Etteplan                         9848ms  in=116 out=77  [ok]
+  [gpu1] [w13/36] Akeneo                          19006ms  in=116 out=120  [ok]
+  [gpu1] [w6/36] Extreme Networks                18668ms  in=118 out=112  [ok]
+  [gpu1] [w3/36] AXIOM PRO                        5265ms  in=117 out=45  [ok]
+  [gpu1] [w10/36] Northstrat Incorporated         18473ms  in=118 out=116  [ok]
+  [gpu1] [w15/36] JBT Marel                       14728ms  in=118 out=107  [ok]
+  [gpu1] [w34/36] LiteLLM                         18522ms  in=115 out=123  [ok]
+  [gpu1] [w2/36] North Star Staffing             17119ms  in=118 out=118  [ok]
+  [gpu1] [w22/36] Just Eat Takeaway.com           16218ms  in=121 out=118  [ok]
+  [gpu1] [w12/36] Alignerr                         9531ms  in=116 out=83  [ok]
+  [gpu1] [w19/36] National Geographic Society     13395ms  in=117 out=117  [ok]
+  [gpu1] [w5/36] Hyra                            12019ms  in=115 out=104  [ok]
+  [gpu1] [w18/36] Heron Power                      7846ms  in=117 out=75  [ok]
+  [gpu1] [w9/36] JPPA - Jackson and Perkins      12096ms  in=119 out=109  [ok]
+  [gpu1] [w14/36] ServiceNow                      12388ms  in=118 out=111  [ok]
+  [gpu1] [w7/36] Dynatrace                       11580ms  in=119 out=109  [ok]
+  [gpu1] [w17/36] Boeing                           9984ms  in=115 out=98  [ok]
+  [gpu1] [w6/36] Hillwood Construction Services   4554ms  in=118 out=59  [ok]
+  [gpu1] [w16/36] Fender Musical Instruments Corporation  10101ms  in=118 out=111  [ok]
+  [gpu1] [w11/36] Clark Construction Group         5963ms  in=116 out=75  [ok]
+  [gpu1] [w20/36] Bouygues Telecom                 5900ms  in=120 out=80  [ok]
+  [gpu1] [w8/36] Bridgestone Americas            10030ms  in=117 out=122  [ok]
+  [gpu1] [w10/36] LJA                              4848ms  in=116 out=78  [ok]
+  [gpu1] [w13/36] Scion Staffing                   5649ms  in=118 out=88  [ok]
+  [gpu1] [w4/36] Renesas Electronics              7349ms  in=117 out=111  [ok]
+  [gpu1] [w2/36] pmX Group                        4438ms  in=117 out=97  [ok]
+[company_enrich] Done. 200/200 parsed  time=1m33s  rate=127.8 rec/min
+[vastai] SSH tunnel closed.
+Vast.ai instance 33113432 destroyed.
+
+=== Results ===
+  Total:        200
+  OK:           200
+  Failed:       0
+  Compute time: 1m33s  (127.8 rec/min)
+  Wall time:    4m20s  (46.1 rec/min)
+  Avg latency:  15298ms
+  Output:       /Users/m1dnyt3/GitHub/ProductionAppName/case-study/iterations/03-first-remote-run/benchmark_results.json

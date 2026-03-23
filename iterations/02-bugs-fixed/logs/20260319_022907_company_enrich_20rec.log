@@ -1,0 +1,36 @@
+=== Benchmark: company_enrich | limit=20 | backend=local | dispatch=static-batches ===
+DB:     postgresql://fixture:fixture@localhost:5433/inference_fixture
+Output: /Users/m1dnyt3/GitHub/ProductionAppName/case-study/iterations/02-bugs-fixed/benchmark_results.json
+
+LLM server online at http://192.168.1.148:26845/v1
+[company_enrich] Processing 20 company/ies ... (workers=4)
+  [w1/4] Weidmüller Germany               7609ms  in=121 out=60  [ok]
+  [w2/4] Microsoft                        7705ms  in=122 out=61  [ok]
+  [w4/4] AEROCONTACT                      8524ms  in=119 out=64  [ok]
+  [w3/4] Amazon.com                      10131ms  in=122 out=76  [ok]
+  [w1/4] The HEINEKEN Company             5528ms  in=123 out=43  [ok]
+  [w2/4] Accenture                        5554ms  in=117 out=44  [ok]
+  [w3/4] ING                              4125ms  in=117 out=32  [ok]
+  [w4/4] Molex                            6731ms  in=121 out=53  [ok]
+  [w1/4] 3BrainAI Solutions s.r.o.        5329ms  in=127 out=43  [ok]
+  [w3/4] Nokia                            5301ms  in=121 out=46  [ok]
+  [w4/4] Zoom Communications              5348ms  in=120 out=46  [ok]
+  [w2/4] Grundfos Pumps                   7509ms  in=123 out=61  [ok]
+  [w1/4] Infineon Technologies            6926ms  in=121 out=55  [ok]
+  [w3/4] Apple                            7732ms  in=119 out=57  [ok]
+  [w2/4] Amsterdam UMC                    6526ms  in=122 out=43  [ok]
+  [w4/4] ENERGIE RECRUTE                  6850ms  in=121 out=58  [ok]
+  [w1/4] Vodafone                         5785ms  in=120 out=50  [ok]
+  [w2/4] RecordLinker                     4647ms  in=121 out=39  [ok]
+  [w4/4] Hitachi Energy                   4561ms  in=119 out=40  [ok]
+  [w3/4] Proterial                        5157ms  in=122 out=47  [ok]
+[company_enrich] Done. 20/20 parsed  time=32.7s  rate=36.7 rec/min
+
+=== Results ===
+  Total:        20
+  OK:           20
+  Failed:       0
+  Compute time: 0m32s  (36.7 rec/min)
+  Wall time:    0m32s  (36.5 rec/min)
+  Avg latency:  6379ms
+  Output:       /Users/m1dnyt3/GitHub/ProductionAppName/case-study/iterations/02-bugs-fixed/benchmark_results.json

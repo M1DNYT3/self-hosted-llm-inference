@@ -1,0 +1,36 @@
+=== Benchmark: company_enrich | limit=20 | backend=local ===
+DB:     postgresql://fixture:fixture@localhost:5433/inference_fixture
+Output: /Users/m1dnyt3/GitHub/ProductionAppName/case-study/iterations/01-parallel-1thread/benchmark_results.json
+
+LLM server online at http://192.168.1.148:26845/v1
+[company_enrich] Processing 20 company/ies ... (workers=1)
+  Weidmüller Germany               4181ms  in=121 out=51  [ok]
+  Microsoft                        4635ms  in=122 out=62  [ok]
+  Amazon.com                       4434ms  in=122 out=66  [ok]
+  AEROCONTACT                      4454ms  in=119 out=62  [ok]
+  The HEINEKEN Company             3491ms  in=123 out=44  [ok]
+  Accenture                        3603ms  in=117 out=48  [ok]
+  ING                              2653ms  in=117 out=33  [ok]
+  Molex                            5135ms  in=121 out=68  [ok]
+  3BrainAI Solutions s.r.o.        4066ms  in=127 out=45  [ok]
+  Grundfos Pumps                   5509ms  in=123 out=70  [ok]
+  Nokia                            3449ms  in=121 out=45  [ok]
+  Zoom Communications              3664ms  in=120 out=46  [ok]
+  Infineon Technologies            4469ms  in=121 out=55  [ok]
+  Amsterdam UMC                    3668ms  in=122 out=44  [ok]
+  Apple                            4553ms  in=119 out=57  [ok]
+  ENERGIE RECRUTE                  3745ms  in=121 out=44  [parse_fail]
+  Vodafone                         3838ms  in=120 out=51  [ok]
+  RecordLinker                     3249ms  in=121 out=44  [ok]
+  Proterial                        3911ms  in=122 out=52  [ok]
+  Hitachi Energy                   2596ms  in=119 out=37  [ok]
+[company_enrich] Done. 19/20 parsed  time=1m19s  rate=15.0 rec/min
+
+=== Results ===
+  Total:        20
+  OK:           19
+  Failed:       1
+  Wall time:    1m20s
+  Rate:         15.0 rec/min
+  Avg latency:  3965ms
+  Output:       /Users/m1dnyt3/GitHub/ProductionAppName/case-study/iterations/01-parallel-1thread/benchmark_results.json

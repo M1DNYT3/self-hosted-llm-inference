@@ -1,0 +1,36 @@
+=== Benchmark: job_skills | limit=20 | backend=local | dispatch=static-batches ===
+DB:     postgresql://fixture:fixture@localhost:5433/inference_fixture
+Output: /Users/m1dnyt3/GitHub/ProductionAppName/case-study/iterations/02-bugs-fixed/benchmark_results.json
+
+LLM server online at http://192.168.1.148:26845/v1
+[job_skills] Processing 20 job(s) ... (workers=4)
+  [w4/4] job  45183  26393ms  in=922 out=187  [ok]
+  [w3/4] job  45178  28305ms  in=439 out=192  [ok]
+  [w1/4] job  45177  36293ms  in=519 out=266  [ok]
+  [w2/4] job  45182  40283ms  in=731 out=294  [ok]
+  [w4/4] job  45568  32428ms  in=733 out=270  [ok]
+  [w3/4] job  45181  32921ms  in=930 out=275  [ok]
+  [w1/4] job  45184  30283ms  in=843 out=248  [ok]
+  [w2/4] job  45185  40273ms  in=923 out=346  [ok]
+  [w4/4] job  45501  24579ms  in=685 out=192  [ok]
+  [w3/4] job  45597  29799ms  in=781 out=251  [ok]
+  [w1/4] job  45580  28397ms  in=681 out=238  [ok]
+  [w4/4] job  45351  13466ms  in=176 out=106  [ok]
+  [w2/4] job  45588  29531ms  in=668 out=245  [ok]
+  [w4/4] job  45515  20438ms  in=621 out=185  [ok]
+  [w1/4] job  45285  23351ms  in=777 out=198  [ok]
+  [w3/4] job  46062  32049ms  in=694 out=261  [ok]
+  [w3/4] job  45406  12890ms  in=659 out=127  [ok]
+  [w2/4] job  45287  26670ms  in=873 out=248  [ok]
+  [w1/4] job  45503  22177ms  in=1296 out=223  [ok]
+  [w2/4] job  45415  16073ms  in=1047 out=228  [ok]
+[job_skills] Done. 20/20 parsed  time=2m33s  rate=7.8 rec/min
+
+=== Results ===
+  Total:        20
+  OK:           20
+  Failed:       0
+  Compute time: 2m33s  (7.8 rec/min)
+  Wall time:    2m33s  (7.8 rec/min)
+  Avg latency:  27330ms
+  Output:       /Users/m1dnyt3/GitHub/ProductionAppName/case-study/iterations/02-bugs-fixed/benchmark_results.json

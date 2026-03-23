@@ -1,0 +1,36 @@
+=== Benchmark: jd_reparse | limit=20 | backend=local | dispatch=static-batches ===
+DB:     postgresql://fixture:fixture@localhost:5433/inference_fixture
+Output: /Users/m1dnyt3/GitHub/ProductionAppName/case-study/iterations/02-bugs-fixed/benchmark_results.json
+
+LLM server online at http://192.168.1.148:26845/v1
+[jd_reparse] Processing 20 job(s) ... (workers=4)
+  [w3/4] job  45178  32222ms  in=393 out=265  slices=1/1  skills=y  [ok]
+  [w4/4] job  45183  47902ms  in=907 out=398  slices=1/2  skills=y  [ok]
+  [w2/4] job  45182  49567ms  in=1391 out=405  slices=2/2  skills=n  [ok]
+  [w1/4] job  45177  52993ms  in=530 out=432  slices=1/1  skills=n  [ok]
+  [w3/4] job  45181  43403ms  in=622 out=375  slices=1/1  skills=y  [ok]
+  [w1/4] job  45184  32043ms  in=976 out=287  slices=1/2  skills=y  [ok]
+  [w4/4] job  45568  59199ms  in=747 out=518  slices=2/2  skills=y  [ok]
+  [w2/4] job  45185  74417ms  in=612 out=663  slices=1/2  skills=y  [ok]
+  [w3/4] job  45597  64347ms  in=975 out=570  slices=2/2  skills=y  [ok]
+  [w4/4] job  45501  35284ms  in=828 out=304  slices=2/2  skills=y  [ok]
+  [w1/4] job  45580  61773ms  in=1051 out=536  slices=3/3  skills=y  [ok]
+  [w4/4] job  45351   9028ms  in=187 out=75  slices=1/1  skills=n  [ok]
+  [w4/4] job  45515  34691ms  in=607 out=297  slices=1/1  skills=y  [ok]
+  [w3/4] job  46062  73527ms  in=1179 out=571  slices=2/2  skills=y  [ok]
+  [w2/4] job  45588  92169ms  in=1190 out=726  slices=3/3  skills=y  [ok]
+  [w1/4] job  45285  73421ms  in=801 out=561  slices=2/2  skills=y  [ok]
+  [w3/4] job  45406  94316ms  in=928 out=630  slices=2/2  skills=y  [ok]
+  [w2/4] job  45287  108052ms  in=865 out=730  slices=2/2  skills=y  [ok]
+  [w1/4] job  45503  145032ms  in=1982 out=1013  slices=2/4  skills=y  [ok]
+  [w2/4] job  45415  60731ms  in=1411 out=629  slices=2/3  skills=y  [ok]
+[jd_reparse] Done. 20/20 processed  skills_found=17  time=6m25s  rate=3.1 rec/min
+
+=== Results ===
+  Total:        20
+  OK:           20
+  Failed:       0
+  Compute time: 6m25s  (3.1 rec/min)
+  Wall time:    6m25s  (3.1 rec/min)
+  Avg latency:  62206ms
+  Output:       /Users/m1dnyt3/GitHub/ProductionAppName/case-study/iterations/02-bugs-fixed/benchmark_results.json

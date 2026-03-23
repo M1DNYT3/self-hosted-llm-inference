@@ -1,0 +1,258 @@
+=== Benchmark: jd_reparse | limit=200 | backend=remote | dispatch=static-batches ===
+DB:     postgresql://fixture:fixture@localhost:5433/inference_fixture
+Output: /Users/m1dnyt3/GitHub/ProductionAppName/case-study/iterations/03-first-remote-run/benchmark_results.json
+
+[vastai] Model verified on HuggingFace: unsloth/Qwen3.5-9B-GGUF/Qwen3.5-9B-Q4_K_M.gguf
+[vastai] Offer search — filters: x2 GPUs (fallback path [2, 1]), price≤$0.30/hr, VRAM 20–28GB, tflops≥20.0/GPU, inet_down≥0Mbps, bw_cost≤$0.50, datacenter=False, verified=True, reliability≥0.9, gpu_name⊇'3090'
+[vastai] Found 13 matching offers for x2 GPUs.
+[vastai] Selected offer:
+  GPU:         RTX 3090 x2
+  VRAM:        24 GB/card  (48 GB total)
+  TFLOPS:      36/GPU  (72 total)
+  Price:       $0.241/hr base + $0.016 BW est = $0.257/hr
+  inet_down:   917 Mbps  (cost $0.0026/GB)
+  Reliability: 0.999  datacenter=False
+  Offer ID:    31390992
+[vastai] SINGLE_GPU_MODE: rented bundle has 2x GPUs but only CUDA_VISIBLE_DEVICES=0 will be started. Remaining cards idle (still billed as part of the bundle).
+[vastai] Parallel slot formula:
+  (24GB VRAM - 6GB model) / 0.5GB per KV slot = 36 slots/GPU × 1 GPU(s) = 36 total workers
+  available_vram=18GB
+[vastai] Instance TTL: 36min (queue=200, n_parallel=36)
+[vastai] llama-server config per GPU:
+  image:        ghcr.io/ggml-org/llama.cpp:server-cuda
+  model:        unsloth/Qwen3.5-9B-GGUF/Qwen3.5-9B-Q4_K_M.gguf
+  GPUs started: 1 (CUDA_VISIBLE_DEVICES 0..0)
+  ports:        8000
+  --parallel:   36
+  --ctx-size:   147456  (4096 tokens/slot × 36 slots)
+  --reasoning-budget: 0  (thinking disabled)
+  disk:         40GB
+[vastai] Using image: ghcr.io/ggml-org/llama.cpp:server-cuda
+Vast.ai instance created: id=33114040 (offer=31390992)
+Waiting for Vast.ai instance to reach 'running' (timeout 3600s) ...
+  status=None
+  status=loading
+  status=running
+Waiting for SSH (timeout 60s) ...
+[vastai] SSH tunnel opened: localhost:58852 → container:8000 (GPU0)
+SSH tunnel open. llama-server endpoints: ('http://localhost:58852/v1',)
+Waiting for llama-server(s) to load model (timeout 300s) ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+  llama-servers not ready yet ...
+All llama-servers ready.
+[jd_reparse] Processing 200 job(s) ... (workers=36)
+  [gpu1] [w16/36] job  45351  14935ms  in=185 out=77  slices=1/1  skills=n  [ok]
+  [gpu1] [w20/36] job  45515  26109ms  in=605 out=153  slices=1/1  skills=y  [ok]
+  [gpu1] [w25/36] job  45813  37640ms  in=881 out=222  slices=2/2  skills=y  [ok]
+  [gpu1] [w7/36] job  45178  40850ms  in=391 out=267  slices=1/1  skills=y  [ok]
+  [gpu1] [w10/36] job  45568  47830ms  in=743 out=291  slices=2/2  skills=y  [ok]
+  [gpu1] [w34/36] job  46065  49401ms  in=866 out=319  slices=2/2  skills=y  [ok]
+  [gpu1] [w9/36] job  45184  52363ms  in=972 out=343  slices=2/2  skills=y  [ok]
+  [gpu1] [w33/36] job  46401  52475ms  in=873 out=327  slices=2/2  skills=y  [ok]
+  [gpu1] [w1/36] job  45182  56054ms  in=1387 out=336  slices=2/2  skills=y  [ok]
+  [gpu1] [w13/36] job  45285  56441ms  in=797 out=362  slices=2/2  skills=y  [ok]
+  [gpu1] [w3/36] job  45181  56577ms  in=620 out=379  slices=1/1  skills=y  [ok]
+  [gpu1] [w12/36] job  45501  57530ms  in=824 out=381  slices=2/2  skills=y  [ok]
+  [gpu1] [w20/36] job  46580  33196ms  in=318 out=213  slices=1/1  skills=y  [ok]
+  [gpu1] [w33/36] job  44960  10580ms  in=115 out=23  slices=1/1  skills=y  [ok]
+  [gpu1] [w15/36] job  46062  63955ms  in=1175 out=385  slices=2/2  skills=y  [ok]
+  [gpu1] [w4/36] job  45185  65101ms  in=610 out=426  slices=1/2  skills=y  [ok]
+  [gpu1] [w28/36] job  46397  65321ms  in=1063 out=405  slices=2/2  skills=y  [ok]
+  [gpu1] [w8/36] job  45183  66231ms  in=903 out=406  slices=1/2  skills=y  [ok]
+  [gpu1] [w2/36] job  45177  66388ms  in=528 out=434  slices=1/1  skills=n  [ok]
+  [gpu1] [w29/36] job  46541  67080ms  in=1171 out=435  slices=2/2  skills=y  [ok]
+  [gpu1] [w18/36] job  45415  67315ms  in=1405 out=425  slices=3/3  skills=y  [ok]
+  [gpu1] [w32/36] job  45923  73521ms  in=1273 out=465  slices=3/3  skills=y  [ok]
+  [gpu1] [w14/36] job  45287  75256ms  in=861 out=459  slices=2/2  skills=y  [ok]
+  [gpu1] [w11/36] job  45597  85479ms  in=971 out=548  slices=1/2  skills=y  [ok]
+  [gpu1] [w3/36] job  46067  28995ms  in=300 out=166  slices=1/1  skills=y  [ok]
+  [gpu1] [w31/36] job  46384  86876ms  in=1156 out=553  slices=2/2  skills=y  [ok]
+  [gpu1] [w19/36] job  45406  88006ms  in=924 out=560  slices=2/2  skills=y  [ok]
+  [gpu1] [w18/36] job  46762  20647ms  in=472 out=109  slices=1/1  skills=y  [ok]
+  [gpu1] [w23/36] job  45734  88390ms  in=1923 out=528  slices=4/4  skills=n  [ok]
+  [gpu1] [w5/36] job  45580  88597ms  in=1045 out=539  slices=3/3  skills=y  [ok]
+  [gpu1] [w8/36] job  46293  30757ms  in=270 out=176  slices=1/1  skills=y  [ok]
+  [gpu1] [w24/36] job  45776  103276ms  in=1460 out=655  slices=3/3  skills=y  [ok]
+  [gpu1] [w23/36] job  46620  18983ms  in=253 out=111  slices=1/1  skills=y  [ok]
+  [gpu1] [w3/36] job  44950  22437ms  in=1016 out=132  slices=2/2  skills=y  [ok]
+  [gpu1] [w19/36] job  46572  23290ms  in=393 out=135  slices=1/1  skills=y  [ok]
+  [gpu1] [w10/36] job  46353  63519ms  in=1469 out=350  slices=3/3  skills=y  [ok]
+  [gpu1] [w21/36] job  45556  114497ms  in=1904 out=695  slices=4/4  skills=y  [ok]
+  [gpu1] [w14/36] job  46550  39295ms  in=913 out=235  slices=2/2  skills=y  [ok]
+  [gpu1] [w28/36] job  47745  51006ms  in=1141 out=292  slices=2/4  skills=y  [ok]
+  [gpu1] [w22/36] job  45612  117044ms  in=1190 out=726  slices=3/3  skills=y  [ok]
+  [gpu1] [w10/36] job  44952  11906ms  in=155 out=53  slices=1/1  skills=y  [ok]
+  [gpu1] [w3/36] job  47161  16306ms  in=240 out=90  slices=1/1  skills=y  [ok]
+  [gpu1] [w20/36] job  45073  66311ms  in=1149 out=421  slices=2/2  skills=y  [ok]
+  [gpu1] [w1/36] job  47744  71693ms  in=1489 out=411  slices=3/3  skills=y  [ok]
+  [gpu1] [w30/36] job  46041  133312ms  in=1627 out=798  slices=3/4  skills=y  [ok]
+  [gpu1] [w25/36] job  46895  96450ms  in=899 out=600  slices=1/2  skills=n  [ok]
+  [gpu1] [w36/36] job  46440  134863ms  in=1664 out=868  slices=3/3  skills=y  [ok]
+  [gpu1] [w6/36] job  45588  138931ms  in=1184 out=886  slices=3/3  skills=y  [ok]
+  [gpu1] [w3/36] job  48256  14618ms  in=381 out=79  slices=1/1  skills=y  [ok]
+  [gpu1] [w5/36] job  47685  55637ms  in=713 out=342  slices=2/4  skills=y  [ok]
+  [gpu1] [w13/36] job  46546  87796ms  in=1187 out=528  slices=3/3  skills=y  [ok]
+  [gpu1] [w34/36] job  46888  96190ms  in=1294 out=584  slices=2/2  skills=y  [ok]
+  [gpu1] [w12/36] job  46545  89749ms  in=1005 out=553  slices=2/2  skills=y  [ok]
+  [gpu1] [w33/36] job  47076  86332ms  in=1137 out=575  slices=2/2  skills=y  [ok]
+  [gpu1] [w11/36] job  46368  72817ms  in=931 out=444  slices=2/2  skills=y  [ok]
+  [gpu1] [w16/36] job  46573  143445ms  in=1597 out=901  slices=3/3  skills=y  [ok]
+  [gpu1] [w22/36] job  46617  44512ms  in=845 out=245  slices=2/3  skills=y  [ok]
+  [gpu1] [w32/36] job  46800  92868ms  in=1565 out=555  slices=3/3  skills=y  [ok]
+  [gpu1] [w2/36] job  46447  103231ms  in=790 out=653  slices=2/2  skills=y  [ok]
+  [gpu1] [w21/36] job  46616  55036ms  in=507 out=335  slices=1/1  skills=y  [ok]
+  [gpu1] [w35/36] job  46439  171903ms  in=1664 out=1118  slices=3/3  skills=y  [ok]
+  [gpu1] [w20/36] job  48842  46310ms  in=1165 out=258  slices=2/2  skills=y  [ok]
+  [gpu1] [w1/36] job  46914  44458ms  in=735 out=245  slices=2/2  skills=y  [ok]
+  [gpu1] [w14/36] job  45028  58479ms  in=1003 out=343  slices=2/2  skills=y  [ok]
+  [gpu1] [w7/36] job  46283  134567ms  in=2113 out=802  slices=4/4  skills=y  [ok]
+  [gpu1] [w17/36] job  45503  178130ms  in=1974 out=1117  slices=3/4  skills=y  [ok]
+  [gpu1] [w8/36] job  44905  81686ms  in=965 out=522  slices=2/2  skills=y  [ok]
+  [gpu1] [w27/36] job  45911  186270ms  in=2300 out=1160  slices=3/4  skills=y  [ok]
+  [gpu1] [w13/36] job  46754  41956ms  in=3850 out=152  slices=4/5  skills=n  [ok]
+  [gpu1] [w36/36] job  47746  58029ms  in=1141 out=292  slices=2/4  skills=y  [ok]
+  [gpu1] [w12/36] job  47747  48693ms  in=1141 out=275  slices=2/4  skills=y  [ok]
+  [gpu1] [w27/36] job  46761  11145ms  in=388 out=56  slices=1/1  skills=n  [ok]
+  [gpu1] [w34/36] job  47099  52199ms  in=640 out=304  slices=1/1  skills=y  [ok]
+  [gpu1] [w15/36] job  46571  143100ms  in=1597 out=909  slices=3/3  skills=y  [ok]
+  [gpu1] [w6/36] job  45942  68206ms  in=768 out=379  slices=2/2  skills=y  [ok]
+  [gpu1] [w21/36] job  44990  37687ms  in=348 out=223  slices=1/1  skills=y  [ok]
+  [gpu1] [w29/36] job  46795  140685ms  in=1658 out=855  slices=4/4  skills=y  [ok]
+  [gpu1] [w5/36] job  45042  64673ms  in=1099 out=394  slices=2/2  skills=y  [ok]
+  [gpu1] [w7/36] job  44878  34480ms  in=649 out=187  slices=1/2  skills=y  [ok]
+  [gpu1] [w3/36] job  48785  71255ms  in=2773 out=349  slices=2/7  skills=y  [ok]
+  [gpu1] [w27/36] job  46926  18036ms  in=206 out=102  slices=0/1  skills=n  [ok]
+  [gpu1] [w26/36] job  45893  215625ms  in=2124 out=1385  slices=4/4  skills=y  [ok]
+  [gpu1] [w16/36] job  45975  60209ms  in=1075 out=353  slices=2/3  skills=y  [ok]
+  [gpu1] [w33/36] job  47793  70479ms  in=835 out=411  slices=2/2  skills=y  [ok]
+  [gpu1] [w23/36] job  47515  116940ms  in=1563 out=706  slices=3/3  skills=y  [ok]
+  [gpu1] [w10/36] job  47261  103668ms  in=1688 out=609  slices=3/3  skills=y  [ok]
+  [gpu1] [w34/36] job  47719  33249ms  in=503 out=198  slices=1/1  skills=y  [ok]
+  [gpu1] [w21/36] job  47532  26258ms  in=275 out=117  slices=1/1  skills=y  [ok]
+  [gpu1] [w11/36] job  44954  75469ms  in=794 out=416  slices=2/2  skills=y  [ok]
+  [gpu1] [w6/36] job  44874  28633ms  in=451 out=155  slices=1/1  skills=y  [ok]
+  [gpu1] [w25/36] job  47144  104991ms  in=1550 out=607  slices=3/3  skills=y  [ok]
+  [gpu1] [w20/36] job  48054  68023ms  in=2703 out=343  slices=4/4  skills=y  [ok]
+  [gpu1] [w9/36] job  46332  189860ms  in=1709 out=1169  slices=2/3  skills=y  [ok]
+  [gpu1] [w29/36] job  47053  44613ms  in=807 out=221  slices=2/2  skills=y  [ok]
+  [gpu1] [w4/36] job  45939  191958ms  in=2123 out=1179  slices=4/4  skills=y  [ok]
+  [gpu1] [w28/36] job  46955  144155ms  in=1760 out=851  slices=4/4  skills=y  [ok]
+  [gpu1] [w31/36] job  46798  175071ms  in=1649 out=1085  slices=3/4  skills=y  [ok]
+  [gpu1] [w8/36] job  47306  88952ms  in=950 out=495  slices=2/2  skills=y  [ok]
+  [gpu1] [w14/36] job  47422  97202ms  in=1142 out=582  slices=1/2  skills=y  [ok]
+  [gpu1] [w20/36] job  46696  32058ms  in=573 out=207  slices=1/1  skills=y  [ok]
+  [gpu1] [w18/36] job  47278  185001ms  in=2348 out=1106  slices=5/5  skills=y  [ok]
+  [gpu1] [w19/36] job  46708  162966ms  in=1324 out=987  slices=3/3  skills=y  [ok]
+  [gpu1] [w2/36] job  45953  109432ms  in=1300 out=653  slices=3/3  skills=y  [ok]
+  [gpu1] [w35/36] job  46889  108978ms  in=1342 out=651  slices=2/2  skills=y  [ok]
+  [gpu1] [w32/36] job  46996  115812ms  in=1597 out=684  slices=3/3  skills=y  [ok]
+  [gpu1] [w10/36] job  48703  61240ms  in=1183 out=326  slices=2/2  skills=y  [ok]
+  [gpu1] [w34/36] job  51808  66571ms  in=2446 out=338  slices=2/4  skills=y  [ok]
+  [gpu1] [w11/36] job  47352  67037ms  in=554 out=412  slices=1/1  skills=n  [ok]
+  [gpu1] [w27/36] job  47645  86999ms  in=1609 out=520  slices=3/3  skills=y  [ok]
+  [gpu1] [w26/36] job  46791  91851ms  in=1491 out=534  slices=2/3  skills=y  [ok]
+  [gpu1] [w33/36] job  48569  88213ms  in=4089 out=434  slices=4/7  skills=y  [ok]
+  [gpu1] [w9/36] job  44947  68632ms  in=1739 out=427  slices=3/3  skills=y  [ok]
+  [gpu1] [w16/36] job  47424  93478ms  in=1632 out=571  slices=3/3  skills=n  [ok]
+  [gpu1] [w22/36] job  44877  151560ms  in=2078 out=937  slices=3/3  skills=y  [ok]
+  [gpu1] [w21/36] job  47992  82755ms  in=1165 out=511  slices=2/2  skills=y  [ok]
+  [gpu1] [w4/36] job  44966  60324ms  in=786 out=354  slices=2/2  skills=y  [ok]
+  [gpu1] [w6/36] job  47057  81617ms  in=1601 out=509  slices=3/3  skills=y  [ok]
+  [gpu1] [w30/36] job  46797  184226ms  in=2070 out=1119  slices=5/5  skills=y  [ok]
+  [gpu1] [w15/36] job  45098  114423ms  in=1678 out=727  slices=3/3  skills=y  [ok]
+  [gpu1] [w32/36] job  47791  41455ms  in=688 out=262  slices=1/1  skills=y  [ok]
+  [gpu1] [w5/36] job  47056  117166ms  in=1601 out=688  slices=3/3  skills=y  [ok]
+  [gpu1] [w10/36] job  52080  39862ms  in=4009 out=226  slices=2/6  skills=y  [ok]
+  [gpu1] [w7/36] job  47093  122065ms  in=1349 out=740  slices=3/3  skills=y  [ok]
+  [gpu1] [w35/36] job  47749  52648ms  in=1141 out=292  slices=2/4  skills=y  [ok]
+  [gpu1] [w16/36] job  47118  30657ms  in=259 out=180  slices=1/1  skills=y  [ok]
+  [gpu1] [w19/36] job  48330  72208ms  in=1573 out=401  slices=3/3  skills=y  [ok]
+  [gpu1] [w36/36] job  47172  155541ms  in=1683 out=949  slices=4/4  skills=y  [ok]
+  [gpu1] [w6/36] job  48328  33144ms  in=1074 out=161  slices=2/2  skills=y  [ok]
+  [gpu1] [w1/36] job  48068  180133ms  in=4798 out=1044  slices=4/7  skills=y  [ok]
+  [gpu1] [w15/36] job  47423  49317ms  in=1629 out=258  slices=3/3  skills=n  [ok]
+  [gpu1] [w2/36] job  47019  94878ms  in=1404 out=577  slices=3/3  skills=y  [ok]
+  [gpu1] [w17/36] job  47188  197109ms  in=2496 out=1189  slices=4/5  skills=y  [ok]
+  [gpu1] [w7/36] job  48307  43639ms  in=326 out=256  slices=1/2  skills=y  [ok]
+  [gpu1] [w11/36] job  48879  78581ms  in=2923 out=463  slices=2/5  skills=y  [ok]
+  [gpu1] [w8/36] job  48389  114371ms  in=1383 out=706  slices=3/3  skills=y  [ok]
+  [gpu1] [w23/36] job  48824  163605ms  in=3969 out=953  slices=3/5  skills=y  [ok]
+  [gpu1] [w15/36] job  47117  27020ms  in=1095 out=119  slices=2/2  skills=n  [ok]
+  [gpu1] [w14/36] job  47446  131375ms  in=4118 out=728  slices=4/5  skills=y  [ok]
+  [gpu1] [w36/36] job  47833  55933ms  in=1481 out=288  slices=3/3  skills=y  [ok]
+  [gpu1] [w32/36] job  48541  81384ms  in=4785 out=401  slices=4/6  skills=y  [ok]
+  [gpu1] [w24/36] job  46622  303091ms  in=2588 out=1799  slices=4/5  skills=y  [ok]
+  [gpu1] [w1/36] job  48359  55079ms  in=4741 out=263  slices=2/6  skills=y  [ok]
+  [gpu1] [w9/36] job  47340  101621ms  in=1142 out=560  slices=2/2  skills=y  [ok]
+  [gpu1] [w4/36] job  47054  97744ms  in=1601 out=506  slices=3/3  skills=y  [ok]
+  [gpu1] [w25/36] job  47634  179267ms  in=2078 out=1032  slices=4/4  skills=y  [ok]
+  [gpu1] [w5/36] job  52560  98663ms  in=4002 out=499  slices=3/9  skills=y  [ok]
+  [gpu1] [w30/36] job  46986  113723ms  in=1561 out=592  slices=3/3  skills=y  [ok]
+  [gpu1] [w27/36] job  48900  134534ms  in=1108 out=751  slices=2/2  skills=y  [ok]
+  [gpu1] [w16/36] job  48932  95967ms  in=4567 out=481  slices=3/6  skills=y  [ok]
+  [gpu1] [w11/36] job  47121  60009ms  in=1335 out=290  slices=3/3  skills=y  [ok]
+  [gpu1] [w26/36] job  47018  135100ms  in=2290 out=764  slices=4/4  skills=y  [ok]
+  [gpu1] [w15/36] job  47780  45623ms  in=922 out=249  slices=2/2  skills=y  [ok]
+  [gpu1] [w31/36] job  46995  183802ms  in=1597 out=1068  slices=2/3  skills=y  [ok]
+  [gpu1] [w29/36] job  47940  194255ms  in=3013 out=1068  slices=3/5  skills=y  [ok]
+  [gpu1] [w36/36] job  48364  43622ms  in=2944 out=227  slices=1/4  skills=y  [ok]
+  [gpu1] [w6/36] job  48876  97913ms  in=3750 out=519  slices=2/5  skills=y  [ok]
+  [gpu1] [w19/36] job  47926  107127ms  in=1963 out=574  slices=3/3  skills=y  [ok]
+  [gpu1] [w35/36] job  48360  122108ms  in=5624 out=637  slices=5/8  skills=y  [ok]
+  [gpu1] [w17/36] job  46001  80859ms  in=1032 out=420  slices=2/2  skills=y  [ok]
+  [gpu1] [w24/36] job  47748  50177ms  in=1141 out=275  slices=2/4  skills=y  [ok]
+  [gpu1] [w22/36] job  47589  148320ms  in=2364 out=817  slices=4/5  skills=y  [ok]
+  [gpu1] [w2/36] job  49647  98671ms  in=4014 out=503  slices=4/6  skills=y  [ok]
+  [gpu1] [w30/36] job  47735  42108ms  in=923 out=241  slices=2/2  skills=y  [ok]
+  [gpu1] [w4/36] job  48285  61499ms  in=1071 out=346  slices=2/2  skills=y  [ok]
+  [gpu1] [w13/36] job  47349  294775ms  in=3891 out=1716  slices=7/7  skills=y  [ok]
+  [gpu1] [w1/36] job  48466  84666ms  in=3082 out=454  slices=2/6  skills=y  [ok]
+  [gpu1] [w12/36] job  47348  297341ms  in=3891 out=1714  slices=7/7  skills=y  [ok]
+  [gpu1] [w29/36] job  48311  55365ms  in=2345 out=289  slices=1/3  skills=y  [ok]
+  [gpu1] [w28/36] job  48826  243304ms  in=5172 out=1347  slices=4/7  skills=y  [ok]
+  [gpu1] [w23/36] job  47983  126883ms  in=4158 out=682  slices=2/5  skills=y  [ok]
+  [gpu1] [w30/36] job  48379  54874ms  in=4156 out=295  slices=3/5  skills=n  [ok]
+  [gpu1] [w25/36] job  48268  110056ms  in=1143 out=622  slices=2/2  skills=y  [ok]
+  [gpu1] [w12/36] job  47055  36618ms  in=3415 out=202  slices=1/4  skills=y  [ok]
+  [gpu1] [w5/36] job  48873  105798ms  in=3379 out=582  slices=3/5  skills=y  [ok]
+  [gpu1] [w22/36] job  48011  74310ms  in=1084 out=417  slices=2/2  skills=y  [ok]
+  [gpu1] [w9/36] job  48838  124555ms  in=2071 out=696  slices=4/4  skills=y  [ok]
+  [gpu1] [w35/36] job  46032  82563ms  in=1490 out=468  slices=3/3  skills=y  [ok]
+  [gpu1] [w2/36] job  51809  72808ms  in=2350 out=438  slices=3/4  skills=y  [ok]
+  [gpu1] [w8/36] job  48935  178832ms  in=5286 out=1067  slices=6/7  skills=y  [ok]
+  [gpu1] [w7/36] job  48926  186561ms  in=5110 out=1109  slices=5/7  skills=y  [ok]
+  [gpu1] [w14/36] job  48251  164845ms  in=1452 out=1058  slices=3/3  skills=y  [ok]
+  [gpu1] [w4/36] job  48857  90146ms  in=4490 out=615  slices=4/6  skills=y  [ok]
+  [gpu1] [w28/36] job  48902  65772ms  in=1665 out=524  slices=3/4  skills=y  [ok]
+  [gpu1] [w19/36] job  46695  122927ms  in=1952 out=886  slices=4/4  skills=y  [ok]
+  [gpu1] [w31/36] job  47760  132520ms  in=1062 out=954  slices=1/2  skills=n  [ok]
+  [gpu1] [w18/36] job  47336  305946ms  in=3408 out=1941  slices=5/6  skills=y  [ok]
+  [gpu1] [w26/36] job  47635  143094ms  in=2078 out=1032  slices=4/4  skills=y  [ok]
+  [gpu1] [w17/36] job  47425  130193ms  in=2022 out=970  slices=3/4  skills=y  [ok]
+  [gpu1] [w26/36] job  48514   2067ms  in=113 out=22  slices=1/1  skills=n  [ok]
+  [gpu1] [w24/36] job  47633  136534ms  in=2078 out=1044  slices=4/4  skills=y  [ok]
+  [gpu1] [w12/36] job  48233  64828ms  in=3518 out=647  slices=3/5  skills=y  [ok]
+  [gpu1] [w24/36] job  48150   5009ms  in=489 out=90  slices=1/1  skills=y  [ok]
+  [gpu1] [w18/36] job  48036  20191ms  in=2530 out=255  slices=2/4  skills=y  [ok]
+  [gpu1] [w9/36] job  52078  65963ms  in=2695 out=755  slices=2/6  skills=y  [ok]
+  [gpu1] [w17/36] job  47921  19913ms  in=3791 out=275  slices=4/10  skills=y  [ok]
+  [gpu1] [w13/36] job  49660  133013ms  in=4397 out=1321  slices=5/7  skills=y  [ok]
+  [gpu1] [w31/36] job  48392  37812ms  in=3794 out=595  slices=4/6  skills=y  [ok]
+  [gpu1] [w13/36] job  47989   7567ms  in=404 out=278  slices=1/1  skills=y  [ok]
+  [gpu1] [w17/36] job  48562  19920ms  in=3102 out=652  slices=2/4  skills=n  [ok]
+  [gpu1] [w18/36] job  49159  30246ms  in=5522 out=926  slices=2/7  skills=y  [ok]
+[jd_reparse] Done. 200/200 processed  skills_found=185  time=10m30s  rate=19.0 rec/min
+[vastai] SSH tunnel closed.
+Vast.ai instance 33114040 destroyed.
+
+=== Results ===
+  Total:        200
+  OK:           200
+  Failed:       0
+  Compute time: 10m30s  (19.0 rec/min)
+  Wall time:    11m51s  (16.9 rec/min)
+  Avg latency:  88933ms
+  Output:       /Users/m1dnyt3/GitHub/ProductionAppName/case-study/iterations/03-first-remote-run/benchmark_results.json

@@ -1,0 +1,36 @@
+=== Benchmark: jd_reparse | limit=20 | backend=local ===
+DB:     postgresql://fixture:fixture@localhost:5433/inference_fixture
+Output: /Users/m1dnyt3/GitHub/ProductionAppName/case-study/iterations/00-baseline/benchmark_results.json
+
+LLM server online at http://192.168.1.148:26845/v1
+[jd_reparse] Processing 20 job(s) ... (workers=1)
+  job  45177  29030ms  in=530 out=432  slices=1/1  skills=n  [ok]
+  job  45178  17277ms  in=393 out=265  slices=1/1  skills=y  [ok]
+  job  45181  25938ms  in=622 out=374  slices=1/1  skills=y  [ok]
+  job  45182  33884ms  in=1391 out=488  slices=2/2  skills=n  [ok]
+  job  45183  27961ms  in=907 out=401  slices=1/2  skills=y  [ok]
+  job  45184  18258ms  in=976 out=287  slices=1/2  skills=y  [ok]
+  job  45185  27691ms  in=612 out=401  slices=1/2  skills=y  [ok]
+  job  45568  27715ms  in=747 out=404  slices=2/2  skills=y  [ok]
+  job  45580  40372ms  in=1051 out=597  slices=3/3  skills=y  [ok]
+  job  45588  49962ms  in=1190 out=759  slices=3/3  skills=y  [ok]
+  job  45597  38660ms  in=975 out=570  slices=2/2  skills=y  [ok]
+  job  45501  21246ms  in=828 out=310  slices=2/2  skills=y  [ok]
+  job  45285  36824ms  in=801 out=544  slices=2/2  skills=y  [ok]
+  job  45287  50025ms  in=865 out=730  slices=2/2  skills=y  [ok]
+  job  46062  30918ms  in=1179 out=442  slices=2/2  skills=y  [ok]
+  job  45351   5161ms  in=187 out=75  slices=1/1  skills=n  [ok]
+  job  45503  71106ms  in=1488 out=1034  slices=2/4  skills=y  [ok]
+  job  45415  41344ms  in=1411 out=630  slices=2/3  skills=y  [ok]
+  job  45406  43523ms  in=928 out=630  slices=2/2  skills=y  [ok]
+  job  45515  19356ms  in=607 out=297  slices=1/1  skills=y  [ok]
+[jd_reparse] Done. 20/20 processed  skills_found=17  time=10m57s  rate=1.8 rec/min
+
+=== Results ===
+  Total:        20
+  OK:           20
+  Failed:       0
+  Wall time:    10m57s
+  Rate:         1.8 rec/min
+  Avg latency:  32813ms
+  Output:       /Users/m1dnyt3/GitHub/ProductionAppName/case-study/iterations/00-baseline/benchmark_results.json
