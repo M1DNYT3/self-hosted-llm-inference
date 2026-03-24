@@ -98,7 +98,7 @@ Blackwell falls back to PTX JIT — a conservative codegen that misses sm_120a's
 execution paths. Fix: bump `ARG CUDA_VERSION` to 12.9.1 in `.devops/cuda.Dockerfile`.
 Validated across four GPU architectures: **+242% on RTX 5090**, zero regression on
 sm_75/sm_86/sm_89. RTX 50xx is now the highest-throughput option per slot in the fleet.
-PR candidate submitted to ggml-org/llama.cpp, addressing issues #17822 and #18865.
+[PR #20920](https://github.com/ggml-org/llama.cpp/pull/20920) submitted to ggml-org/llama.cpp, addressing issues #17822 and #18865.
 
 ---
 

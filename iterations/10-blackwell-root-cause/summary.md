@@ -1,7 +1,7 @@
 # 10 — Blackwell Root Cause (RTX 5090 +242% on CUDA 12.9.1)
 
 > Status: COMPLETE — Root cause confirmed and validated. One-line Dockerfile fix.
-> PR candidate: ggml-org/llama.cpp — change `ARG CUDA_VERSION=12.4.0` to `12.9.1`.
+> PR submitted: https://github.com/ggml-org/llama.cpp/pull/20920
 
 ## Background
 
@@ -246,8 +246,7 @@ the complete fix.
   drop only in CUDA 13.0 — a separate decision for another day.
 - **Drop-in deployment.** `LLM_VAST_IMAGE=m1dnyt3/llama-cpp:server-cuda-12.9` in `.env`.
 
-PR candidate: change `ARG CUDA_VERSION=12.4.0` → `ARG CUDA_VERSION=12.9.1` in
-`.devops/cuda.Dockerfile`. Addresses issues #17822 and #18865.
+PR submitted: https://github.com/ggml-org/llama.cpp/pull/20920 — addresses #17822 and #18865.
 
 ## Log Index
 
