@@ -116,7 +116,7 @@ produces a ~3.4× throughput penalty on Blackwell. Two related open issues:
 **Fix**: change `ARG CUDA_VERSION=12.4.0` to `12.9.1` in `.devops/cuda.Dockerfile`.
 Validated across sm_75/sm_86/sm_89/sm_120a: +242% on RTX 5090, zero regression elsewhere.
 Iteration 10 documents the full investigation, control runs, the vastai detour that nearly
-caused a false conclusion, and the final validated fix. [PR #20920](https://github.com/ggml-org/llama.cpp/pull/20920) submitted upstream, addressing #17822 and #18865.
+caused a false conclusion, and the final validated fix. [PR #20920](https://github.com/ggml-org/llama.cpp/pull/20920) merged upstream (Mar 2026), addressing #17822 and #18865. A follow-on [PR #21438](https://github.com/ggml-org/llama.cpp/pull/21438) lowered the floor to 12.8.1 for broader host compatibility after [issue #21429](https://github.com/ggml-org/llama.cpp/issues/21429) reported Error 804 on hosts with older drivers.
 
 **Implication for hardware selection**: with the fixed image (`m1dnyt3/llama-cpp:server-cuda-12.9`
 or equivalent CUDA 12.8+ build), RTX 50xx delivers ~1.7× per-slot throughput vs RTX 3090,
